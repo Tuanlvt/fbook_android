@@ -69,6 +69,8 @@
     <string name="asc">Asc</string>
     <string name="waiting_approve">Waiting Approve</string>
     <string name="add_a_comment">Add a comment</string>
+    <string name="number_requests">Have %s requests</string>
+    <string name="view_all_request">View all request</string>
 
 
     <!-- Dialog -->

@@ -3,13 +3,10 @@ package com.framgia.fbook.screen.approverequest
 import android.app.Activity
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.BookRepositoryImpl
-import com.framgia.fbook.data.source.UserRepository
-import com.framgia.fbook.data.source.UserRepositoryImpl
-import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
-import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.utils.dagger.ActivityScope
 import com.framgia.fbook.utils.navigator.Navigator
+import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import com.fstyle.structure_android.widget.dialog.DialogManagerImpl
 import dagger.Module
@@ -24,9 +21,11 @@ class ApproveRequestModule(private val activity: Activity) {
 
   @ActivityScope
   @Provides
-  fun providePresenter(bookRepository: BookRepository): ApproveRequestContract.Presenter {
+  fun providePresenter(bookRepository: BookRepository,
+      basesSchedulerProvider: BaseSchedulerProvider): ApproveRequestContract.Presenter {
     val presenter = ApproveRequestPresenter(bookRepository)
     presenter.setViewModel(activity as ApproveRequestContract.ViewModel)
+    presenter.setSchedulerProvider(basesSchedulerProvider)
     return presenter
   }
 

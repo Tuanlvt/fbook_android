@@ -56,6 +56,8 @@
     <string name="user_returned">Đã trả lại</string>
     <string name="waiting_approve">Chờ phê duyệt</string>
     <string name="add_a_comment">Thêm bình luận</string>
+    <string name="number_requests">Có %s yêu cầu</string>
+    <string name="view_all_request">Xem tất cả yêu cầu</string>
 
     <!-- Dialog -->
     <string name="agree">Đồng ý</string>

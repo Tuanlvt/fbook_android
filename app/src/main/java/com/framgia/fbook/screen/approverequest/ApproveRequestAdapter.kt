@@ -34,7 +34,7 @@ class ApproveRequestAdapter constructor(
     val binding = DataBindingUtil.inflate<ItemApproveRequestBinding>(
         LayoutInflater.from(parent.context),
         R.layout.item_approve_request, parent, false)
-    return ItemViewHolder(binding, mItemApproveRequestClickListener)
+    return ItemViewHolder(context, binding, mItemApproveRequestClickListener)
   }
 
   override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -45,12 +45,13 @@ class ApproveRequestAdapter constructor(
     return mBooks.size
   }
 
-  class ItemViewHolder(private val mBinding: ItemApproveRequestBinding,
+  class ItemViewHolder(private val context: Context,
+      private val mBinding: ItemApproveRequestBinding,
       private val mItemClickListener: ItemApproveRequestClickListener?) : RecyclerView.ViewHolder(
       mBinding.root) {
 
     fun bind(book: Book) {
-      mBinding.viewModel = ItemApproveRequestViewModel(book, mItemClickListener)
+      mBinding.viewModel = ItemApproveRequestViewModel(context, book, mItemClickListener)
       mBinding.executePendingBindings()
     }
   }
