@@ -43,27 +43,44 @@ class Book() : BaseModel(), Parcelable {
   var image: Image? = null
   @Expose
   @SerializedName("owners")
-  var owners: List<Owner>? = arrayListOf()
+  var owners: List<Owner>? = ArrayList()
   @Expose
   @SerializedName("media")
-  var images: List<Image>? = arrayListOf()
+  var images: List<Image>? = ArrayList()
   @Expose
   @SerializedName("users_waiting")
-  var usersWaitings: List<User>? = arrayListOf()
+  var usersWaitings: List<User>? = ArrayList()
   @Expose
   @SerializedName("users_reading")
-  var usersReadings: List<User>? = arrayListOf()
+  var usersReadings: List<User>? = ArrayList()
   @Expose
   @SerializedName("users_returning")
-  var usersReturnings: List<User>? = arrayListOf()
+  var usersReturnings: List<User>? = ArrayList()
   @Expose
   @SerializedName("users_returned")
-  var usersReturneds: List<User>? = arrayListOf()
+  var usersReturneds: List<User>? = ArrayList()
   @Expose
   @SerializedName("reviews_detail")
-  var reviewDetails: List<ReviewDetail>? = arrayListOf()
+  var reviewDetails: List<ReviewDetail>? = ArrayList()
 
-  inner class ReviewDetail {
+  constructor(parcel: Parcel) : this() {
+    id = parcel.readValue(Int::class.java.classLoader) as? Int
+    title = parcel.readString()
+    description = parcel.readString()
+    author = parcel.readString()
+    publishDate = parcel.readString()
+    totalPage = parcel.readValue(Int::class.java.classLoader) as? Int
+    countView = parcel.readValue(Int::class.java.classLoader) as? Int
+    avgStar = parcel.readValue(Float::class.java.classLoader) as? Float
+    overview = parcel.readString()
+    usersWaitings = parcel.createTypedArrayList(User)
+    usersReadings = parcel.createTypedArrayList(User)
+    usersReturnings = parcel.createTypedArrayList(User)
+    usersReturneds = parcel.createTypedArrayList(User)
+    reviewDetails = parcel.createTypedArrayList(ReviewDetail)
+  }
+
+  class ReviewDetail() : BaseModel(), Parcelable {
     @Expose
     @SerializedName("id")
     var id: Int? = null
@@ -79,18 +96,36 @@ class Book() : BaseModel(), Parcelable {
     @Expose
     @SerializedName("user")
     var user: User? = null
-  }
 
-  constructor(parcel: Parcel) : this() {
-    id = parcel.readValue(Int::class.java.classLoader) as? Int
-    title = parcel.readString()
-    description = parcel.readString()
-    author = parcel.readString()
-    publishDate = parcel.readString()
-    totalPage = parcel.readValue(Int::class.java.classLoader) as? Int
-    countView = parcel.readValue(Int::class.java.classLoader) as? Int
-    avgStar = parcel.readValue(Float::class.java.classLoader) as? Float
-    overview = parcel.readString()
+    constructor(parcel: Parcel) : this() {
+      id = parcel.readValue(Int::class.java.classLoader) as? Int
+      content = parcel.readString()
+      star = parcel.readValue(Float::class.java.classLoader) as? Float
+      createdAt = parcel.readString()
+      user = parcel.readParcelable(User::class.java.classLoader)
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+      parcel.writeValue(id)
+      parcel.writeString(content)
+      parcel.writeValue(star)
+      parcel.writeString(createdAt)
+      parcel.writeParcelable(user, flags)
+    }
+
+    override fun describeContents(): Int {
+      return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<ReviewDetail> {
+      override fun createFromParcel(parcel: Parcel): ReviewDetail {
+        return ReviewDetail(parcel)
+      }
+
+      override fun newArray(size: Int): Array<ReviewDetail?> {
+        return arrayOfNulls(size)
+      }
+    }
   }
 
   override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -103,6 +138,11 @@ class Book() : BaseModel(), Parcelable {
     parcel.writeValue(countView)
     parcel.writeValue(avgStar)
     parcel.writeString(overview)
+    parcel.writeTypedList(usersWaitings)
+    parcel.writeTypedList(usersReadings)
+    parcel.writeTypedList(usersReturnings)
+    parcel.writeTypedList(usersReturneds)
+    parcel.writeTypedList(reviewDetails)
   }
 
   override fun describeContents(): Int {

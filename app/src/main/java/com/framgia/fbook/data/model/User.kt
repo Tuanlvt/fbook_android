@@ -52,7 +52,7 @@ class User() : BaseModel(), Parcelable {
   var tag: String? = null
   @SerializedName("favorite_categories")
   @Expose
-  var categories: List<Category>? = null
+  var categories: List<Category>? = ArrayList()
   @SerializedName("owner_id")
   @Expose
   var ownerId: Int? = null
@@ -74,13 +74,56 @@ class User() : BaseModel(), Parcelable {
     deletedAt = parcel.readString()
     avatar = parcel.readString()
     tag = parcel.readString()
-    categories = parcel.createTypedArrayList(Category.CREATOR)
+    categories = parcel.createTypedArrayList(Category)
     ownerId = parcel.readValue(Int::class.java.classLoader) as? Int
+    pivot = parcel.readParcelable(Pivot::class.java.classLoader)
+  }
+
+  class Pivot() : BaseModel(), Parcelable {
+    @SerializedName("book_id")
+    @Expose
+    var bookId: Int? = null
+    @SerializedName("user_id")
+    @Expose
+    var userId: Int? = null
+    @SerializedName("status")
+    @Expose
+    var status: Int? = null
+    @SerializedName("owner_id")
+    @Expose
+    var ownerId: Int? = null
+
+    constructor(parcel: Parcel) : this() {
+      bookId = parcel.readValue(Int::class.java.classLoader) as? Int
+      userId = parcel.readValue(Int::class.java.classLoader) as? Int
+      status = parcel.readValue(Int::class.java.classLoader) as? Int
+      ownerId = parcel.readValue(Int::class.java.classLoader) as? Int
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+      parcel.writeValue(bookId)
+      parcel.writeValue(userId)
+      parcel.writeValue(status)
+      parcel.writeValue(ownerId)
+    }
+
+    override fun describeContents(): Int {
+      return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Pivot> {
+      override fun createFromParcel(parcel: Parcel): Pivot {
+        return Pivot(parcel)
+      }
+
+      override fun newArray(size: Int): Array<Pivot?> {
+        return arrayOfNulls(size)
+      }
+    }
   }
 
   override fun writeToParcel(parcel: Parcel, flags: Int) {
     parcel.writeValue(id)
-    parcel.writeValue(ownerId)
     parcel.writeString(name)
     parcel.writeString(email)
     parcel.writeString(phone)
@@ -94,6 +137,8 @@ class User() : BaseModel(), Parcelable {
     parcel.writeString(avatar)
     parcel.writeString(tag)
     parcel.writeTypedList(categories)
+    parcel.writeValue(ownerId)
+    parcel.writeParcelable(pivot, flags)
   }
 
   override fun describeContents(): Int {
@@ -108,20 +153,5 @@ class User() : BaseModel(), Parcelable {
     override fun newArray(size: Int): Array<User?> {
       return arrayOfNulls(size)
     }
-  }
-
-  inner class Pivot : BaseModel() {
-    @SerializedName("book_id")
-    @Expose
-    var bookId: Int? = null
-    @SerializedName("user_id")
-    @Expose
-    var userId: Int? = null
-    @SerializedName("status")
-    @Expose
-    var status: Int? = null
-    @SerializedName("owner_id")
-    @Expose
-    var ownerId: Int? = null
   }
 }
