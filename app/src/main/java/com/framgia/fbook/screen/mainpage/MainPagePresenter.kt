@@ -1,6 +1,7 @@
 package com.framgia.fbook.screen.mainpage
 
 import com.framgia.fbook.data.source.BookRepository
+import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
@@ -11,7 +12,7 @@ import io.reactivex.disposables.Disposable
  * Listens to user actions from the UI ([MainPageFragment]), retrieves the data and updates
  * the UI as required.
  */
-open class MainPagePresenter(
+open class MainPagePresenter(private val mUserRepository: UserRepository,
     private val mBookRepository: BookRepository) : MainPageContract.Presenter {
 
   private lateinit var mViewModel: MainPageContract.ViewModel
@@ -22,6 +23,18 @@ open class MainPagePresenter(
 
   override fun onStop() {
     mCompositeDisposable.clear()
+  }
+
+  override fun getListOffice() {
+    val disposable = mUserRepository.getOffices()
+        .subscribeOn(mSchedulerProvider.io())
+        .observeOn(mSchedulerProvider.ui())
+        .subscribe({ officeResponse ->
+          mViewModel.onGetOfficeSuccess(officeResponse.items)
+        }, { error ->
+          mViewModel.onError(error as BaseException)
+        })
+    mCompositeDisposable.add(disposable)
   }
 
   override fun getSectionListBook() {
@@ -54,7 +67,7 @@ open class MainPagePresenter(
           mViewModel.onGetSectionListBookSuccess(TypeBook.READ_BOOK,
               listBookReadResponse.items?.data)
         }, { error ->
-          if(error is BaseException) {
+          if (error is BaseException) {
             mViewModel.onError(error)
           }
         })

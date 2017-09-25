@@ -1,6 +1,7 @@
 package com.framgia.fbook.screen.mainpage
 
 import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.screen.BasePresenter
 import com.framgia.fbook.screen.BaseViewModel
@@ -17,6 +18,8 @@ interface MainPageContract {
 
     fun onGetSectionListBookSuccess(typeBook: Int, listBook: List<Book>?)
 
+    fun onGetOfficeSuccess(listOffice: List<Office>?)
+
     fun onShowProgressDialog()
 
     fun onDismissProgressDialog()
@@ -28,5 +31,7 @@ interface MainPageContract {
    */
   interface Presenter : BasePresenter<ViewModel> {
     fun getSectionListBook()
+
+    fun getListOffice()
   }
 }

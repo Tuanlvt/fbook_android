@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
  * Created by nguyenhuy95dn on 8/28/2017.
  */
 
-class Book() : BaseModel(), Parcelable {
+class Book() : BaseModel() , Parcelable{
 
   @Expose
   @SerializedName("id")
@@ -41,6 +41,9 @@ class Book() : BaseModel(), Parcelable {
   @Expose
   @SerializedName("image")
   var image: Image? = null
+  @SerializedName("office")
+  @Expose
+  var office: Office? = null
   @Expose
   @SerializedName("owners")
   var owners: List<Owner>? = ArrayList()
@@ -79,6 +82,7 @@ class Book() : BaseModel(), Parcelable {
     usersReturneds = parcel.createTypedArrayList(User)
     reviewDetails = parcel.createTypedArrayList(ReviewDetail)
   }
+
 
   class ReviewDetail() : BaseModel(), Parcelable {
     @Expose

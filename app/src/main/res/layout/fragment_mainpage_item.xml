@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 >
-                <ImageView
+                <com.framgia.fbook.widget.view.ImageViewLabel
                     android:id="@+id/imageItemBook"
                     android:layout_width="@dimen/dp_150"
                     android:layout_height="@dimen/dp_170"
