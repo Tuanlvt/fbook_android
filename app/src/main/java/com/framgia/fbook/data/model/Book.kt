@@ -81,6 +81,7 @@ class Book() : BaseModel() , Parcelable{
     usersReturnings = parcel.createTypedArrayList(User)
     usersReturneds = parcel.createTypedArrayList(User)
     reviewDetails = parcel.createTypedArrayList(ReviewDetail)
+    office = parcel.readParcelable(Office::class.java.classLoader)
   }
 
 
@@ -147,6 +148,7 @@ class Book() : BaseModel() , Parcelable{
     parcel.writeTypedList(usersReturnings)
     parcel.writeTypedList(usersReturneds)
     parcel.writeTypedList(reviewDetails)
+    parcel.writeParcelable(office, flags)
   }
 
   override fun describeContents(): Int {
