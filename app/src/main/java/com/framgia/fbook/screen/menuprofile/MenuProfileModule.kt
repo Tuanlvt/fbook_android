@@ -35,13 +35,6 @@ class MenuProfileModule(private val mFragment: Fragment) {
 
   @FragmentScope
   @Provides
-  fun provideMenuProfileAdapter(): MenuProfileAdapter {
-    return MenuProfileAdapter(mFragment.context,
-        mFragment.childFragmentManager)
-  }
-
-  @FragmentScope
-  @Provides
   fun providerUserRepository(userRemoteDataSource: UserRemoteDataSource,
       userLocalDataSource: UserLocalDataSource): UserRepository {
     return UserRepositoryImpl(userRemoteDataSource, userLocalDataSource)

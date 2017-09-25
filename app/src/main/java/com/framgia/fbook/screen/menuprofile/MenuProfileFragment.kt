@@ -14,10 +14,8 @@ import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.FragmentMenuProfileBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.approverequest.ApproveRequestActivity
-import com.framgia.fbook.screen.categoryfavorite.CategoryFavoriteFragment
 import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.main.MainActivity
-import com.framgia.fbook.screen.personalinfor.PersonalInforFragment
 import com.framgia.fbook.screen.sharebook.ShareBookActivity
 import com.framgia.fbook.screen.updateProfile.UpdateProfileActivity
 import com.framgia.fbook.utils.Constant
@@ -35,12 +33,10 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   @Inject
   internal lateinit var mPresenter: MenuProfileContract.Presenter
   @Inject
-  internal lateinit var menuProfileAdapter: MenuProfileAdapter
-  private lateinit var mMenuProfileComponent: MenuProfileComponent
-  @Inject
   internal lateinit var mUserRepository: UserRepository
   @Inject
   internal lateinit var mDialogManager: DialogManager
+  private lateinit var mMenuProfileComponent: MenuProfileComponent
   private var mIsLoadDataFirstTime: Boolean = true
   val mUser: ObservableField<User> = ObservableField()
   val mIsVisibleLayoutNotLoggedIn: ObservableField<Boolean> = ObservableField()
@@ -82,16 +78,6 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_PROFILE_REQUEST) {
       mIsVisibleLayoutNotLoggedIn.set(false)
       mUser.set(mUserRepository.getUserLocal())
-      val fragmentPersonalInformation = menuProfileAdapter.getFragment(
-          0)?.childFragmentManager?.fragments?.get(0)
-      val fragmentCategoryFavorite = menuProfileAdapter.getFragment(
-          1)?.childFragmentManager?.fragments?.get(0)
-      if (fragmentPersonalInformation is PersonalInforFragment) {
-        fragmentPersonalInformation.setUser(mUserRepository.updateUser())
-      }
-      if (fragmentCategoryFavorite is CategoryFavoriteFragment) {
-        fragmentCategoryFavorite.setUser(mUserRepository.updateUser())
-      }
     }
   }
 

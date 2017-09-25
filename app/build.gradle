@@ -90,7 +90,7 @@ dependencies {
 
   testCompile dependencies.junit
   testCompile dependencies.mockito
-  
+
 //  androidTestCompile 'info.cukes:cucumber-android:1.2.5@jar'
 //  androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.5'
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

@@ -1,9 +1,9 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_menu_profile_container"
+    android:id="@+id/layout_profile_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context="com.framgia.fbook.screen.profile.ProfileActivity"
     style="@style/AppTheme"
-    tools:context="com.framgia.fbook.screen.main.MainActivity"
     />
