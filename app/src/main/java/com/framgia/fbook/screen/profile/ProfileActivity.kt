@@ -11,7 +11,6 @@ import com.framgia.fbook.databinding.ActivityProfileBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.sharebook.ShareBookActivity
-import com.framgia.fbook.screen.updateProfile.UpdateProfileActivity
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.library.MaterialDialog
 import com.fstyle.structure_android.widget.dialog.DialogManager
@@ -92,9 +91,5 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
           mNavigator.startActivityAtRoot(MainActivity::class.java)
         })
     return
-  }
-
-  fun onClickEdit() {
-    mNavigator.startActivity(UpdateProfileActivity::class.java)
   }
 }
