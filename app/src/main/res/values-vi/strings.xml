@@ -60,6 +60,8 @@
     <string name="add_a_comment">Thêm bình luận…</string>
     <string name="ranking">Xếp hạng:</string>
 
+    <string name="desc">Giảm dần</string>
+    <string name="asc">Tăng dần</string>
     <!-- Dialog -->
     <string name="agree">Đồng ý</string>
     <string name="cancel">Huỷ </string>

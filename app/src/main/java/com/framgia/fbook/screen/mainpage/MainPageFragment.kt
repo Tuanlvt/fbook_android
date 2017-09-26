@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentMainPageBinding
 import com.framgia.fbook.screen.BaseFragment
@@ -86,6 +87,12 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItem
 
   override fun onError(error: BaseException) {
     mDialogManager.dialogError(error.getMessageError())
+  }
+
+  override fun onGetOfficeSuccess(listOffice: List<Office>?) {
+    listOffice?.let {
+      //TODO edit later
+    }
   }
 
   override fun onGetSectionListBookSuccess(typeBook: Int, listBook: List<Book>?) {

@@ -2,6 +2,7 @@ package com.framgia.fbook.screen.mainpage
 
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.source.BookRepository
+import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.data.source.remote.api.error.Type
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
@@ -33,6 +34,8 @@ class MainPagePresenterTest {
   lateinit var mBaseSchedulerProvider: ImmediateSchedulerProvider
   @Mock
   lateinit var mBookRepository: BookRepository
+  @Mock
+  lateinit var mUserRepository: UserRepository
   private val LATE = "latest"
   private val VIEW = "view"
   private val RATING = "rating"

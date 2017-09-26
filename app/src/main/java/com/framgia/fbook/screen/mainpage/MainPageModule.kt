@@ -3,7 +3,11 @@ package com.framgia.fbook.screen.mainpage
 import android.support.v4.app.Fragment
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.BookRepositoryImpl
+import com.framgia.fbook.data.source.UserRepository
+import com.framgia.fbook.data.source.UserRepositoryImpl
+import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
+import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.screen.mainpage.adapter.MainPageAdapter
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.navigator.Navigator
@@ -23,9 +27,9 @@ class MainPageModule(private val mFragment: Fragment) {
 
 
   @Provides
-  fun providePresenter(schedulerProvider: BaseSchedulerProvider,
+  fun providePresenter(userRepository: UserRepository, schedulerProvider: BaseSchedulerProvider,
       bookRepository: BookRepository): MainPageContract.Presenter {
-    val presenter = MainPagePresenter(bookRepository)
+    val presenter = MainPagePresenter(userRepository, bookRepository)
     presenter.setViewModel(mFragment as MainPageContract.ViewModel)
     presenter.setSchedulerProvider(schedulerProvider)
     return presenter
@@ -78,9 +82,16 @@ class MainPageModule(private val mFragment: Fragment) {
     return MainPageAdapter(mFragment.context)
   }
 
-  @FragmentScope
+
   @Provides
   fun provideNavigator(): Navigator {
     return Navigator(mFragment.parentFragment)
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideUserRepository(localDataSource: UserLocalDataSource,
+      remoteDataSource: UserRemoteDataSource): UserRepository {
+    return UserRepositoryImpl(remoteDataSource, localDataSource)
   }
 }
