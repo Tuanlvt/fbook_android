@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
  * Created by nguyenhuy95dn on 8/28/2017.
  */
 
-class Book() : BaseModel() , Parcelable{
+class Book() : BaseModel(), Parcelable {
 
   @Expose
   @SerializedName("id")
@@ -76,6 +76,7 @@ class Book() : BaseModel() , Parcelable{
     countView = parcel.readValue(Int::class.java.classLoader) as? Int
     avgStar = parcel.readValue(Float::class.java.classLoader) as? Float
     overview = parcel.readString()
+    owners = parcel.createTypedArrayList(Owner)
     usersWaitings = parcel.createTypedArrayList(User)
     usersReadings = parcel.createTypedArrayList(User)
     usersReturnings = parcel.createTypedArrayList(User)
@@ -83,7 +84,6 @@ class Book() : BaseModel() , Parcelable{
     reviewDetails = parcel.createTypedArrayList(ReviewDetail)
     office = parcel.readParcelable(Office::class.java.classLoader)
   }
-
 
   class ReviewDetail() : BaseModel(), Parcelable {
     @Expose
@@ -143,6 +143,7 @@ class Book() : BaseModel() , Parcelable{
     parcel.writeValue(countView)
     parcel.writeValue(avgStar)
     parcel.writeString(overview)
+    parcel.writeTypedList(owners)
     parcel.writeTypedList(usersWaitings)
     parcel.writeTypedList(usersReadings)
     parcel.writeTypedList(usersReturnings)
