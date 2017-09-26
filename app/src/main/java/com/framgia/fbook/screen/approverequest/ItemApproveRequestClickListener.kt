@@ -7,6 +7,4 @@ import com.framgia.fbook.data.model.Book
  */
 interface ItemApproveRequestClickListener {
   fun onItemClick(book: Book)
-
-  fun onClickViewRequest(book: Book)
 }
