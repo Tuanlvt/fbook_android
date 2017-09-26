@@ -12,7 +12,7 @@ import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.FragmentCategoryFavoriteBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.addCategoryFavorite.AddCategoryFavoriteActivity
-import com.framgia.fbook.screen.main.MainActivity
+import com.framgia.fbook.screen.profile.ProfileActivity
 import com.framgia.fbook.utils.navigator.Navigator
 import javax.inject.Inject
 
@@ -22,20 +22,20 @@ import javax.inject.Inject
 class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewModel {
 
   @Inject
+  internal lateinit var mNavigator: Navigator
+  @Inject
   internal lateinit var mPresenter: CategoryFavoriteContract.Presenter
   @Inject
   internal lateinit var mAdapter: CategoryAdapter
   @Inject
   internal lateinit var mUserRepository: UserRepository
   val mUser: ObservableField<User>? = ObservableField()
-  @Inject
-  internal lateinit var mNavigator: Navigator
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
 
     DaggerCategoryFavoriteComponent.builder()
-        .mainComponent((activity as MainActivity).getMainComponent())
+        .profileComponent((activity as ProfileActivity).getProfileComponent())
         .categoryFavoriteModule(CategoryFavoriteModule(this))
         .build()
         .inject(this)
@@ -63,11 +63,6 @@ class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewMo
       it?.set(mUserRepository.getUserLocal())
       mAdapter.updateData(it?.get()?.categories)
     }
-  }
-
-  fun setUser(user: User?) {
-    mUser?.set(user)
-    fillData()
   }
 
   fun onClickEditCategoryFavorite() {

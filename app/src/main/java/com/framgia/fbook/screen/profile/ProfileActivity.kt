@@ -27,25 +27,27 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
   internal lateinit var mPresenter: ProfileContract.Presenter
   @Inject
   internal lateinit var profileAdapter: ProfileAdapter
-  private lateinit var profileComponent: ProfileComponent
   @Inject
   internal lateinit var mUserRepository: UserRepository
   @Inject
   internal lateinit var mDialogManager: DialogManager
+  private lateinit var profileComponent: ProfileComponent
+
   val mUser: ObservableField<User> = ObservableField()
   val mPageLimit: ObservableField<Int> = ObservableField(PAGE_LIMIT)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    DaggerProfileComponent.builder()
+
+    profileComponent = DaggerProfileComponent.builder()
         .appComponent((application as MainApplication).appComponent)
         .profileModule(ProfileModule(this))
         .build()
-        .inject(this)
-
+    profileComponent.inject(this)
     val binding = DataBindingUtil.setContentView<ActivityProfileBinding>(this,
         R.layout.activity_profile)
     binding.viewModel = this
+    mUser.let { it?.set(mUserRepository.getUserLocal()) }
   }
 
   override fun onStart() {
