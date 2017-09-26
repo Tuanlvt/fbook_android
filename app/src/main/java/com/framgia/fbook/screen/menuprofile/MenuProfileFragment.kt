@@ -16,6 +16,7 @@ import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.approverequest.ApproveRequestActivity
 import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.main.MainActivity
+import com.framgia.fbook.screen.profile.ProfileActivity
 import com.framgia.fbook.screen.sharebook.ShareBookActivity
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
@@ -102,13 +103,8 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
     }
   }
 
-
-  fun getMenuProfileComponent(): MenuProfileComponent {
-    return mMenuProfileComponent
-  }
-
   fun onClickProfile() {
-    //Todo navigation Activity Profile
+    mNavigator.startActivity(ProfileActivity::class.java)
   }
 
   fun onClickShareBook() {

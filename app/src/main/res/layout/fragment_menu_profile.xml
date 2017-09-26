@@ -330,16 +330,16 @@
                     </LinearLayout>
                 </android.support.v4.widget.NestedScrollView>
             </android.support.design.widget.CoordinatorLayout>
-            <!--<android.support.constraint.ConstraintLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:background="@color/color_white_light"-->
-                <!--android:visibility="@{viewModel.mIsVisibleLayoutNotLoggedIn? View.VISIBLE : View.GONE}"-->
-                <!--&gt;-->
-                <!--<include-->
-                    <!--layout="@layout/layout_not_loggin"-->
-                    <!--/>-->
-            <!--</android.support.constraint.ConstraintLayout>-->
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_white_light"
+                android:visibility="@{viewModel.mIsVisibleLayoutNotLoggedIn? View.VISIBLE : View.GONE}"
+                >
+                <include
+                    layout="@layout/layout_not_loggin"
+                    />
+            </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </layout>

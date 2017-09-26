@@ -33,7 +33,7 @@
                 <android.support.design.widget.AppBarLayout
                     android:id="@+id/appbar"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_300"
+                    android:layout_height="wrap_content"
                     android:theme="@style/ThemeOverlay.AppCompat.Light"
                     >
                     <android.support.design.widget.CollapsingToolbarLayout
@@ -45,7 +45,7 @@
                         >
                         <android.support.constraint.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_250"
+                            android:layout_height="@dimen/dp_270"
                             app:layout_collapseMode="parallax"
                             >
                             <FrameLayout
@@ -80,7 +80,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom"
-                                android:layout_marginBottom="@dimen/dp_2"
+                                android:layout_marginBottom="@dimen/dp_5"
                                 android:layout_marginTop="@dimen/dp_8"
                                 android:fontFamily="serif"
                                 android:gravity="center"
@@ -92,77 +92,36 @@
                                 tools:layout_editor_absoluteX="0dp"
                                 />
                             <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp_40"
-                                android:layout_marginTop="@dimen/dp_8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_50"
+                                android:background="@drawable/button_click"
+                                android:onClick="@{() ->viewModel.onClickOther()}"
                                 android:orientation="horizontal"
-                                android:weightSum="3.5"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/text_name_user"
-                                tools:ignore="MissingConstraints"
-                                tools:layout_editor_absoluteX="0dp"
-                                >
-                                <Button
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/button_click"
-                                    android:onClick="@{() -> viewModel.onClickSetting()}"
-                                    android:text="@string/setting"
-                                    android:textAllCaps="false"
-                                    android:textColor="@color/color_white"
-                                    tools:ignore="ButtonStyle"
-                                    />
-                                <Button
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginEnd="@dimen/dp_3"
-                                    android:layout_marginLeft="@dimen/dp_2"
-                                    android:layout_marginRight="@dimen/dp_3"
-                                    android:layout_marginStart="@dimen/dp_2"
-                                    android:layout_weight="1.5"
-                                    android:background="@drawable/button_click"
-                                    android:onClick="@{() -> viewModel.onClickApproveRequest()}"
-                                    android:text="@string/approve_request"
-                                    android:textAllCaps="false"
-                                    android:textColor="@color/color_white"
-                                    tools:ignore="ButtonStyle"
-                                    />
-                                <Button
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/button_click"
-                                    android:onClick="@{() -> viewModel.onClickShareBook()}"
-                                    android:text="@string/share_book"
-                                    android:textAllCaps="false"
-                                    android:textColor="@color/color_white"
-                                    tools:ignore="ButtonStyle"
-                                    />
-                            </LinearLayout>
-                            <ImageView
-                                android:layout_width="@dimen/dp_40"
-                                android:layout_height="@dimen/dp_40"
-                                android:layout_margin="@dimen/dp_16"
-                                android:background="@drawable/ic_edit"
-                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:padding="@dimen/dp_5"
                                 app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                tools:ignore="ContentDescription"
-                                />
+                                tools:ignore="UseCompoundDrawables"
+                                >
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:text="@string/other"
+                                    android:textColor="@color/color_white"
+                                    android:textSize="@dimen/sp_18"
+                                    />
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="@dimen/dp_5"
+                                    android:layout_marginStart="@dimen/dp_5"
+                                    android:background="@drawable/ic_right"
+                                    tools:ignore="ContentDescription"
+                                    />
+                            </LinearLayout>
 
-                            <ImageView
-                                android:layout_width="@dimen/dp_40"
-                                android:layout_height="@dimen/dp_40"
-                                android:layout_margin="@dimen/dp_16"
-                                android:background="@drawable/ic_logout"
-                                android:onClick="@{() -> viewModel.onClickLogout()}"
-                                android:rotation="180"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:ignore="ContentDescription"
-                                />
                         </android.support.constraint.ConstraintLayout>
                         <android.support.v7.widget.Toolbar
                             android:layout_width="match_parent"
