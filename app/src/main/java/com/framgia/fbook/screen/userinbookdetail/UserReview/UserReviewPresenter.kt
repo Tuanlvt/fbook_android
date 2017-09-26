@@ -1,8 +1,11 @@
 package com.framgia.fbook.screen.userinbookdetail.screen.UserReview
 
 import com.framgia.fbook.data.source.BookRepository
+import com.framgia.fbook.data.source.remote.api.error.BaseException
+import com.framgia.fbook.data.source.remote.api.request.ReviewBookRequest
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 /**
  * Listens to user actions from the UI ([UserReviewFragment]), retrieves the data and updates
@@ -32,5 +35,37 @@ internal class UserReviewPresenter(
 
   companion object {
     private val TAG = UserReviewPresenter::class.java.name
+  }
+
+  override fun reviewBook(bookId: Int?, reviewBookRequest: ReviewBookRequest) {
+    val disposable: Disposable = mBookRepository.reviewBook(bookId, reviewBookRequest)
+        .subscribeOn(mSchedulerProvider.io())
+        .observeOn(mSchedulerProvider.ui())
+        .doOnSubscribe { mViewModel?.onShowProgressDialog() }
+        .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
+        .subscribe(
+            {
+              mViewModel?.onReviewBookSuccess()
+            },
+            { error ->
+              mViewModel?.onError(error as BaseException)
+            })
+    mCompositeDisposable.add(disposable)
+  }
+
+  override fun getBookDetail(bookId: Int?) {
+    val disposable: Disposable = mBookRepository.getBookDetail(bookId)
+        .subscribeOn(mSchedulerProvider.io())
+        .observeOn(mSchedulerProvider.ui())
+        .doOnSubscribe { mViewModel?.onShowProgressDialog() }
+        .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
+        .subscribe(
+            { book ->
+              mViewModel?.onGetBookDetailSuccess(book.item)
+            },
+            { error ->
+              mViewModel?.onError(error as BaseException)
+            })
+    mCompositeDisposable.add(disposable)
   }
 }

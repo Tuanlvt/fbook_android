@@ -77,7 +77,7 @@ object BindingUtils {
     val uri = Uri.parse(url)
     Glide.with(imageView.context)
         .load(uri)
-        .placeholder(R.drawable.ic_user_xml)
+        .placeholder(R.drawable.ic_user_place_holder)
         .dontAnimate()
         .into(imageView)
   }

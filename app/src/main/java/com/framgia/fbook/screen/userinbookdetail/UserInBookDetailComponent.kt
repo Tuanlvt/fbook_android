@@ -1,6 +1,8 @@
 package com.framgia.fbook.screen.userinbookdetail;
 
+import android.content.Context
 import com.framgia.fbook.AppComponent
+import com.framgia.fbook.data.source.local.sharedprf.SharedPrefsApi
 import com.framgia.fbook.data.source.remote.api.service.FBookApi
 import com.framgia.fbook.utils.dagger.ActivityScope
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
@@ -19,4 +21,8 @@ interface UserInBookDetailComponent {
   fun fBookApi(): FBookApi
 
   fun baseSchedulerProvider(): BaseSchedulerProvider
+
+  fun sharedPrefsApi(): SharedPrefsApi
+
+  fun applicationContext(): Context
 }

@@ -2,6 +2,7 @@ package com.framgia.fbook.data.source
 
 import com.framgia.fbook.data.model.*
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
+import com.framgia.fbook.data.source.remote.api.request.ReviewBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import io.reactivex.Single
@@ -43,5 +44,7 @@ interface BookDataSource {
 
     fun getListBookBySort(type: String?,
         page: Int?, sort: Sort?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+
+    fun reviewBook(bookId: Int?, reviewBookRequest: ReviewBookRequest?): Single<Any>
   }
 }

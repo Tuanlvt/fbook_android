@@ -61,9 +61,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginStart="@dimen/dp_10"
-                    android:isIndicator="true"
-                    android:stepSize="1"
-                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:rating="@={viewModel.mAverageRating}"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:transformPivotY="@dimen/dp_40"
+                    app:setOnRatingBarChangeListener="@{viewModel.ratingBarChangeListener}"
                     />
             </LinearLayout>
             <EditText
@@ -75,6 +77,7 @@
                 android:layout_marginRight="@dimen/dp_16"
                 android:layout_marginStart="@dimen/dp_10"
                 android:hint="@string/add_a_comment"
+                android:text="@={viewModel.mUserComment}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/image_submit"
@@ -85,6 +88,7 @@
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
                 android:layout_margin="@dimen/dp_10"
+                android:onClick="@{viewModel::onClickSubmit}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:srcCompat="@drawable/ic_submit_comment"

@@ -119,7 +119,7 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         >
-                        <ImageView
+                        <com.framgia.fbook.widget.view.ImageViewLabel
                             android:id="@+id/image_cover"
                             android:layout_width="@dimen/dp_130"
                             android:layout_height="@dimen/dp_170"
@@ -130,6 +130,7 @@
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.0"
+                            app:updateText="@{viewModel.mBook.office.name}"
                             bind:imageUrl="@{viewModel.mCoverBook}"
                             tools:ignore="ContentDescription"
                             />
