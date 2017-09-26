@@ -3,6 +3,7 @@ package com.framgia.fbook.data.source
 import com.framgia.fbook.data.model.*
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
+import com.framgia.fbook.data.source.remote.api.request.ReviewBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import io.reactivex.Single
@@ -17,6 +18,7 @@ interface BookRepository : BookDataSource.BookRemoteDataSource
 
 class BookRepositoryImpl @Inject constructor(
     private val bookRemoteDataSource: BookRemoteDataSource) : BookRepository {
+
   override fun getApproveRequest(): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
     return bookRemoteDataSource.getApproveRequest()
   }
@@ -67,5 +69,9 @@ class BookRepositoryImpl @Inject constructor(
   override fun getListBookBySort(type: String?,
       page: Int?, sort: Sort?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
     return bookRemoteDataSource.getListBookBySort(type, page, sort)
+  }
+
+  override fun reviewBook(bookId: Int?, reviewBookRequest: ReviewBookRequest?): Single<Any> {
+    return bookRemoteDataSource.reviewBook(bookId, reviewBookRequest)
   }
 }

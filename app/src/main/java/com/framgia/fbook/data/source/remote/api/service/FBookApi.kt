@@ -1,10 +1,7 @@
 package com.framgia.fbook.data.source.remote.api.service
 
 import com.framgia.fbook.data.model.*
-import com.framgia.fbook.data.source.remote.api.request.AddCategoryFavoriteRequest
-import com.framgia.fbook.data.source.remote.api.request.ReadingOrCancelBookRequest
-import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
-import com.framgia.fbook.data.source.remote.api.request.SignInRequest
+import com.framgia.fbook.data.source.remote.api.request.*
 import com.framgia.fbook.data.source.remote.api.response.BaseBookByCategoryResponse
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
@@ -82,4 +79,8 @@ interface FBookApi {
 
   @GET("/api/v0/user/books/waiting_approve")
   fun getApproveRequest(): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+
+  @POST("/api/v0/books/review/{book_id}")
+  fun reviewBook(
+      @Path("book_id") bookId: Int?, @Body reviewBookRequest: ReviewBookRequest?): Single<Any>
 }

@@ -4,6 +4,7 @@ import com.framgia.fbook.data.model.*
 import com.framgia.fbook.data.source.BookDataSource
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
 import com.framgia.fbook.data.source.remote.api.request.ReadingOrCancelBookRequest
+import com.framgia.fbook.data.source.remote.api.request.ReviewBookRequest
 import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
@@ -21,6 +22,7 @@ import javax.inject.Inject
  */
 class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDataSource(
     nameApi), BookDataSource.BookRemoteDataSource {
+
   override fun getMyBook(userId: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
     return fbookApi.getMyBook(userId)
   }
@@ -107,5 +109,9 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
   override fun getListBookBySort(type: String?,
       page: Int?, sort: Sort?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
     return fbookApi.getListBookBySort(type, page, sort)
+  }
+
+  override fun reviewBook(bookId: Int?, reviewBookRequest: ReviewBookRequest?): Single<Any> {
+    return fbookApi.reviewBook(bookId, reviewBookRequest)
   }
 }
