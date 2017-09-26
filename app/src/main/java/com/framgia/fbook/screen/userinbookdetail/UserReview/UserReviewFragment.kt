@@ -10,7 +10,8 @@ import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.databinding.FragmentUserReviewBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.userinbookdetail.UserInBookDetailActivity
-import com.framgia.fbook.utils.Constant
+import com.framgia.fbook.screen.userinbookdetail.UserReview.ItemUserReviewClickListener
+import com.framgia.fbook.screen.userinbookdetail.UserReview.UserReviewAdapter
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
@@ -18,7 +19,7 @@ import javax.inject.Inject
 /**
  * UserReview Screen.
  */
-class UserReviewFragment : BaseFragment(), UserReviewContract.ViewModel {
+class UserReviewFragment : BaseFragment(), UserReviewContract.ViewModel, ItemUserReviewClickListener {
 
   companion object {
 
@@ -39,11 +40,11 @@ class UserReviewFragment : BaseFragment(), UserReviewContract.ViewModel {
   internal lateinit var mNavigator: Navigator
   @Inject
   internal lateinit var mDialogManager: DialogManager
+  @Inject
+  internal lateinit var mUserReviewAdapter: UserReviewAdapter
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
-
-    val book: Book = activity.intent.getParcelableExtra(Constant.USER_BOOK_DETAIL_EXTRA)
 
     DaggerUserReviewComponent.builder()
         .userInBookDetailComponent(
@@ -56,6 +57,7 @@ class UserReviewFragment : BaseFragment(), UserReviewContract.ViewModel {
         R.layout.fragment_user_review, container,
         false)
     binding.viewModel = this
+    initData()
     return binding.root
   }
 
@@ -67,5 +69,15 @@ class UserReviewFragment : BaseFragment(), UserReviewContract.ViewModel {
   override fun onStop() {
     mPresenter.onStop()
     super.onStop()
+  }
+
+  override fun onItemUserReviewClick(reviewDetail: Book.ReviewDetail?) {
+    //TODO edit later
+  }
+
+  private fun initData() {
+    val book: Book? = arguments.getParcelable(UserReviewFragment.TAB_USER_REVIEW)
+    mUserReviewAdapter.updateData(book?.reviewDetails)
+    mUserReviewAdapter.setItemUserClickListener(this)
   }
 }

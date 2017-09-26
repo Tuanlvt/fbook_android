@@ -12,7 +12,7 @@ class Category() : BaseModel(), Parcelable {
 
   @SerializedName("id")
   @Expose
-  var id: Int? = null
+  var id: Int? = 0
   @SerializedName("name")
   @Expose
   var name: String? = null
@@ -22,15 +22,17 @@ class Category() : BaseModel(), Parcelable {
   var favorite: Boolean? = false
 
   constructor(parcel: Parcel) : this() {
-    id = parcel.readValue(Int::class.java.classLoader) as? Int
+    id = parcel.readInt()
     name = parcel.readString()
     description = parcel.readString()
+    favorite = parcel.readInt() != 0
   }
 
   override fun writeToParcel(parcel: Parcel, flags: Int) {
     parcel.writeValue(id)
     parcel.writeString(name)
     parcel.writeString(description)
+    parcel.writeValue(favorite)
   }
 
   override fun describeContents(): Int {

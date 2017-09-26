@@ -8,6 +8,7 @@ import com.framgia.fbook.data.source.UserRepositoryImpl
 import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
+import com.framgia.fbook.screen.userinbookdetail.UserReview.UserReviewAdapter
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.navigator.Navigator
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
@@ -56,5 +57,11 @@ class UserReviewModule(private val mFragment: Fragment) {
   @Provides
   fun provideNavigator(): Navigator {
     return Navigator(mFragment)
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideUserReviewAdapter(): UserReviewAdapter {
+    return UserReviewAdapter(mFragment.context.applicationContext)
   }
 }

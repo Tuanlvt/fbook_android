@@ -19,7 +19,10 @@ class UserReviewAdapter constructor(
   private val mReviewDetails = arrayListOf<Book.ReviewDetail>()
   private lateinit var mItemUserReviewClickListener: ItemUserReviewClickListener
   fun updateData(reviewDetails: List<Book.ReviewDetail>?) {
-    reviewDetails?.let { mReviewDetails.addAll(it) }
+    reviewDetails?.let {
+      mReviewDetails.clear()
+      mReviewDetails.addAll(it)
+    }
     notifyDataSetChanged()
   }
 

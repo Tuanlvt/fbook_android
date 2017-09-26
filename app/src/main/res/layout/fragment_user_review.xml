@@ -22,44 +22,74 @@
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/cardView"
+            android:layout_above="@+id/constraint_layout_comment"
+            android:layout_marginTop="@dimen/dp_5"
+            android:clipToPadding="false"
             android:orientation="vertical"
+            android:paddingBottom="@dimen/dp_5"
             app:layoutManager="LinearLayoutManager"
+            app:recyclerAdapter="@{viewModel.mUserReviewAdapter}"
             />
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView"
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraint_layout_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             >
-            <android.support.constraint.ConstraintLayout
+            <LinearLayout
+                android:id="@+id/linear_layout_rank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 >
-                <EditText
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp_3"
-                    android:layout_marginEnd="@dimen/dp_16"
+                    android:text="@string/ranking"
+                    android:textSize="@dimen/sp_15"
+                    android:textStyle="italic"
+                    />
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginRight="@dimen/dp_16"
                     android:layout_marginStart="@dimen/dp_10"
-                    android:hint="@string/add_a_comment"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/image_submit"
+                    android:isIndicator="true"
+                    android:stepSize="1"
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
                     />
-                <ImageView
-                    android:id="@+id/image_submit"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
-                    android:layout_margin="@dimen/dp_10"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:srcCompat="@drawable/ic_submit_comment"
-                    tools:ignore="ContentDescription"
-                    />
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
+            </LinearLayout>
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_3"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_16"
+                android:layout_marginStart="@dimen/dp_10"
+                android:hint="@string/add_a_comment"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/image_submit"
+                app:layout_constraintTop_toBottomOf="@+id/linear_layout_rank"
+                />
+            <ImageView
+                android:id="@+id/image_submit"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:layout_margin="@dimen/dp_10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:srcCompat="@drawable/ic_submit_comment"
+                tools:ignore="ContentDescription"
+                />
+        </android.support.constraint.ConstraintLayout>
     </RelativeLayout>
 </layout>
