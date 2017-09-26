@@ -17,7 +17,6 @@ import com.framgia.fbook.screen.approverequest.ApproveRequestActivity
 import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.sharebook.ShareBookActivity
-import com.framgia.fbook.screen.updateProfile.UpdateProfileActivity
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.library.MaterialDialog
@@ -108,6 +107,10 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
     return mMenuProfileComponent
   }
 
+  fun onClickProfile() {
+    //Todo navigation Activity Profile
+  }
+
   fun onClickShareBook() {
     mNavigator.startActivity(ShareBookActivity::class.java)
   }
@@ -120,7 +123,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
     //Todo navigation Activity Setting
   }
 
-  fun onClickLogout() {
+  fun onClickSignOut() {
     mDialogManager.dialogBasic(getString(R.string.inform),
         getString(R.string.are_u_want_to_sign_out),
         MaterialDialog.SingleButtonCallback { materialDialog, dialogAction ->
@@ -128,10 +131,6 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
           mNavigator.startActivityAtRoot(MainActivity::class.java)
         })
     return
-  }
-
-  fun onClickEdit() {
-    mNavigator.startActivity(UpdateProfileActivity::class.java)
   }
 
   override fun getUserVisibleHint(): Boolean {
