@@ -59,6 +59,7 @@ class User() : BaseModel(), Parcelable {
   @SerializedName("pivot")
   @Expose
   var pivot: Pivot? = null
+  var owner: Owner? = null
 
   constructor(parcel: Parcel) : this() {
     id = parcel.readValue(Int::class.java.classLoader) as? Int
