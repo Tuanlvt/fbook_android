@@ -2,6 +2,7 @@ package com.framgia.fbook.data.source
 
 import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.model.User
+import com.framgia.fbook.data.source.remote.api.request.UserApproveBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.response.SignInResponse
 import io.reactivex.Single
@@ -34,5 +35,9 @@ interface UserDataSource {
     fun getUser(): Single<BaseResponse<User>>
 
     fun getOffices(): Single<BaseResponse<List<Office>>>
+
+    fun userApproveBook(bookId: Int?, userApproveBookRequest: UserApproveBookRequest?): Single<Any>
+
+    fun getApproveDetail(bookId: Int?): Single<Any>
   }
 }

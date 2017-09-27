@@ -86,5 +86,8 @@ interface FBookApi {
 
   @POST("/api/v0/books/approve/{book_id}")
   fun userApproveBook(@Path("book_id") bookId: Int?,
-      @Body userApproveBookRequest: UserApproveBookRequest): Single<Any>
+      @Body userApproveBookRequest: UserApproveBookRequest?): Single<Any>
+
+  @GET("/api/v0/user/{book_id}/approve/detail")
+  fun getApproveDetail(@Path("book_id") bookId: Int?): Single<Any>
 }

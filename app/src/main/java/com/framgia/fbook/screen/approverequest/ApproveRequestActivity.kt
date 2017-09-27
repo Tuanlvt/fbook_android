@@ -8,6 +8,7 @@ import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.source.remote.api.error.BaseException
+import com.framgia.fbook.data.source.remote.api.request.UserApproveBookRequest
 import com.framgia.fbook.databinding.ActivityApproveRequestBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.bookdetail.BookDetailActivity
@@ -33,6 +34,8 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
 
   companion object {
     private val TAG = ApproveRequestActivity::class.java.simpleName
+    private val APPROVE = "approve"
+    private val UNAPPROVE = "unapprove"
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +79,10 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
 
   override fun onError(e: BaseException) {
     Log.e(MyBookFragment.TAG, e.getMessageError())
+  }
 
+  override fun onApproveBookSuccess() {
+   //TODO edit later
   }
 
   override fun onItemClick(book: Book) {
@@ -86,7 +92,14 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
   }
 
   override fun onClickApprove(bookId: Int?, userId: Int?) {
-    //TODO edit later
+    userId?.let {
+      val userApproveBookRequest = UserApproveBookRequest()
+      userApproveBookRequest.data?.userId = userId
+      userApproveBookRequest.data?.key = APPROVE
+      bookId?.let {
+        mPresenter.approveBook(bookId, userApproveBookRequest)
+      }
+    }
   }
 
   private fun setVisibleLayoutNoData(size: Int?) {

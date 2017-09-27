@@ -1,7 +1,9 @@
 package com.framgia.fbook.screen.approverequest;
 
 import com.framgia.fbook.data.source.BookRepository
+import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
+import com.framgia.fbook.data.source.remote.api.request.UserApproveBookRequest
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -10,7 +12,7 @@ import io.reactivex.disposables.Disposable
  * Listens to user actions from the UI ({@link ApproveRequestActivity}), retrieves the data and updates
  * the UI as required.
  */
-class ApproveRequestPresenter(
+class ApproveRequestPresenter(private val mUserRepository: UserRepository,
     private val mBookRepository: BookRepository) : ApproveRequestContract.Presenter {
   private var mViewModel: ApproveRequestContract.ViewModel? = null
   private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
@@ -23,6 +25,22 @@ class ApproveRequestPresenter(
 
   override fun setViewModel(viewModel: ApproveRequestContract.ViewModel) {
     mViewModel = viewModel
+  }
+
+  override fun approveBook(bookId: Int?, userApproveBookRequest: UserApproveBookRequest?) {
+    val disposable: Disposable = mUserRepository.userApproveBook(bookId, userApproveBookRequest)
+        .subscribeOn(mBaseSchedulerProvider.io())
+        .observeOn(mBaseSchedulerProvider.ui())
+        .doOnSubscribe { mViewModel?.onShowProgressDialog() }
+        .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
+        .subscribe(
+            {
+              mViewModel?.onApproveBookSuccess()
+            },
+            { error ->
+              mViewModel?.onError(error as BaseException)
+            })
+    mCompositeDisposable.add(disposable)
   }
 
   override fun getApproveRequest() {
