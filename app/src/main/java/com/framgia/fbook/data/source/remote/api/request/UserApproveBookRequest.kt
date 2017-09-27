@@ -10,10 +10,16 @@ import com.google.gson.annotations.SerializedName
  */
 class UserApproveBookRequest : BaseRequest() {
 
-  @SerializedName("key")
+  @SerializedName("item")
   @Expose
-  val key = "approve"
-  @SerializedName("user_id")
-  @Expose
-  var userId: String? = null
+  var data: Data? = Data()
+
+  inner class Data : BaseRequest() {
+    @SerializedName("key")
+    @Expose
+    var key: String? = null
+    @SerializedName("user_id")
+    @Expose
+    var userId: Int? = null
+  }
 }

@@ -4,6 +4,7 @@ import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserDataSource
 import com.framgia.fbook.data.source.remote.api.request.SignInRequest
+import com.framgia.fbook.data.source.remote.api.request.UserApproveBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.response.SignInResponse
 import com.framgia.fbook.data.source.remote.api.service.FBookApi
@@ -29,5 +30,14 @@ constructor(nameApi: FBookApi) : BaseRemoteDataSource(nameApi), UserDataSource.R
 
   override fun getOffices(): Single<BaseResponse<List<Office>>> {
     return fbookApi.getOffices()
+  }
+
+  override fun userApproveBook(bookId: Int?,
+      userApproveBookRequest: UserApproveBookRequest?): Single<Any> {
+    return fbookApi.userApproveBook(bookId, userApproveBookRequest)
+  }
+
+  override fun getApproveDetail(bookId: Int?): Single<Any> {
+    return fbookApi.getApproveDetail(bookId)
   }
 }
