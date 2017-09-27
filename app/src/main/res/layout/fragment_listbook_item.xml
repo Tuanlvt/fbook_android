@@ -28,7 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 >
-                <ImageView
+                <com.framgia.fbook.widget.view.ImageViewLabel
+                    app:updateText="@{viewModel.book.office.name}"
                     android:id="@+id/imageItemBook"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_170"
