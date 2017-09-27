@@ -25,7 +25,7 @@ class ImageViewLabel : ImageView {
   private var mText: String? = ""
 
   companion object {
-    private val mDistance = 120F
+    private val mDistance = 130F
     private val mHeightLabel = 60F
   }
 

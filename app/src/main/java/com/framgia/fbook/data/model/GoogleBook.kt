@@ -1,5 +1,7 @@
 package com.framgia.fbook.data.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -8,40 +10,17 @@ import com.google.gson.annotations.SerializedName
  * Contact me thuanpx1710@gmail.com.
  * Thank you !
  */
-class GoogleBook : BaseModel() {
+class GoogleBook() : BaseModel(), Parcelable {
   @SerializedName("id")
   @Expose
   var id: String? = null
   @SerializedName("volumeInfo")
   @Expose
   var volumeInfo: VolumeInfo? = null
-  @SerializedName("readingModes")
-  @Expose
-  var readingModes: ReadingModes? = null
-  @SerializedName("pageCount")
-  @Expose
-  var pageCount: Int? = null
-  @SerializedName("categories")
-  @Expose
-  var categoriesList: List<String>? = null
-  @SerializedName("maturityRating")
-  @Expose
-  var maturityRating: String? = null
-  @SerializedName("imageLinks")
-  @Expose
-  var imageLink: ImageLink? = null
-  @SerializedName("language")
-  @Expose
-  var language: String? = null
-  @SerializedName("previewLink")
-  @Expose
-  var previewLink: String? = null
-  @SerializedName("infoLink")
-  @Expose
-  var infoLink: String? = null
-  @SerializedName("canonicalVolumeLink")
-  @Expose
-  var canonicalVolumeLink: String? = null
+
+  constructor(parcel: Parcel) : this() {
+    id = parcel.readString()
+  }
 
   inner class VolumeInfo : BaseModel() {
     @SerializedName("title")
@@ -62,16 +41,12 @@ class GoogleBook : BaseModel() {
     @SerializedName("description")
     @Expose
     var description: String? = null
-  }
-
-  inner class ReadingModes : BaseModel() {
-    @SerializedName("text")
+    @SerializedName("averageRating")
     @Expose
-    var isText: Boolean? = null
-    @SerializedName("image")
+    var averageRating: Float? = null
+    @SerializedName("imageLinks")
     @Expose
-    var isImage: Boolean? = null
-
+    var imageLink: ImageLink? = null
   }
 
   inner class ImageLink : BaseModel() {
@@ -81,5 +56,23 @@ class GoogleBook : BaseModel() {
     @SerializedName("medium")
     @Expose
     var medium: String? = null
+  }
+
+  override fun writeToParcel(parcel: Parcel, flags: Int) {
+    parcel.writeString(id)
+  }
+
+  override fun describeContents(): Int {
+    return 0
+  }
+
+  companion object CREATOR : Parcelable.Creator<GoogleBook> {
+    override fun createFromParcel(parcel: Parcel): GoogleBook {
+      return GoogleBook(parcel)
+    }
+
+    override fun newArray(size: Int): Array<GoogleBook?> {
+      return arrayOfNulls(size)
+    }
   }
 }

@@ -14,8 +14,11 @@ import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.SearchBook.SearchBookActivity
 import com.framgia.fbook.screen.SearchBook.TypeSearch
 import com.framgia.fbook.screen.SearchBook.adaptersearchbook.SearchBookAdapter
+import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
+import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.common.StringUtils
+import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
 
@@ -38,6 +41,8 @@ open class InternalBookFragment : BaseFragment(), InternalBookContract.ViewModel
   internal lateinit var mDialogManager: DialogManager
   @Inject
   internal lateinit var mInternalBookAdapter: SearchBookAdapter
+  @Inject
+  internal lateinit var mNavigator: Navigator
   var mKeyWord: ObservableField<String> = ObservableField()
   var mKeyWordErrorMsg: ObservableField<String> = ObservableField()
   private var mTypeSearch: String? = null
@@ -87,7 +92,11 @@ open class InternalBookFragment : BaseFragment(), InternalBookContract.ViewModel
   }
 
   override fun onItemClickListener(any: Any?) {
-    //TODO edit later
+    any?.let {
+      val bundle = Bundle()
+      bundle.putParcelable(Constant.BOOK_DETAIL_EXTRA, any as Book)
+      mNavigator.startActivity(BookDetailActivity::class.java, bundle)
+    }
   }
 
   override fun onSearchBookSuccess(listBook: List<Book>?) {
