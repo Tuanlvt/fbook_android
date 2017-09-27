@@ -63,6 +63,7 @@
     <string name="ranking">Xếp hạng:</string>
     <string name="other">Khác</string>
     <string name="approve">Đồng ý</string>
+    <string name="owner_this_book">[Chủ cuốn sách này]</string>
 
     <string name="desc">Giảm dần</string>
     <string name="asc">Tăng dần</string>

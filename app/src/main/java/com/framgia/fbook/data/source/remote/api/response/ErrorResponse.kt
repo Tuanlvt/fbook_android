@@ -8,16 +8,33 @@ import com.google.gson.annotations.SerializedName
  */
 
 class ErrorResponse {
-
-  @SerializedName("description")
+  @SerializedName("message")
   @Expose
-  var message: List<String>? = null
-  @SerializedName("status")
-  @Expose
-  var status: Boolean? = null
-  @SerializedName("code")
-  @Expose
-  var code: Int? = null
+  var errorMessage: ErrorMessage? = null
 
+  class ErrorMessage {
+    @SerializedName("description")
+    @Expose
+    var message: List<String>? = null
+    @SerializedName("status")
+    @Expose
+    var status: Boolean? = null
+    @SerializedName("code")
+    @Expose
+    var code: Int? = null
+  }
 
+  fun getMessage(): String? {
+    var listMessage: String? = ""
+    errorMessage?.message?.let {
+      it.indices.forEach { position ->
+        listMessage += if (position < it.size - 1) {
+          " - " + it[position] + "\n"
+        } else {
+          " - " + it[position]
+        }
+      }
+    }
+    return listMessage
+  }
 }

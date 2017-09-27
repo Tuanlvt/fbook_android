@@ -33,7 +33,7 @@ class BaseException : RuntimeException {
   fun getMessageError(): String {
     when (errorType) {
       Type.SERVER -> {
-        return errorResponse?.message.toString()
+        return errorResponse?.getMessage().toString()
       }
       Type.NETWORK -> return getNetworkErrorMessage(cause)
       Type.HTTP -> {
