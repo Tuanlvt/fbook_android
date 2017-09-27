@@ -11,12 +11,16 @@ import com.framgia.fbook.data.model.User
 import com.framgia.fbook.databinding.FragmentUserReadingWaitingReturnBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.userinbookdetail.UserInBookDetailActivity
+import com.framgia.fbook.screen.userinbookdetail.UserReadingWaitingReturn.ItemUserClickListener
+import com.framgia.fbook.screen.userinbookdetail.UserReadingWaitingReturn.UserReadingWaitingReturnAdapter
+import com.framgia.fbook.utils.navigator.Navigator
 import javax.inject.Inject
 
 /**
  * UserReadingWaitingReturn Screen.
  */
-class UserReadingWaitingReturnFragment : BaseFragment(), UserReadingWaitingReturnContract.ViewModel {
+class UserReadingWaitingReturnFragment : BaseFragment(), UserReadingWaitingReturnContract.ViewModel,
+    ItemUserClickListener {
 
   companion object {
 
@@ -34,7 +38,11 @@ class UserReadingWaitingReturnFragment : BaseFragment(), UserReadingWaitingRetur
   }
 
   @Inject
+  internal lateinit var mNavigator: Navigator
+  @Inject
   internal lateinit var mPresenter: UserReadingWaitingReturnContract.Presenter
+  @Inject
+  internal lateinit var mUserReadingWaitingReturnAdapter: UserReadingWaitingReturnAdapter
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -64,15 +72,23 @@ class UserReadingWaitingReturnFragment : BaseFragment(), UserReadingWaitingRetur
     super.onStop()
   }
 
-  private fun initData() {
-    val users: List<User> = arguments.getParcelableArrayList(USERS_EXTRA)
-    val owners: List<Owner> = arguments.getParcelableArrayList(OWNERS_EXTRA)
-    
+  override fun onItemUserClick(user: User?) {
     //TODO edit later
-    updateAdapter(users)
   }
 
-  private fun updateAdapter(users: List<User>?) {
-    //TODO edit later
+  private fun initData() {
+    val users: List<User>? = arguments.getParcelableArrayList(USERS_EXTRA)
+    val owners: List<Owner>? = arguments.getParcelableArrayList(OWNERS_EXTRA)
+
+    users?.indices?.forEach { position ->
+      owners?.forEach { owner ->
+        if (users[position].ownerId == owner.id) {
+          users[position].owner = owner
+        }
+      }
+    }
+
+    mUserReadingWaitingReturnAdapter.setItemUserClickListener(this)
+    mUserReadingWaitingReturnAdapter.updateData(users)
   }
 }

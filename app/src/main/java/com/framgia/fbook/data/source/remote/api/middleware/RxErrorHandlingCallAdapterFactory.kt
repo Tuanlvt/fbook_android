@@ -104,7 +104,7 @@ class RxErrorHandlingCallAdapterFactory private constructor() : CallAdapter.Fact
             val errorResponse = Gson().fromJson(response.errorBody()?.string(),
                 ErrorResponse::class.java)
             if (errorResponse != null && !TextUtils.isEmpty(
-                errorResponse.message?.get(0))) {
+                errorResponse.getMessage())) {
               return BaseException.toServerError(errorResponse)
             } else {
               return BaseException.toHttpError(response)

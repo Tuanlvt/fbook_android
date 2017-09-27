@@ -97,7 +97,7 @@ class UserReviewFragment : BaseFragment(), UserReviewContract.ViewModel, ItemUse
   }
 
   override fun onError(e: BaseException) {
-    mDialogManager.dialogError(e.toString())
+    mDialogManager.dialogError(e.getMessageError())
   }
 
   override fun onShowProgressDialog() {

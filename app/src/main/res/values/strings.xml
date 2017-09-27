@@ -76,6 +76,7 @@
     <string name="ranking">Ranking:</string>
     <string name="other">Other</string>
     <string name="approve">Approve</string>
+    <string name="owner_this_book">[Owner this book]</string>
 
     <!-- Dialog -->
     <string name="agree">Agree</string>
