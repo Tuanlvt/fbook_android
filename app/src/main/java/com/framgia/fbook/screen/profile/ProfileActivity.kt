@@ -9,10 +9,6 @@ import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.ActivityProfileBinding
 import com.framgia.fbook.screen.BaseActivity
-import com.framgia.fbook.screen.main.MainActivity
-import com.framgia.fbook.screen.sharebook.ShareBookActivity
-import com.framgia.fbook.utils.navigator.Navigator
-import com.fstyle.library.MaterialDialog
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
 
@@ -21,7 +17,6 @@ import javax.inject.Inject
  */
 class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
 
-  private val mNavigator: Navigator by lazy { Navigator(this) }
   @Inject
   internal lateinit var mPresenter: ProfileContract.Presenter
   @Inject
@@ -59,6 +54,10 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     super.onStop()
   }
 
+  fun onClickOther() {
+    //Todo Navigation Activity Other
+  }
+
   companion object {
     private val PAGE_LIMIT = 1
     val TAG: String = ProfileActivity::class.java.name
@@ -69,27 +68,5 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
 
   fun getProfileComponent(): ProfileComponent {
     return profileComponent
-  }
-
-  fun onClickShareBook() {
-    mNavigator.startActivity(ShareBookActivity::class.java)
-  }
-
-  fun onClickApproveRequest() {
-    //Todo navigation Activity Approve Request
-  }
-
-  fun onClickSetting() {
-    //Todo navigation Activity Setting
-  }
-
-  fun onClickLogout() {
-    mDialogManager.dialogBasic(getString(R.string.inform),
-        getString(R.string.are_u_want_to_sign_out),
-        MaterialDialog.SingleButtonCallback { materialDialog, dialogAction ->
-          mUserRepository.clearData()
-          mNavigator.startActivityAtRoot(MainActivity::class.java)
-        })
-    return
   }
 }

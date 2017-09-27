@@ -11,7 +11,7 @@ import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.FragmentPersonalInforBinding
 import com.framgia.fbook.screen.BaseFragment
-import com.framgia.fbook.screen.main.MainActivity
+import com.framgia.fbook.screen.profile.ProfileActivity
 import javax.inject.Inject
 
 /**
@@ -29,7 +29,7 @@ class PersonalInforFragment : BaseFragment(), PersonalInforContract.ViewModel {
       savedInstanceState: Bundle?): View? {
 
     DaggerPersonalInforComponent.builder()
-        .mainComponent((activity as MainActivity).getMainComponent())
+        .profileComponent((activity as ProfileActivity).getProfileComponent())
         .personalInforModule(PersonalInforModule(this))
         .build()
         .inject(this)
@@ -50,7 +50,6 @@ class PersonalInforFragment : BaseFragment(), PersonalInforContract.ViewModel {
     mPresenter.onStop()
     super.onStop()
   }
-
 
   fun setUser(user: User?) {
     mUser.set(user)

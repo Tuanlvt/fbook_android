@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.framgia.fbook.R
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.categoryfavorite.CategoryFavoriteFragment
+import com.framgia.fbook.screen.personalinfor.PersonalInforFragment
 import com.framgia.fbook.utils.navigator.NavigateAnim
 import com.framgia.fbook.utils.navigator.Navigator
 
@@ -39,7 +39,8 @@ class ProfileContainerFragment : BaseFragment() {
     var containerId = R.id.layout_profile_container
     var page: Int = arguments.getInt(EXTRA_TAB)
     when (page) {
-      PROFILE -> Toast.makeText(activity, R.string.personal_infor, Toast.LENGTH_SHORT).show()
+      PROFILE -> mNavigator.goNextChildFragment(containerId, PersonalInforFragment.newInstance(),
+          false, NavigateAnim.NONE, PersonalInforFragment.TAG)
       CATEGORY_FAVORITE ->
         mNavigator.goNextChildFragment(containerId,
             CategoryFavoriteFragment.newInstance(), false, NavigateAnim.NONE,
