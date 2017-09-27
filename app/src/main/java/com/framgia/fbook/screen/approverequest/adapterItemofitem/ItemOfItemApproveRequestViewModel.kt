@@ -8,5 +8,10 @@ import com.framgia.fbook.data.model.User
  * Contact me thuanpx1710@gmail.com.
  * Thank you !
  */
-class ItemOfItemApproveRequestViewModel(val user: User) : BaseObservable() {
+class ItemOfItemApproveRequestViewModel(private val mBookId: Int?, val user: User,
+    private val mItemOfItemApproveClickListener: ItemOfItemApproveClickListener?) : BaseObservable() {
+
+  fun onClickApprove() {
+    mItemOfItemApproveClickListener?.onClickApprove(mBookId, user.id)
+  }
 }

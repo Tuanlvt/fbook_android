@@ -19,9 +19,15 @@ class ItemApproveRequestAdapter(
     context: Context, private val mBookId: Int?,
     private val mListUser: List<User>?) : BaseRecyclerViewAdapter<ItemApproveRequestAdapter.ItemViewHolder>(
     context) {
+  private lateinit var mItemOfItemApproveClickListener: ItemOfItemApproveClickListener
+
+  fun setItemOfItemApproveClickListener(itemApproveClickListener: ItemOfItemApproveClickListener) {
+    mItemOfItemApproveClickListener = itemApproveClickListener
+  }
+
   override fun onBindViewHolder(holder: ItemViewHolder?, position: Int) {
     mListUser?.let {
-      holder?.bindData(mListUser[position])
+      holder?.bindData(mBookId, mListUser[position])
     }
   }
 
@@ -29,7 +35,7 @@ class ItemApproveRequestAdapter(
     val binding = DataBindingUtil.inflate<ItemOfItemApproveRequestBinding>(
         LayoutInflater.from(parent.context),
         R.layout.item_of_item_approve_request, parent, false)
-    return ItemViewHolder(binding)
+    return ItemViewHolder(binding, mItemOfItemApproveClickListener)
   }
 
   override fun getItemCount(): Int {
@@ -40,10 +46,12 @@ class ItemApproveRequestAdapter(
   }
 
   inner class ItemViewHolder(
-      private val mBinding: ItemOfItemApproveRequestBinding) : RecyclerView.ViewHolder(
+      private val mBinding: ItemOfItemApproveRequestBinding,
+      private val mItemOfItemApproveClickListener: ItemOfItemApproveClickListener) : RecyclerView.ViewHolder(
       mBinding.root) {
-    fun bindData(user: User) {
-      mBinding.viewModel = ItemOfItemApproveRequestViewModel(user)
+    fun bindData(bookId: Int?, user: User) {
+      mBinding.viewModel = ItemOfItemApproveRequestViewModel(bookId, user,
+          mItemOfItemApproveClickListener)
       mBinding.executePendingBindings()
     }
   }
