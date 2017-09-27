@@ -31,6 +31,9 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
   internal lateinit var mNavigator: Navigator
   val mIsVisibleLayoutNoData: ObservableField<Boolean> = ObservableField()
 
+  companion object {
+    private val TAG = ApproveRequestActivity::class.java.simpleName
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -80,6 +83,10 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
     val bundle = Bundle()
     bundle.putParcelable(Constant.BOOK_DETAIL_EXTRA, book)
     mNavigator.startActivity(BookDetailActivity::class.java, bundle)
+  }
+
+  override fun onClickApprove(bookId: Int?, userId: Int?) {
+    //TODO edit later
   }
 
   private fun setVisibleLayoutNoData(size: Int?) {
