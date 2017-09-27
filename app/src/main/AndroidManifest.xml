@@ -57,5 +57,10 @@
             android:name=".screen.approverequest.ApproveRequestActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".screen.otheruser.OtherUserActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
     </application>
+
 </manifest>

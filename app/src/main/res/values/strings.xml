@@ -113,4 +113,10 @@
 
     <!-- date format -->
     <string name="date_format_yyyy_MM_dd">yyyy-MM-dd</string>
+    <string name="reading_books">Reading Books</string>
+    <string name="waiting_books">Waiting Books</string>
+    <string name="read_book">Read Books</string>
+    <string name="sharing_books">Sharing Books</string>
+    <string name="suggested_books">Suggested Books</string>
+    <string name="reviewed_books">Reviewed Books</string>
 </resources>
