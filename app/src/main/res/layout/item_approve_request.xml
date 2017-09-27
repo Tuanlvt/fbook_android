@@ -10,185 +10,199 @@
             name="viewModel"
             type="com.framgia.fbook.screen.approverequest.ItemApproveRequestViewModel"
             />
+        <import type="android.view.View"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constrainn_layout_descriptipn"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{()-> viewModel.onItemBookClicked()}"
+        android:orientation="vertical"
         >
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/constrainn_layout_descriptipn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_10"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{()-> viewModel.onItemBookClicked()}"
             >
-            <ImageView
-                android:id="@+id/image_cover"
-                android:layout_width="@dimen/dp_130"
-                android:layout_height="@dimen/dp_170"
-                android:scaleType="centerCrop"
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                bind:imageUrl="@{viewModel.book.Image.mobileImage.smallPath}"
-                tools:ignore="ContentDescription"
-                />
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginLeft="@dimen/dp_16"
-                android:layout_marginStart="@dimen/dp_16"
-                app:layout_constraintBottom_toBottomOf="@id/image_cover"
-                app:layout_constraintLeft_toRightOf="@+id/image_cover"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 >
-                <TextView
-                    android:id="@+id/text_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="@{viewModel.book.title}"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/sp_17"
-                    android:textStyle="bold"
+                <ImageView
+                    android:id="@+id/image_cover"
+                    android:layout_width="@dimen/dp_130"
+                    android:layout_height="@dimen/dp_170"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    bind:imageUrl="@{viewModel.mBook.Image.mobileImage.smallPath}"
+                    tools:ignore="ContentDescription"
                     />
-                <TextView
-                    android:id="@+id/text_title_author"
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="@string/author_two_dots"
-                    android:textColor="@android:color/black"
-                    android:textStyle="italic"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_title"
-                    />
-                <TextView
-                    android:id="@+id/text_author"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_8"
-                    android:layout_marginStart="@dimen/dp_8"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="@{viewModel.book.author}"
-                    app:layout_constraintLeft_toRightOf="@+id/text_title_author"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginStart="@dimen/dp_16"
+                    app:layout_constraintBottom_toBottomOf="@id/image_cover"
+                    app:layout_constraintLeft_toRightOf="@+id/image_cover"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_title"
-                    app:layout_constraintTop_toTopOf="@+id/text_title_author"
-                    />
-                <TextView
-                    android:id="@+id/text_title_count_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:text="@string/view_count"
-                    android:textColor="@android:color/black"
-                    android:textStyle="italic"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_author"
-                    />
-                <TextView
-                    android:id="@+id/text_count_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_8"
-                    android:layout_marginStart="@dimen/dp_8"
-                    android:text="@{String.valueOf(viewModel.book.countView)}"
-                    app:layout_constraintLeft_toRightOf="@+id/text_title_count_view"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_author"
-                    app:layout_constraintTop_toTopOf="@+id/text_title_count_view"
-                    />
-                <TextView
-                    android:id="@+id/text_tile_publish_date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:text="@string/publish_date_two_dots"
-                    android:textColor="@android:color/black"
-                    android:textStyle="italic"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_count_view"
-                    />
-                <TextView
-                    android:id="@+id/text_publish_date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_8"
-                    android:layout_marginStart="@dimen/dp_8"
-                    android:text="@{viewModel.book.publishDate}"
-                    app:layout_constraintLeft_toRightOf="@+id/text_tile_publish_date"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/text_tile_publish_date"
-                    />
-                <RatingBar
-                    android:id="@+id/ratingBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:rating="@{viewModel.book.avgStar}"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_tile_publish_date"
-                    style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
-                    />
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="@dimen/dp_5"
-                    android:layout_marginRight="@dimen/dp_5"
-                    android:background="@drawable/border_button_background_red"
-                    android:gravity="center"
-                    android:padding="@dimen/dp_5"
-                    android:text="@{viewModel.NumberOfWaiting}"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/sp_13"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/text_view_request"
-                    app:layout_constraintTop_toBottomOf="@+id/ratingBar"
-                    />
-                <TextView
-                    android:id="@+id/text_view_request"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/border_button_stroke_red"
-                    android:onClick="@{()-> viewModel.onClickViewRequest()}"
-                    android:padding="@dimen/dp_5"
-                    android:text="@string/view_all_request"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/sp_13"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ratingBar"
-                    />
-            </android.support.constraint.ConstraintLayout>
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+                    <TextView
+                        android:id="@+id/text_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@{viewModel.mBook.title}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/sp_17"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+                    <TextView
+                        android:id="@+id/text_title_author"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@string/author_two_dots"
+                        android:textColor="@android:color/black"
+                        android:textStyle="italic"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_title"
+                        />
+                    <TextView
+                        android:id="@+id/text_author"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_8"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@{viewModel.mBook.author}"
+                        app:layout_constraintLeft_toRightOf="@+id/text_title_author"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_title"
+                        app:layout_constraintTop_toTopOf="@+id/text_title_author"
+                        />
+                    <TextView
+                        android:id="@+id/text_title_count_view"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:text="@string/view_count"
+                        android:textColor="@android:color/black"
+                        android:textStyle="italic"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/text_author"
+                        />
+                    <TextView
+                        android:id="@+id/text_count_view"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_8"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:text="@{String.valueOf(viewModel.mBook.countView)}"
+                        app:layout_constraintLeft_toRightOf="@+id/text_title_count_view"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_author"
+                        app:layout_constraintTop_toTopOf="@+id/text_title_count_view"
+                        />
+                    <TextView
+                        android:id="@+id/text_tile_publish_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:text="@string/publish_date_two_dots"
+                        android:textColor="@android:color/black"
+                        android:textStyle="italic"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_count_view"
+                        />
+                    <TextView
+                        android:id="@+id/text_publish_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_8"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:text="@{viewModel.mBook.publishDate}"
+                        app:layout_constraintLeft_toRightOf="@+id/text_tile_publish_date"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/text_tile_publish_date"
+                        />
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:rating="@{viewModel.mBook.avgStar}"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_tile_publish_date"
+                        style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginEnd="@dimen/dp_5"
+                        android:layout_marginRight="@dimen/dp_5"
+                        android:background="@drawable/border_button_background_red"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_5"
+                        android:text="@{viewModel.NumberOfWaiting}"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/sp_13"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@+id/text_view_request"
+                        app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+                        />
+                    <TextView
+                        android:id="@+id/text_view_request"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/border_button_stroke_red"
+                        android:onClick="@{()-> viewModel.onClickViewRequest()}"
+                        android:padding="@dimen/dp_5"
+                        android:text="@string/view_all_request"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/sp_13"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+                        />
+                </android.support.constraint.ConstraintLayout>
 
+            </android.support.constraint.ConstraintLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:background="@color/color_gray_view"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
         </android.support.constraint.ConstraintLayout>
-        <View
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="@color/color_gray_view"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.IsVisibleListAllRequest ? View.VISIBLE : View.GONE}"
+            app:layoutManager="LinearLayoutManager"
+            bind:recyclerAdapter="@{viewModel.Adapter}"
             />
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 </layout>

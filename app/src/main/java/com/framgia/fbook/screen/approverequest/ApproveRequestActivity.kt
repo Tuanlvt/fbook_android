@@ -4,7 +4,6 @@ import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
@@ -75,10 +74,6 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
   override fun onError(e: BaseException) {
     Log.e(MyBookFragment.TAG, e.getMessageError())
 
-  }
-
-  override fun onClickViewRequest(book: Book) {
-    // todo open request detail screen
   }
 
   override fun onItemClick(book: Book) {
