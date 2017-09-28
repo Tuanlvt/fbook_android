@@ -5,7 +5,7 @@ import com.framgia.fbook.data.source.remote.api.request.*
 import com.framgia.fbook.data.source.remote.api.response.BaseBookByCategoryResponse
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
-import com.framgia.fbook.data.source.remote.api.response.SignInResponse
+import com.framgia.fbook.data.source.remote.api.response.TokenResponse
 import io.reactivex.Single
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -19,7 +19,7 @@ interface FBookApi {
   fun getHome(@Query("office_id") officeId: Int?): Single<BaseResponse<List<BookType>>>
 
   @POST("/api/v0/login")
-  fun login(@Body signInRequest: SignInRequest?): Single<SignInResponse>
+  fun login(@Body signInRequest: SignInRequest?): Single<TokenResponse>
 
   @POST("/api/v0/search")
   fun searchBook(
@@ -90,4 +90,7 @@ interface FBookApi {
 
   @GET("/api/v0/user/{book_id}/approve/detail")
   fun getApproveDetail(@Path("book_id") bookId: Int?): Single<BaseResponse<Book>>
+
+  @POST("/api/v0/refresh-token")
+  fun refreshToken(@Body refreshTokenRequest: RefreshTokenRequest?): Single<TokenResponse>
 }

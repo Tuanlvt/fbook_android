@@ -1,12 +1,12 @@
 package com.framgia.fbook.data.source.remote.api.middleware
 
 import com.framgia.fbook.data.source.TokenRepository
-import java.io.IOException
-import java.net.HttpURLConnection
-
+import com.framgia.fbook.utils.common.StringUtils
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
+import java.io.IOException
+import java.net.HttpURLConnection
 
 /**
  * Created by Sun on 3/18/2017.
@@ -36,7 +36,15 @@ class InterceptorImpl(private val mTokenRepository: TokenRepository) : Intercept
         .header("Accept", "application/json")
         .addHeader("Cache-Control", "no-cache")
         .addHeader("Cache-Control", "no-store")
-        .addHeader(KEY_TOKEN, mTokenRepository.getToken())
+        .addHeader(KEY_TOKEN, getAccessToken())
         .method(originRequest.method(), originRequest.body())
+  }
+
+  private fun getAccessToken(): String? {
+    var accessToken = mTokenRepository.getToken()?.accessToken
+    if (StringUtils.isBlank(accessToken)) {
+      accessToken = ""
+    }
+    return accessToken
   }
 }

@@ -39,7 +39,7 @@ class LoginPresenter(private val mUserRepository: UserRepository,
   }
 
   override fun checkUserLogin() {
-    if (StringUtils.isBlank(mTokenRepository.getToken())) {
+    if (StringUtils.isBlank(mTokenRepository.getToken()?.accessToken)) {
       return
     }
     mViewModel?.onUserLoggedIn()
@@ -77,8 +77,8 @@ class LoginPresenter(private val mUserRepository: UserRepository,
         .subscribeOn(mSchedulerProvider.io())
         .doOnSubscribe { mViewModel?.onShowProgressDialog() }
         .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
-        .flatMap({ signInResponse ->
-          mTokenRepository.saveToken(signInResponse.signInData?.accessToken)
+        .flatMap({ tokenResponse ->
+          mTokenRepository.saveToken(tokenResponse.token)
           mUserRepository.getUser()
         })
         .observeOn(mSchedulerProvider.ui())

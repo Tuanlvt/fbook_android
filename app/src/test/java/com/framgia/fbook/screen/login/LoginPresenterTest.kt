@@ -33,8 +33,8 @@ package com.framgia.fbook.screen.login
 
 //  @Test
 //  fun login_shouldReturnToken_whenLogin() {
-//    val signInData = SignInResponse()
-//    Mockito.`when`(mUserRepository.login(email, password)).thenReturn(Single.just(signInData))
+//    val token = SignInResponse()
+//    Mockito.`when`(mUserRepository.login(email, password)).thenReturn(Single.just(token))
 //    mPresenter.login(email, password)
 //    Mockito.verify(mViewModel).onUserLoggedIn()
 //  }
