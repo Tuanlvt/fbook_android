@@ -119,4 +119,6 @@
     <string name="sharing_books">Sharing Books</string>
     <string name="suggested_books">Suggested Books</string>
     <string name="reviewed_books">Reviewed Books</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">UnFollow</string>
 </resources>

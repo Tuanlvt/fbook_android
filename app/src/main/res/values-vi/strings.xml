@@ -95,4 +95,6 @@
     <string name="sharing_books">Sách đã chia sẻ</string>
     <string name="suggested_books">Sách được đề xuất</string>
     <string name="reviewed_books">Sách được đánh giá</string>
+    <string name="follow">Theo dõi</string>
+    <string name="unfollow">Bỏ theo dõi</string>
 </resources>

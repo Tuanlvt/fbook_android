@@ -19,5 +19,9 @@
     <color name="color_yellow">#ef8c07</color>
     <color name="color_blue">#2158c7</color>
     <color name="color_white_light_translate">#f7f4f4</color>
+    <color name="color_blue_light">#2196F3</color>
+    <color name="color_blue_mos">#0D47A1</color>
+    <color name="color_green">#388E3C</color>
+    <color name="color_green_mos">#1B5E20</color>
 
 </resources>
