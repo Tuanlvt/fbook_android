@@ -8,6 +8,7 @@ import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.utils.dagger.ActivityScope
 import com.framgia.fbook.utils.navigator.Navigator
+import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import com.fstyle.structure_android.widget.dialog.DialogManagerImpl
 import dagger.Module
@@ -22,8 +23,10 @@ class ProfileModule(private val mActivity: Activity) {
 
   @ActivityScope
   @Provides
-  fun providePresenter(): ProfileContract.Presenter {
-    val presenter = ProfilePresenter()
+  fun providePresenter(userRepository: UserRepository,
+      schedulerProvider: BaseSchedulerProvider): ProfileContract.Presenter {
+    val presenter = ProfilePresenter(userRepository)
+    presenter.setSchedulerProvider(schedulerProvider)
     presenter.setViewModel(mActivity as ProfileContract.ViewModel)
     return presenter
   }

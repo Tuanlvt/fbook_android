@@ -91,6 +91,9 @@ interface FBookApi {
   @GET("/api/v0/user/{book_id}/approve/detail")
   fun getApproveDetail(@Path("book_id") bookId: Int?): Single<BaseResponse<Book>>
 
+  @GET("/api/v0/users/{id}")
+  fun getOtherUserProfile(@Path("id") idUser: Int?): Single<BaseResponse<User>>
+
   @POST("/api/v0/refresh-token")
   fun refreshToken(@Body refreshTokenRequest: RefreshTokenRequest?): Single<TokenResponse>
 }

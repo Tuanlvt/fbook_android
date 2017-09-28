@@ -18,6 +18,7 @@ import com.framgia.fbook.databinding.ActivityBookdetailBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.SearchBook.SearchBookActivity
 import com.framgia.fbook.screen.login.LoginActivity
+import com.framgia.fbook.screen.profile.ProfileActivity
 import com.framgia.fbook.screen.userinbookdetail.UserInBookDetailActivity
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
@@ -153,7 +154,14 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
   }
 
   override fun onItemOwnerClick(owner: Owner?) {
-    //TODO edit later
+    val bundle = Bundle()
+    val idOwner: Int? = owner?.id
+    if (idOwner != null) {
+      bundle.putInt(BookDetailActivity.TAG, idOwner)
+      mNavigator.startActivity(ProfileActivity::class.java, bundle)
+      return
+    }
+    return
   }
 
   private fun initData() {

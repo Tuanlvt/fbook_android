@@ -39,6 +39,8 @@ interface UserDataSource {
 
     fun userApproveBook(bookId: Int?, userApproveBookRequest: UserApproveBookRequest?): Single<Any>
 
+    fun getOtherUserProfile(idUser: Int?): Single<BaseResponse<User>>
+
     fun getApproveDetail(bookId: Int?): Single<BaseResponse<Book>>
   }
 }
