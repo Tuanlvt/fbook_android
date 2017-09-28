@@ -89,5 +89,5 @@ interface FBookApi {
       @Body userApproveBookRequest: UserApproveBookRequest?): Single<Any>
 
   @GET("/api/v0/user/{book_id}/approve/detail")
-  fun getApproveDetail(@Path("book_id") bookId: Int?): Single<Any>
+  fun getApproveDetail(@Path("book_id") bookId: Int?): Single<BaseResponse<Book>>
 }
