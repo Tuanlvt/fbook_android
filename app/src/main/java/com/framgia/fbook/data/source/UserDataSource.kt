@@ -5,7 +5,7 @@ import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.remote.api.request.UserApproveBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
-import com.framgia.fbook.data.source.remote.api.response.SignInResponse
+import com.framgia.fbook.data.source.remote.api.response.TokenResponse
 import io.reactivex.Single
 
 /**
@@ -31,7 +31,7 @@ interface UserDataSource {
    * RemoteData For User
    */
   interface RemoteDataSource {
-    fun login(email: String?, password: String?): Single<SignInResponse>
+    fun login(email: String?, password: String?): Single<TokenResponse>
 
     fun getUser(): Single<BaseResponse<User>>
 

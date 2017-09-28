@@ -7,7 +7,7 @@ import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.data.source.remote.api.request.UserApproveBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
-import com.framgia.fbook.data.source.remote.api.response.SignInResponse
+import com.framgia.fbook.data.source.remote.api.response.TokenResponse
 import io.reactivex.Single
 
 /**
@@ -22,7 +22,7 @@ open class UserRepositoryImpl(private val mRemoteDataSource: UserRemoteDataSourc
     return mRemoteDataSource.getOffices()
   }
 
-  override fun login(email: String?, password: String?): Single<SignInResponse> {
+  override fun login(email: String?, password: String?): Single<TokenResponse> {
     return mRemoteDataSource.login(email, password)
   }
 

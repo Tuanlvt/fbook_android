@@ -1,18 +1,18 @@
 package com.framgia.fbook.data.source.remote.api.response
 
+import com.framgia.fbook.data.model.BaseModel
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
  * Created by ThS on 8/30/2017.
  */
-class SignInResponse : BaseRespone() {
-
+class TokenResponse : BaseRespone() {
   @SerializedName("fauth")
   @Expose
-  var signInData: SignInData? = null
+  var token: Token? = null
 
-  inner class SignInData {
+  class Token : BaseModel() {
     @SerializedName("access_token")
     @Expose
     var accessToken: String? = null
