@@ -1,5 +1,7 @@
 package com.framgia.fbook.screen.profile;
 
+import com.framgia.fbook.data.model.User
+import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.screen.BasePresenter;
 import com.framgia.fbook.screen.BaseViewModel;
 
@@ -10,10 +12,18 @@ interface ProfileContract {
   /**
    * View.
    */
-  interface ViewModel : BaseViewModel
+  interface ViewModel : BaseViewModel {
+
+    fun onGetUserOtherProfileSuccess(user: User?)
+
+    fun onError(exception: BaseException)
+  }
 
   /**
    * Presenter.
    */
-  interface Presenter : BasePresenter<ViewModel>
+  interface Presenter : BasePresenter<ViewModel> {
+
+    fun getUserOtherProfile(idUser: Int?)
+  }
 }

@@ -3,13 +3,17 @@ package com.framgia.fbook.screen.profile;
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
+import android.util.Log
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
+import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.ActivityProfileBinding
 import com.framgia.fbook.screen.BaseActivity
+import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.otheruser.OtherUserActivity
+import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
@@ -44,7 +48,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     val binding = DataBindingUtil.setContentView<ActivityProfileBinding>(this,
         R.layout.activity_profile)
     binding.viewModel = this
-    mUser.let { it?.set(mUserRepository.getUserLocal()) }
+    fillData()
   }
 
   override fun onStart() {
@@ -57,13 +61,30 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     super.onStop()
   }
 
+  override fun onGetUserOtherProfileSuccess(user: User?) {
+    mUser.let { it?.set(user) }
+  }
+
+  override fun onError(exception: BaseException) {
+    Log.e(TAG, exception.getMessageError())
+  }
+
   fun onClickOther() {
     val bundle = Bundle()
     val idUser: Int? = mUser.get().id
     if (idUser != null) {
-      bundle.putInt(OtherUserActivity.TAG, idUser)
-      mNavigator.startActivity(OtherUserActivity.newInstance(idUser)::class.java)
+      bundle.putInt(ProfileActivity.TAG, idUser)
+      mNavigator.startActivity(OtherUserActivity::class.java, bundle)
     }
+  }
+
+  fun fillData() {
+    val idUser: Int? = intent.getIntExtra(BookDetailActivity.TAG, 0)
+    if (idUser != Constant.EXTRA_ZERO) {
+      mPresenter.getUserOtherProfile(idUser)
+      return
+    }
+    return mUser.let { it?.set(mUserRepository.getUserLocal()) }
   }
 
   companion object {

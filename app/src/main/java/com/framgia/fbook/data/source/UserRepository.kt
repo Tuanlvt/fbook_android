@@ -54,4 +54,8 @@ open class UserRepositoryImpl(private val mRemoteDataSource: UserRemoteDataSourc
   override fun getApproveDetail(bookId: Int?): Single<BaseResponse<Book>> {
     return mRemoteDataSource.getApproveDetail(bookId)
   }
+
+  override fun getOtherUserProfile(idUser: Int?): Single<BaseResponse<User>> {
+    return mRemoteDataSource.getOtherUserProfile(idUser)
+  }
 }
