@@ -9,6 +9,8 @@ import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.ActivityProfileBinding
 import com.framgia.fbook.screen.BaseActivity
+import com.framgia.fbook.screen.otheruser.OtherUserActivity
+import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
 
@@ -17,6 +19,7 @@ import javax.inject.Inject
  */
 class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
 
+  private val mNavigator: Navigator by lazy { Navigator(this) }
   @Inject
   internal lateinit var mPresenter: ProfileContract.Presenter
   @Inject
@@ -55,7 +58,12 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
   }
 
   fun onClickOther() {
-    //Todo Navigation Activity Other
+    val bundle = Bundle()
+    val idUser: Int? = mUser.get().id
+    if (idUser != null) {
+      bundle.putInt(OtherUserActivity.TAG, idUser)
+      mNavigator.startActivity(OtherUserActivity.newInstance(idUser)::class.java)
+    }
   }
 
   companion object {

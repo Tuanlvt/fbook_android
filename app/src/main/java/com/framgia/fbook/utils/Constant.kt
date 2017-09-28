@@ -42,4 +42,13 @@ object Constant {
     val TAB_USER_RETURNING = 3
     val TAB_USER_RETURNED = 4
   }
+
+  object TabOtherInUser {
+    val TAB_READING_BOOK = 0
+    val TAB_WAITING_BOOK = 1
+    val TAB_READ_BOOK = 2
+    val TAB_SHARING_BOOK = 3
+    val TAB_SUGGESTED_BOOK = 4
+    val TAB_REVIEW_BOOK = 5
+  }
 }

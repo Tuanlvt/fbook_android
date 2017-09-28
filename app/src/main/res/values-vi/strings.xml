@@ -89,4 +89,10 @@
     <string name="import_data_from_internal_book">Nhập dữ liệu từ sách nội bộ</string>
     <string name="please_enter_title">Vui lòng nhập tiêu đề</string>
     <string name="update_success">Cập nhật thành công !</string>
+    <string name="reading_books">Sách đang đọc</string>
+    <string name="waiting_books">Sách đang chờ</string>
+    <string name="read_book">Sách đã đọc</string>
+    <string name="sharing_books">Sách đã chia sẻ</string>
+    <string name="suggested_books">Sách được đề xuất</string>
+    <string name="reviewed_books">Sách được đánh giá</string>
 </resources>
