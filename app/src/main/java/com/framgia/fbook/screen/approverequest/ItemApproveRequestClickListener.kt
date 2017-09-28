@@ -8,5 +8,5 @@ import com.framgia.fbook.data.model.Book
 interface ItemApproveRequestClickListener {
   fun onItemClick(book: Book)
 
-  fun onClickApprove(bookId: Int?, userId: Int?)
+  fun onCLickViewRequest(bookId: Int?)
 }

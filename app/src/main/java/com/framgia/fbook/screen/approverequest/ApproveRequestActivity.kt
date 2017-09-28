@@ -8,7 +8,6 @@ import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.source.remote.api.error.BaseException
-import com.framgia.fbook.data.source.remote.api.request.UserApproveBookRequest
 import com.framgia.fbook.databinding.ActivityApproveRequestBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.bookdetail.BookDetailActivity
@@ -77,29 +76,20 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
     mDialogManager.dismissProgressDialog()
   }
 
+  override fun onApproveBookSuccess() {
+  }
+
   override fun onError(e: BaseException) {
     Log.e(MyBookFragment.TAG, e.getMessageError())
   }
 
-  override fun onApproveBookSuccess() {
-   //TODO edit later
+  override fun onCLickViewRequest(bookId: Int?) {
   }
 
   override fun onItemClick(book: Book) {
     val bundle = Bundle()
     bundle.putParcelable(Constant.BOOK_DETAIL_EXTRA, book)
     mNavigator.startActivity(BookDetailActivity::class.java, bundle)
-  }
-
-  override fun onClickApprove(bookId: Int?, userId: Int?) {
-    userId?.let {
-      val userApproveBookRequest = UserApproveBookRequest()
-      userApproveBookRequest.data?.userId = userId
-      userApproveBookRequest.data?.key = APPROVE
-      bookId?.let {
-        mPresenter.approveBook(bookId, userApproveBookRequest)
-      }
-    }
   }
 
   private fun setVisibleLayoutNoData(size: Int?) {

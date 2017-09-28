@@ -197,12 +197,5 @@
                 app:layout_constraintRight_toRightOf="parent"
                 />
         </android.support.constraint.ConstraintLayout>
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="@{viewModel.IsVisibleListAllRequest ? View.VISIBLE : View.GONE}"
-            app:layoutManager="LinearLayoutManager"
-            bind:recyclerAdapter="@{viewModel.Adapter}"
-            />
     </LinearLayout>
 </layout>
