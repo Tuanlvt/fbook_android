@@ -1,5 +1,6 @@
 package com.framgia.fbook.data.source.remote
 
+import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserDataSource
