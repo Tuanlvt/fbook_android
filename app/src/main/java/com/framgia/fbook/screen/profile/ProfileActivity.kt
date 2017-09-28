@@ -11,7 +11,6 @@ import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.ActivityProfileBinding
 import com.framgia.fbook.screen.BaseActivity
-import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.otheruser.OtherUserActivity
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
@@ -33,6 +32,8 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
   @Inject
   internal lateinit var mDialogManager: DialogManager
   private lateinit var profileComponent: ProfileComponent
+  private lateinit var mGetUserListenerPersonal: GetUserListener.onGetUserPersonal
+  private lateinit var mGetUserListenerCategory: GetUserListener.onGetUserCategory
 
   val mUser: ObservableField<User> = ObservableField()
   val mPageLimit: ObservableField<Int> = ObservableField(PAGE_LIMIT)
@@ -63,8 +64,21 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     super.onStop()
   }
 
+  fun setGetUserListenerPersonal(getUserListenerPersonal: GetUserListener.onGetUserPersonal) {
+    mGetUserListenerPersonal = getUserListenerPersonal
+  }
+
+  fun setGetUserListenerCategory(getUserListenerCategory: GetUserListener.onGetUserCategory) {
+    mGetUserListenerCategory = getUserListenerCategory
+  }
+
+
   override fun onGetUserOtherProfileSuccess(user: User?) {
-    mUser.let { it?.set(user) }
+    user?.let {
+      mUser.set(user)
+      mGetUserListenerPersonal.onGetUser(user)
+      mGetUserListenerCategory.onGetUser(user)
+    }
   }
 
   override fun onError(exception: BaseException) {
@@ -81,7 +95,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
   }
 
   fun fillData() {
-    val idUser: Int? = intent.getIntExtra(BookDetailActivity.TAG, 0)
+    val idUser: Int? = intent.getIntExtra(Constant.BOOK_DETAIL_EXTRA, 0)
     if (idUser != Constant.EXTRA_ZERO) {
       //Todo edit later
       mIsVisibleButtonFollow.set(true)
@@ -92,7 +106,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     //Todo edit later
     mIsVisibleButtonFollow.set(false)
     mIsVisibleButtonUnFollow.set(false)
-    return mUser.let { it?.set(mUserRepository.getUserLocal()) }
+    return mUser.set(mUserRepository.getUserLocal())
   }
 
   fun onClickArrowBack() {

@@ -50,7 +50,7 @@ class User() : BaseModel(), Parcelable {
   @SerializedName("tags")
   @Expose
   var tag: String? = null
-  @SerializedName("favorite_categories")
+  @SerializedName(value = "favorite_categories", alternate = arrayOf("categories"))
   @Expose
   var categories: List<Category>? = ArrayList()
   @SerializedName("owner_id")

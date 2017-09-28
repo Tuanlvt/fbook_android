@@ -154,14 +154,14 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
   }
 
   override fun onItemOwnerClick(owner: Owner?) {
-    val bundle = Bundle()
-    val idOwner: Int? = owner?.id
-    if (idOwner != null) {
-      bundle.putInt(BookDetailActivity.TAG, idOwner)
-      mNavigator.startActivity(ProfileActivity::class.java, bundle)
+    if (isUserNotLoggedIn()) {
       return
     }
-    return
+    owner?.let {
+      val bundle = Bundle()
+      bundle.putInt(Constant.BOOK_DETAIL_EXTRA, owner.id)
+      mNavigator.startActivity(ProfileActivity::class.java, bundle)
+    }
   }
 
   private fun initData() {
