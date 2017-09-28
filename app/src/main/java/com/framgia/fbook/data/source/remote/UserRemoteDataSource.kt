@@ -38,7 +38,7 @@ constructor(nameApi: FBookApi) : BaseRemoteDataSource(nameApi), UserDataSource.R
     return fbookApi.userApproveBook(bookId, userApproveBookRequest)
   }
 
-  override fun getApproveDetail(bookId: Int?): Single<Any> {
+  override fun getApproveDetail(bookId: Int?): Single<BaseResponse<Book>> {
     return fbookApi.getApproveDetail(bookId)
   }
 }
