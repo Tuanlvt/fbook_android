@@ -15,14 +15,15 @@ class ApproveDetailActivity : BaseActivity(), ApproveDetailContract.ViewModel {
 
   @Inject
   internal lateinit var mPresenter: ApproveDetailContract.Presenter
+  private lateinit var mApproveDetailComponent: ApproveDetailComponent
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    DaggerApproveDetailComponent.builder()
+    mApproveDetailComponent = DaggerApproveDetailComponent.builder()
         .appComponent((application as MainApplication).appComponent)
         .approveDetailModule(ApproveDetailModule(this))
         .build()
-        .inject(this)
+    mApproveDetailComponent.inject(this)
 
     val binding = DataBindingUtil.setContentView<ActivityApprovedetailBinding>(this,
         R.layout.activity_approvedetail)
@@ -37,6 +38,10 @@ class ApproveDetailActivity : BaseActivity(), ApproveDetailContract.ViewModel {
   override fun onStop() {
     mPresenter.onStop()
     super.onStop()
+  }
+
+  fun getApproveRequestComponent(): ApproveDetailComponent {
+    return mApproveDetailComponent
   }
 
   fun onClickArrowBack() {
