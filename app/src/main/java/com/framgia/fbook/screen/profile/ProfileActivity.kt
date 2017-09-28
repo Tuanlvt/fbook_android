@@ -36,6 +36,8 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
 
   val mUser: ObservableField<User> = ObservableField()
   val mPageLimit: ObservableField<Int> = ObservableField(PAGE_LIMIT)
+  val mIsVisibleButtonFollow: ObservableField<Boolean> = ObservableField()
+  val mIsVisibleButtonUnFollow: ObservableField<Boolean> = ObservableField()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -81,10 +83,20 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
   fun fillData() {
     val idUser: Int? = intent.getIntExtra(BookDetailActivity.TAG, 0)
     if (idUser != Constant.EXTRA_ZERO) {
+      //Todo edit later
+      mIsVisibleButtonFollow.set(true)
+      mIsVisibleButtonUnFollow.set(false)
       mPresenter.getUserOtherProfile(idUser)
       return
     }
+    //Todo edit later
+    mIsVisibleButtonFollow.set(false)
+    mIsVisibleButtonUnFollow.set(false)
     return mUser.let { it?.set(mUserRepository.getUserLocal()) }
+  }
+
+  fun onClickArrowBack() {
+    mNavigator.finishActivity()
   }
 
   companion object {
