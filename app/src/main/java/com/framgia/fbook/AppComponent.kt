@@ -1,6 +1,7 @@
 package com.framgia.fbook
 
 import android.content.Context
+import com.framgia.fbook.data.source.TokenRepository
 import com.framgia.fbook.data.source.local.sharedprf.SharedPrefsApi
 import com.framgia.fbook.data.source.remote.api.NetworkModule
 import com.framgia.fbook.data.source.remote.api.service.FBookApi
@@ -28,4 +29,6 @@ interface AppComponent {
   fun applicationContext(): Context
 
   fun baseSchedulerProvider(): BaseSchedulerProvider
+
+  fun tokenRepository(): TokenRepository
 }

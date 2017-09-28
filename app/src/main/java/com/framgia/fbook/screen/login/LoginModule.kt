@@ -45,12 +45,6 @@ class LoginModule(private val mActivity: Activity) {
 
   @ActivityScope
   @Provides
-  fun provideTokenRepository(tokenLocalDataSource: TokenLocalDataSource): TokenRepository {
-    return TokenRepositoryImpl(tokenLocalDataSource)
-  }
-
-  @ActivityScope
-  @Provides
   fun provideNavigator(): Navigator {
     return Navigator(mActivity)
   }

@@ -43,7 +43,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_16"
                 android:layout_marginStart="@dimen/dp_16"
-                android:layout_marginTop="@dimen/dp_5"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
