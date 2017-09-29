@@ -10,6 +10,7 @@ import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.ActivityApproveRequestBinding
 import com.framgia.fbook.screen.BaseActivity
+import com.framgia.fbook.screen.approverequest.approvedetail.ApproveDetailActivity
 import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.mybook.MyBookFragment
 import com.framgia.fbook.utils.Constant
@@ -84,6 +85,11 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
   }
 
   override fun onCLickViewRequest(bookId: Int?) {
+    bookId?.let {
+      val bundle = Bundle()
+      bundle.putInt(Constant.BOOK_DETAIL_EXTRA, bookId)
+      mNavigator.startActivity(ApproveDetailActivity::class.java, bundle)
+    }
   }
 
   override fun onItemClick(book: Book) {
