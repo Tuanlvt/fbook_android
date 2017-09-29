@@ -22,6 +22,7 @@
     <color name="color_blue_light">#2196F3</color>
     <color name="color_blue_mos">#0D47A1</color>
     <color name="color_green">#388E3C</color>
+    <color name="color_black">#5c5050</color>
     <color name="color_green_mos">#1B5E20</color>
 
 </resources>
