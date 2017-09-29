@@ -96,4 +96,7 @@ interface FBookApi {
 
   @POST("/api/v0/refresh-token")
   fun refreshToken(@Body refreshTokenRequest: RefreshTokenRequest?): Single<TokenResponse>
+
+  @GET("/api/v0/users/follow/info/{user_id}")
+  fun getFollowInfomationOfUser(@Path("user_id") userId: Int?): Single<BaseResponse<Follow>>
 }

@@ -1,6 +1,7 @@
 package com.framgia.fbook.data.source
 
 import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.data.model.Follow
 import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.local.UserLocalDataSource
@@ -18,6 +19,7 @@ interface UserRepository : UserDataSource.RemoteDataSource, UserDataSource.Local
 
 open class UserRepositoryImpl(private val mRemoteDataSource: UserRemoteDataSource,
     private val mLocalDataSource: UserLocalDataSource) : UserRepository {
+
   override fun getOffices(): Single<BaseResponse<List<Office>>> {
     return mRemoteDataSource.getOffices()
   }
@@ -57,5 +59,9 @@ open class UserRepositoryImpl(private val mRemoteDataSource: UserRemoteDataSourc
 
   override fun getOtherUserProfile(idUser: Int?): Single<BaseResponse<User>> {
     return mRemoteDataSource.getOtherUserProfile(idUser)
+  }
+
+  override fun getFollowInfomationOfUser(userId: Int?): Single<BaseResponse<Follow>> {
+    return mRemoteDataSource.getFollowInfomationOfUser(userId)
   }
 }
