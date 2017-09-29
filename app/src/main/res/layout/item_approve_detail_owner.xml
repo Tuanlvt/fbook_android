@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <variable
+            name="viewModel"
+            type="com.framgia.fbook.screen.approverequest.approvedetail.ItemApproveDetailOwnerViewModel"
+            />
+    </data>
+    <LinearLayout
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        android:gravity="center"
+        android:onClick="@{viewModel::onItemOwnerClick}"
+        android:orientation="vertical"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:scaleType="centerCrop"
+            bind:imageUserUrl="@{viewModel.mOwner.avatar}"
+            tools:ignore="ContentDescription"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_5"
+            android:gravity="center"
+            android:text="@{viewModel.mOwner.name}"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/sp_12"
+            />
+    </LinearLayout>
+</layout>
