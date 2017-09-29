@@ -10,7 +10,7 @@ import javax.inject.Inject
 /**
  * Created by framgia on 28/09/2017.
  */
-class TokenRemoteDatasource @Inject
+class TokenRemoteDataSource @Inject
 constructor(nameApi: FBookApi) : BaseRemoteDataSource(nameApi), TokenDataSource.RemoteDataSource {
   override fun refreshToken(refreshTokenRequest: RefreshTokenRequest?): Single<TokenResponse> {
     return fbookApi.refreshToken(refreshTokenRequest)

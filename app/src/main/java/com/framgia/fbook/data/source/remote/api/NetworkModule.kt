@@ -2,9 +2,6 @@ package com.framgia.fbook.data.source.remote.api
 
 import android.app.Application
 import com.framgia.fbook.BuildConfig
-import com.framgia.fbook.data.source.TokenRepository
-import com.framgia.fbook.data.source.TokenRepositoryImpl
-import com.framgia.fbook.data.source.local.TokenLocalDataSource
 import com.framgia.fbook.data.source.remote.api.middleware.InterceptorImpl
 import com.framgia.fbook.data.source.remote.api.middleware.RxErrorHandlingCallAdapterFactory
 import com.framgia.fbook.data.source.remote.api.service.BooleanAdapter
@@ -63,14 +60,8 @@ class NetworkModule(private val mApplication: Application) {
 
   @AppScope
   @Provides
-  fun provideInterceptor(tokenRepository: TokenRepository): Interceptor {
-    return InterceptorImpl(tokenRepository)
-  }
-
-  @AppScope
-  @Provides
-  fun provideTokenRepository(localDataSource: TokenLocalDataSource): TokenRepository {
-    return TokenRepositoryImpl(localDataSource)
+  fun provideInterceptor(): Interceptor {
+    return InterceptorImpl()
   }
 
   @AppScope

@@ -5,6 +5,7 @@ import android.util.Log
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.data.source.remote.api.response.ErrorResponse
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import io.reactivex.*
 import retrofit2.Call
 import retrofit2.CallAdapter
@@ -111,8 +112,9 @@ class RxErrorHandlingCallAdapterFactory private constructor() : CallAdapter.Fact
             }
           } catch (e: IOException) {
             Log.e(TAG, e.message)
+          } catch (e: JsonSyntaxException) {
+            Log.e(TAG, e.message, e)
           }
-
         } else {
           return BaseException.toHttpError(response)
         }

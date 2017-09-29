@@ -1,6 +1,9 @@
 package com.framgia.fbook.data.source.remote.api.middleware
 
+import android.util.Log
 import com.framgia.fbook.data.source.TokenRepository
+import com.framgia.fbook.data.source.remote.api.error.BaseException
+import com.framgia.fbook.data.source.remote.api.request.RefreshTokenRequest
 import com.framgia.fbook.utils.common.StringUtils
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -12,9 +15,12 @@ import java.net.HttpURLConnection
  * Created by Sun on 3/18/2017.
  */
 
-class InterceptorImpl(private val mTokenRepository: TokenRepository) : Interceptor {
+class InterceptorImpl : Interceptor {
 
+  private val TAG = javaClass.name
   private val KEY_TOKEN = "Authorization"
+
+  private lateinit var mTokenRepository: TokenRepository
 
   @Throws(IOException::class)
   override fun intercept(chain: Interceptor.Chain): Response {
@@ -22,12 +28,17 @@ class InterceptorImpl(private val mTokenRepository: TokenRepository) : Intercept
     var request = builder.build()
     var response = chain.proceed(request)
     if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-      //            refreshToken();
-      //            builder.addHeader("Authorization", "Bearer " + accessToken);
+      refreshToken()
+      builder.removeHeader(KEY_TOKEN)
+      builder.addHeader(KEY_TOKEN, getAccessToken())
       request = builder.build()
       response = chain.proceed(request)
     }
     return response
+  }
+
+  fun setTokenRepository(tokenRepository: TokenRepository) {
+    mTokenRepository = tokenRepository
   }
 
   private fun initializeHeader(chain: Interceptor.Chain): Request.Builder {
@@ -46,5 +57,19 @@ class InterceptorImpl(private val mTokenRepository: TokenRepository) : Intercept
       accessToken = ""
     }
     return accessToken
+  }
+
+  private fun refreshToken() {
+    val tokenRequest = RefreshTokenRequest()
+    tokenRequest.refresh_token = mTokenRepository.getToken()?.refreshToken
+
+    mTokenRepository.refreshToken(tokenRequest)
+        .subscribe(
+            { tokenResponse ->
+              mTokenRepository.saveToken(tokenResponse.token)
+            },
+            { error ->
+              Log.e(TAG, (error as BaseException).getMessageError())
+            })
   }
 }
