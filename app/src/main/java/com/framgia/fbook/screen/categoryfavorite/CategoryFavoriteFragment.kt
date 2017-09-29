@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.categoryfavorite
 
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
@@ -12,6 +13,7 @@ import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.FragmentCategoryFavoriteBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.addCategoryFavorite.AddCategoryFavoriteActivity
+import com.framgia.fbook.screen.profile.GetUserListener
 import com.framgia.fbook.screen.profile.ProfileActivity
 import com.framgia.fbook.utils.navigator.Navigator
 import javax.inject.Inject
@@ -19,7 +21,7 @@ import javax.inject.Inject
 /**
  * CategoryFavorite Screen.
  */
-class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewModel {
+class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewModel, GetUserListener.onGetUserCategory {
 
   @Inject
   internal lateinit var mNavigator: Navigator
@@ -29,7 +31,7 @@ class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewMo
   internal lateinit var mAdapter: CategoryAdapter
   @Inject
   internal lateinit var mUserRepository: UserRepository
-  val mUser: ObservableField<User>? = ObservableField()
+  val mUser: ObservableField<User> = ObservableField()
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -48,6 +50,18 @@ class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewMo
     return binding.root
   }
 
+  override fun onAttach(context: Context?) {
+    super.onAttach(context)
+    if (context is ProfileActivity) {
+      context.setGetUserListenerCategory(this)
+    }
+  }
+
+  override fun onGetUser(user: User?) {
+    mUser.set(user)
+    mAdapter.updateData(mUser.get().categories)
+  }
+
   override fun onStart() {
     super.onStart()
     mPresenter.onStart()
@@ -57,6 +71,7 @@ class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewMo
     mPresenter.onStop()
     super.onStop()
   }
+
 
   private fun fillData() {
     mUser.let {

@@ -56,6 +56,7 @@ open class DialogManagerImpl(private val mContext: Context) : DialogManager {
         .content(content)
         .positiveText(R.string.agree)
         .negativeText(R.string.cancel)
+        .cancelable(false)
         .onPositive(positiveButtonListener)
         .show()
   }

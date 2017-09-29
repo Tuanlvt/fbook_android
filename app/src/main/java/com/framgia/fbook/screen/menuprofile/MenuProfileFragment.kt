@@ -76,7 +76,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_PROFILE_REQUEST) {
-      mIsVisibleLayoutNotLoggedIn.set(false)
+      mIsVisibleLayoutNotLoggedIn.set(true)
       mUser.set(mUserRepository.getUserLocal())
     }
   }
@@ -95,10 +95,10 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
               mNavigator.startActivityForResultFromFragment(LoginActivity::class.java,
                   Constant.RequestCode.TAB_PROFILE_REQUEST)
             })
-        mIsVisibleLayoutNotLoggedIn.set(true)
+        mIsVisibleLayoutNotLoggedIn.set(false)
         return
       }
-      mIsVisibleLayoutNotLoggedIn.set(false)
+      mIsVisibleLayoutNotLoggedIn.set(true)
       mUser.set(user)
     }
   }

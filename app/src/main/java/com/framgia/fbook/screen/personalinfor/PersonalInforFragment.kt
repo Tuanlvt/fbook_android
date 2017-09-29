@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.personalinfor
 
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
@@ -11,13 +12,14 @@ import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.FragmentPersonalInforBinding
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.profile.GetUserListener
 import com.framgia.fbook.screen.profile.ProfileActivity
 import javax.inject.Inject
 
 /**
  * PersonalInfor Screen.
  */
-class PersonalInforFragment : BaseFragment(), PersonalInforContract.ViewModel {
+class PersonalInforFragment : BaseFragment(), PersonalInforContract.ViewModel, GetUserListener.onGetUserPersonal {
 
   @Inject
   internal lateinit var mPresenter: PersonalInforContract.Presenter
@@ -39,6 +41,17 @@ class PersonalInforFragment : BaseFragment(), PersonalInforContract.ViewModel {
     binding.viewModel = this
     mUser.set(mUserRepository.getUserLocal())
     return binding.root
+  }
+
+  override fun onAttach(context: Context?) {
+    super.onAttach(context)
+    if (context is ProfileActivity) {
+      context.setGetUserListenerPersonal(this)
+    }
+  }
+
+  override fun onGetUser(user: User?) {
+    mUser.set(user)
   }
 
   override fun onStart() {
