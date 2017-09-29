@@ -52,4 +52,9 @@ object Constant {
     val TAB_SUGGESTED_BOOK = 4
     val TAB_REVIEW_BOOK = 5
   }
+
+  object TabApproveDetail {
+    val TAB_WAIT_AND_READ = 0
+    val TAB_RETURNING_AND_RETURNED = 1
+  }
 }
