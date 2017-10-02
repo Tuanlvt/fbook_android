@@ -1,6 +1,7 @@
 package com.framgia.fbook.data.source
 
 import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.data.model.Follow
 import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.remote.api.request.UserApproveBookRequest
@@ -42,5 +43,7 @@ interface UserDataSource {
     fun getOtherUserProfile(idUser: Int?): Single<BaseResponse<User>>
 
     fun getApproveDetail(bookId: Int?): Single<BaseResponse<Book>>
+
+    fun getFollowInfomationOfUser(userId: Int?): Single<BaseResponse<Follow>>
   }
 }

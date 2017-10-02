@@ -1,6 +1,7 @@
 package com.framgia.fbook.data.source.remote
 
 import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.data.model.Follow
 import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserDataSource
@@ -18,6 +19,7 @@ import javax.inject.Inject
 
 class UserRemoteDataSource @Inject
 constructor(nameApi: FBookApi) : BaseRemoteDataSource(nameApi), UserDataSource.RemoteDataSource {
+
   override fun login(email: String?, password: String?): Single<TokenResponse> {
     val signInRequest = SignInRequest()
     signInRequest.email = email
@@ -46,4 +48,7 @@ constructor(nameApi: FBookApi) : BaseRemoteDataSource(nameApi), UserDataSource.R
     return fbookApi.getOtherUserProfile(idUser)
   }
 
+  override fun getFollowInfomationOfUser(userId: Int?): Single<BaseResponse<Follow>> {
+    return fbookApi.getFollowInfomationOfUser(userId)
+  }
 }

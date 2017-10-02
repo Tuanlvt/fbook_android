@@ -36,6 +36,17 @@ class ProfilePresenter(private val mUserRepository: UserRepository) : ProfileCon
     mCompositeDisposable.add(disposable)
   }
 
+  override fun getFollowInfomationOfUser(idUser: Int?) {
+    val disposable: Disposable = mUserRepository.getFollowInfomationOfUser(idUser)
+        .subscribeOn(mBaseSchedulerProvider.io())
+        .observeOn(mBaseSchedulerProvider.ui())
+        .subscribe({
+          follow ->
+          mViewModel?.onGetFollowInfomationOfUserSuccess(follow.items)
+        },
+            { error -> mViewModel?.onError(error as BaseException) })
+    mCompositeDisposable.addAll(disposable)
+  }
 
   override fun setViewModel(viewModel: ProfileContract.ViewModel) {
     mViewModel = viewModel
