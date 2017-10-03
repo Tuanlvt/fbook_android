@@ -18,7 +18,7 @@ class Follow() : BaseModel(), Parcelable {
   var following: List<ListFollow>? = ArrayList()
   @Expose
   @SerializedName("isFollow")
-  var isFollow: Boolean? = false
+  var isFollow: Boolean = false
   @Expose
   @SerializedName("countFollowed")
   var countFollowed: Int? = 0
@@ -27,7 +27,7 @@ class Follow() : BaseModel(), Parcelable {
   var countFollowing: Int? = 0
 
   constructor(parcel: Parcel) : this() {
-    isFollow = parcel.readValue(Boolean::class.java.classLoader) as? Boolean
+    isFollow = parcel.readValue(Boolean::class.java.classLoader) as Boolean
     countFollowed = parcel.readValue(Int::class.java.classLoader) as? Int
     countFollowing = parcel.readValue(Int::class.java.classLoader) as? Int
   }

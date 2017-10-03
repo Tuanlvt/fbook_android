@@ -4,12 +4,14 @@ import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Follow
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
+import com.framgia.fbook.data.source.remote.api.request.FollowOrUnFollowUserRequest
 import com.framgia.fbook.databinding.ActivityProfileBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.otheruser.OtherUserActivity
@@ -97,6 +99,10 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     Log.e(TAG, exception.getMessageError())
   }
 
+  override fun onFollowOrUnFollowSuccess() {
+    mIsVisibleButtonFollow.set(!mFollow.get().isFollow)
+  }
+
   fun onClickOther() {
     val bundle = Bundle()
     val idUser: Int? = mUser.get().id
@@ -111,14 +117,25 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     if (idUser != Constant.EXTRA_ZERO) {
       mPresenter.getUserOtherProfile(idUser)
       mPresenter.getFollowInfomationOfUser(idUser)
+      return
     }
     mIsVisibleLayoutButtonFollow.set(false)
     mUser.set(mUserRepository.getUserLocal())
     mPresenter.getFollowInfomationOfUser(mUser.get().id)
+    return
   }
 
   fun onClickArrowBack() {
     mNavigator.finishActivity()
+  }
+
+  fun onClickFollowOrUnFollowUser(view: View) {
+    val followOrUnFollowUserRequest = FollowOrUnFollowUserRequest()
+    val itemFollowOrUnFollowUserRequest = FollowOrUnFollowUserRequest.Item()
+
+    itemFollowOrUnFollowUserRequest.userId = mUser.get().id
+    followOrUnFollowUserRequest.item = itemFollowOrUnFollowUserRequest
+    mPresenter.followOrUnFollow(followOrUnFollowUserRequest)
   }
 
   companion object {
