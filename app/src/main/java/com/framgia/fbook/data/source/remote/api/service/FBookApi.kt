@@ -99,4 +99,8 @@ interface FBookApi {
 
   @GET("/api/v0/users/follow/info/{user_id}")
   fun getFollowInfomationOfUser(@Path("user_id") userId: Int?): Single<BaseResponse<Follow>>
+
+  @POST("/api/v0/users/follow")
+  fun followOrUnFollowUser(
+      @Body followOrUnFollowUserRequest: FollowOrUnFollowUserRequest?): Single<Any>
 }

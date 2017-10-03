@@ -75,76 +75,82 @@
                                     tools:ignore="ContentDescription"
                                     />
                             </FrameLayout>
-                            <LinearLayout
+                            <FrameLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/button_click_blue"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:orientation="horizontal"
-                                android:visibility="@{viewModel.mIsVisibleButtonUnFollow ? View.VISIBLE : View.GONE}"
+                                android:layout_marginLeft="@dimen/dp_2"
+                                android:layout_marginStart="@dimen/dp_2"
+                                android:visibility="@{viewModel.mIsVisibleLayoutButtonFollow ? View.VISIBLE : View.GONE}"
                                 app:layout_constraintBottom_toTopOf="@+id/text_name_user"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                tools:ignore="UselessParent"
                                 >
-                                <ImageView
-                                    android:layout_width="@dimen/dp_20"
-                                    android:layout_height="@dimen/dp_20"
-                                    android:layout_gravity="center_vertical"
-                                    android:background="@drawable/ic_unfollow"
-                                    tools:ignore="ContentDescription,TooDeepLayout"
-                                    />
-                                <TextView
+
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:paddingEnd="@dimen/dp_7"
-                                    android:paddingLeft="@dimen/dp_2"
-                                    android:paddingRight="@dimen/dp_7"
-                                    android:paddingStart="@dimen/dp_2"
-                                    android:text="@string/unfollow"
-                                    android:textColor="@color/color_white"
-                                    android:textSize="@dimen/sp_17"
-                                    tools:layout_editor_absoluteX="0dp"
-                                    tools:layout_editor_absoluteY="50dp"
-                                    />
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/button_click_green"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:orientation="horizontal"
-                                android:visibility="@{viewModel.mIsVisibleButtonFollow ? View.VISIBLE : View.GONE}"
-                                app:layout_constraintBottom_toTopOf="@+id/text_name_user"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:ignore="UselessParent"
-                                >
-                                <ImageView
-                                    android:layout_width="@dimen/dp_20"
-                                    android:layout_height="@dimen/dp_20"
-                                    android:layout_gravity="center_vertical"
-                                    android:background="@drawable/ic_follow"
-                                    tools:ignore="ContentDescription,TooDeepLayout"
-                                    />
-                                <TextView
+                                    android:background="@drawable/button_click_blue"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:orientation="horizontal"
+                                    android:visibility="@{viewModel.mIsVisibleButtonFollow ? View.VISIBLE : View.GONE}"
+                                    tools:ignore="UselessParent"
+                                    >
+                                    <ImageView
+                                        android:layout_width="@dimen/dp_20"
+                                        android:layout_height="@dimen/dp_20"
+                                        android:layout_gravity="center_vertical"
+                                        android:background="@drawable/ic_unfollow"
+                                        tools:ignore="ContentDescription,TooDeepLayout"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:paddingEnd="@dimen/dp_3"
+                                        android:paddingLeft="@dimen/dp_2"
+                                        android:paddingRight="@dimen/dp_3"
+                                        android:paddingStart="@dimen/dp_2"
+                                        android:text="@string/unfollow"
+                                        android:textColor="@color/color_white"
+                                        android:textSize="@dimen/sp_17"
+                                        tools:layout_editor_absoluteX="0dp"
+                                        tools:layout_editor_absoluteY="50dp"
+                                        />
+                                </LinearLayout>
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:paddingEnd="@dimen/dp_7"
-                                    android:paddingLeft="@dimen/dp_2"
-                                    android:paddingRight="@dimen/dp_7"
-                                    android:paddingStart="@dimen/dp_2"
-                                    android:text="@string/follow"
-                                    android:textColor="@color/color_white"
-                                    android:textSize="@dimen/sp_17"
-                                    tools:layout_editor_absoluteX="0dp"
-                                    tools:layout_editor_absoluteY="50dp"
-                                    />
-                            </LinearLayout>
+                                    android:background="@drawable/button_click_green"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:orientation="horizontal"
+                                    android:visibility="@{viewModel.mIsVisibleButtonFollow ? View.GONE : View.VISIBLE}"
+                                    tools:ignore="UselessParent"
+                                    >
+                                    <ImageView
+                                        android:layout_width="@dimen/dp_20"
+                                        android:layout_height="@dimen/dp_20"
+                                        android:layout_gravity="center_vertical"
+                                        android:background="@drawable/ic_follow"
+                                        tools:ignore="ContentDescription,TooDeepLayout"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:paddingEnd="@dimen/dp_3"
+                                        android:paddingLeft="@dimen/dp_2"
+                                        android:paddingRight="@dimen/dp_3"
+                                        android:paddingStart="@dimen/dp_2"
+                                        android:text="@string/follow"
+                                        android:textColor="@color/color_white"
+                                        android:textSize="@dimen/sp_17"
+                                        tools:layout_editor_absoluteX="0dp"
+                                        tools:layout_editor_absoluteY="50dp"
+                                        />
+                                </LinearLayout>
+                            </FrameLayout>
                             <TextView
                                 android:id="@+id/text_name_user"
                                 android:layout_width="match_parent"

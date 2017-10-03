@@ -112,6 +112,7 @@
     <string name="add_successful">Add successful</string>
     <string name="import_data_from_internal_book">Import data from internal books</string>
     <string name="please_enter_title">Please enter title</string>
+    <string name="people">%s people</string>
 
     <!-- date format -->
     <string name="date_format_yyyy_MM_dd">yyyy-MM-dd</string>

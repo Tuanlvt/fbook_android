@@ -6,6 +6,7 @@ import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
+import com.framgia.fbook.data.source.remote.api.request.FollowOrUnFollowUserRequest
 import com.framgia.fbook.data.source.remote.api.request.UserApproveBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.response.TokenResponse
@@ -63,5 +64,10 @@ open class UserRepositoryImpl(private val mRemoteDataSource: UserRemoteDataSourc
 
   override fun getFollowInfomationOfUser(userId: Int?): Single<BaseResponse<Follow>> {
     return mRemoteDataSource.getFollowInfomationOfUser(userId)
+  }
+
+  override fun followOrUnFollowUser(
+      followOrUnFollowUserRequest: FollowOrUnFollowUserRequest?): Single<Any> {
+    return mRemoteDataSource.followOrUnFollowUser(followOrUnFollowUserRequest)
   }
 }

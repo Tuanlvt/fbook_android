@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.profile
 
+import com.framgia.fbook.data.model.Follow
 import com.framgia.fbook.data.model.User
 
 /**
@@ -12,5 +13,9 @@ interface GetUserListener {
 
   interface onGetUserCategory {
     fun onGetUser(user: User?)
+  }
+
+  interface onGetFollowUser {
+    fun onGetFollow(follow: Follow?)
   }
 }
