@@ -1,20 +1,25 @@
 package com.framgia.fbook.screen.categoryfavorite
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
+import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentCategoryFavoriteBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.addCategoryFavorite.AddCategoryFavoriteActivity
 import com.framgia.fbook.screen.profile.GetUserListener
 import com.framgia.fbook.screen.profile.ProfileActivity
+import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import javax.inject.Inject
 
@@ -72,6 +77,22 @@ class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewMo
     super.onStop()
   }
 
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_CATEGORY_FAVORITE_USER) {
+      mPresenter.getUser()
+    }
+  }
+
+  override fun onGetUserSuccess(user: User?) {
+    user.let { mUser.set(user) }
+    mUserRepository.saveUser(user)
+    mAdapter.updateData(mUser.get().categories)
+  }
+
+  override fun onError(exception: BaseException) {
+    Log.d(TAG, exception.getMessageError())
+  }
 
   private fun fillData() {
     mUser.let {
@@ -81,7 +102,8 @@ class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewMo
   }
 
   fun onClickEditCategoryFavorite() {
-    mNavigator.startActivity(AddCategoryFavoriteActivity::class.java)
+    mNavigator.startActivityForResultFromFragment(AddCategoryFavoriteActivity::class.java,
+        Constant.RequestCode.TAB_CATEGORY_FAVORITE_USER)
   }
 
   companion object {

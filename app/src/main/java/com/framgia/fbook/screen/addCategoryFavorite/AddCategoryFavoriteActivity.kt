@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.addCategoryFavorite;
 
+import android.app.Activity
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.util.Log
@@ -90,6 +91,7 @@ class AddCategoryFavoriteActivity : BaseActivity(), AddCategoryFavoriteContract.
     user?.tag = tags
     mUserRepository.saveUser(user)
     mPresenter.getCategory()
+    mNavigator.finishActivityWithResult(Activity.RESULT_OK)
   }
 
   fun onClickUpdate() {

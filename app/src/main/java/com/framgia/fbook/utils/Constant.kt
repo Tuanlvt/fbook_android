@@ -36,6 +36,7 @@ object Constant {
     val TAB_MY_BOOK_REQUEST: Int = 101
     val TAB_PROFILE_REQUEST: Int = 102
     val BOOK_DETAIL_REQUEST: Int = 103
+    val TAB_CATEGORY_FAVORITE_USER: Int = 104
   }
 
   object TabUser {
