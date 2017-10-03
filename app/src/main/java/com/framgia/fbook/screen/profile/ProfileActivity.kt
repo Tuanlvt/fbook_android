@@ -35,12 +35,13 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
   private lateinit var profileComponent: ProfileComponent
   private lateinit var mGetUserListenerPersonal: GetUserListener.onGetUserPersonal
   private lateinit var mGetUserListenerCategory: GetUserListener.onGetUserCategory
+  private lateinit var mGetUserListenerFollow: GetUserListener.onGetFollowUser
 
   val mUser: ObservableField<User> = ObservableField()
   val mFollow: ObservableField<Follow> = ObservableField()
   val mPageLimit: ObservableField<Int> = ObservableField(PAGE_LIMIT)
   val mIsVisibleButtonFollow: ObservableField<Boolean> = ObservableField()
-  val mIsVisibleButtonUnFollow: ObservableField<Boolean> = ObservableField()
+  val mIsVisibleLayoutButtonFollow: ObservableField<Boolean> = ObservableField(true)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -74,6 +75,10 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     mGetUserListenerCategory = getUserListenerCategory
   }
 
+  fun setGetUserListenerFollow(getUserListenerFollow: GetUserListener.onGetFollowUser) {
+    mGetUserListenerFollow = getUserListenerFollow
+  }
+
   override fun onGetUserOtherProfileSuccess(user: User?) {
     user?.let {
       mUser.set(user)
@@ -83,7 +88,9 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
   }
 
   override fun onGetFollowInfomationOfUserSuccess(follow: Follow?) {
-    follow.let { mFollow.set(follow) }
+    follow?.let { mFollow.set(follow) }
+    mIsVisibleButtonFollow.set(mFollow.get().isFollow)
+    mGetUserListenerFollow.onGetFollow(follow)
   }
 
   override fun onError(exception: BaseException) {
@@ -102,19 +109,12 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
   fun fillData() {
     val idUser: Int? = intent.getIntExtra(Constant.BOOK_DETAIL_EXTRA, 0)
     if (idUser != Constant.EXTRA_ZERO) {
-      //Todo edit later
-      mIsVisibleButtonFollow.set(true)
-      mIsVisibleButtonUnFollow.set(false)
       mPresenter.getUserOtherProfile(idUser)
       mPresenter.getFollowInfomationOfUser(idUser)
-      return
     }
-    //Todo edit later
-    mIsVisibleButtonFollow.set(false)
-    mIsVisibleButtonUnFollow.set(false)
+    mIsVisibleLayoutButtonFollow.set(false)
     mUser.set(mUserRepository.getUserLocal())
     mPresenter.getFollowInfomationOfUser(mUser.get().id)
-    return
   }
 
   fun onClickArrowBack() {

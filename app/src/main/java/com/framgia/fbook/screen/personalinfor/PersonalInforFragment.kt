@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.framgia.fbook.R
+import com.framgia.fbook.data.model.Follow
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.FragmentPersonalInforBinding
@@ -19,13 +20,15 @@ import javax.inject.Inject
 /**
  * PersonalInfor Screen.
  */
-class PersonalInforFragment : BaseFragment(), PersonalInforContract.ViewModel, GetUserListener.onGetUserPersonal {
+class PersonalInforFragment : BaseFragment(), PersonalInforContract.ViewModel, GetUserListener.onGetUserPersonal, GetUserListener.onGetFollowUser {
 
   @Inject
   internal lateinit var mPresenter: PersonalInforContract.Presenter
   @Inject
   lateinit var mUserRepository: UserRepository
   val mUser: ObservableField<User> = ObservableField()
+  val mCountFollowing: ObservableField<String> = ObservableField()
+  val mCountFollowed: ObservableField<String> = ObservableField()
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -47,11 +50,32 @@ class PersonalInforFragment : BaseFragment(), PersonalInforContract.ViewModel, G
     super.onAttach(context)
     if (context is ProfileActivity) {
       context.setGetUserListenerPersonal(this)
+      context.setGetUserListenerFollow(this)
     }
   }
 
   override fun onGetUser(user: User?) {
     mUser.set(user)
+  }
+
+  override fun onGetFollow(follow: Follow?) {
+    follow?.let {
+      setNumberUserFollowing(follow)
+      setNumberUserFollowed(follow)
+    }
+  }
+
+  fun setNumberUserFollowing(follow: Follow?) {
+    follow?.let {
+      mCountFollowing.set(
+          String.format(getString(R.string.people), follow.countFollowing.toString()))
+    }
+  }
+
+  fun setNumberUserFollowed(follow: Follow?) {
+    follow?.let {
+      mCountFollowed.set(String.format(getString(R.string.people), follow.countFollowed.toString()))
+    }
   }
 
   override fun onStart() {

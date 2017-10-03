@@ -4,6 +4,7 @@ import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Follow
 import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.model.User
+import com.framgia.fbook.data.source.remote.api.request.FollowOrUnFollowUserRequest
 import com.framgia.fbook.data.source.remote.api.request.UserApproveBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.response.TokenResponse
@@ -45,5 +46,7 @@ interface UserDataSource {
     fun getApproveDetail(bookId: Int?): Single<BaseResponse<Book>>
 
     fun getFollowInfomationOfUser(userId: Int?): Single<BaseResponse<Follow>>
+
+    fun followOrUnFollowUser(followOrUnFollowUserRequest: FollowOrUnFollowUserRequest?): Single<Any>
   }
 }
