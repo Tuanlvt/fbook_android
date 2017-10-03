@@ -79,6 +79,7 @@
     <string name="owner_this_book">[Owner this book]</string>
     <string name="approve_waiting_reading_requests">Approve waiting-reading requests</string>
     <string name="approve_returning_returned_requests">Approve returning-returned requests</string>
+    <string name="unapprove">Unapprove</string>
 
     <!-- Dialog -->
     <string name="agree">Agree</string>

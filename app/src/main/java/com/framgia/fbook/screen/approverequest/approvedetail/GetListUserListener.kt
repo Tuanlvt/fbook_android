@@ -8,11 +8,15 @@ import com.framgia.fbook.data.model.User
  * Thank you !
  */
 interface GetListUserListener {
-  fun onGetListUserWaiting(listUser: List<User>?)
+  interface GetListUserWaitAndRead {
+    fun onGetListUserWaiting(listUser: List<User>?)
 
-  fun onGetListUserReading(listUser: List<User>?)
+    fun onGetListUserReading(listUser: List<User>?)
+  }
 
-  fun onGetListUserReturning(listUser: List<User>?)
+  interface GetListUserReturnAndReturning {
+    fun onGetListUserReturning(listUser: List<User>?)
 
-  fun onGetListUserReturned(listUser: List<User>?)
+    fun onGetListUserReturned(listUser: List<User>?)
+  }
 }
