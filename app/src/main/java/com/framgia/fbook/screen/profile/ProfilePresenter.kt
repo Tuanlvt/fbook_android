@@ -2,6 +2,7 @@ package com.framgia.fbook.screen.profile;
 
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
+import com.framgia.fbook.data.source.remote.api.request.FollowOrUnFollowUserRequest
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -46,6 +47,18 @@ class ProfilePresenter(private val mUserRepository: UserRepository) : ProfileCon
         },
             { error -> mViewModel?.onError(error as BaseException) })
     mCompositeDisposable.addAll(disposable)
+  }
+
+  override fun followOrUnFollow(followOrUnFollowUserRequest: FollowOrUnFollowUserRequest?) {
+    val disposable: Disposable = mUserRepository.followOrUnFollowUser(followOrUnFollowUserRequest)
+        .subscribeOn(mBaseSchedulerProvider.io())
+        .observeOn(mBaseSchedulerProvider.ui())
+        .subscribe({
+          mViewModel?.onFollowOrUnFollowSuccess()
+        }, { error ->
+          mViewModel?.onError(error as BaseException)
+        })
+    mCompositeDisposable.add(disposable)
   }
 
   override fun setViewModel(viewModel: ProfileContract.ViewModel) {
