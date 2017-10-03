@@ -46,5 +46,8 @@ interface BookDataSource {
         page: Int?, sort: Sort?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 
     fun reviewBook(bookId: Int?, reviewBookRequest: ReviewBookRequest?): Single<Any>
+
+    fun getFeatureOtherOfUser(userId: Int?,
+        type: String?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
   }
 }

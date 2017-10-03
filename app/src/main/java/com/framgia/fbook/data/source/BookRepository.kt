@@ -74,4 +74,9 @@ class BookRepositoryImpl @Inject constructor(
   override fun reviewBook(bookId: Int?, reviewBookRequest: ReviewBookRequest?): Single<Any> {
     return bookRemoteDataSource.reviewBook(bookId, reviewBookRequest)
   }
+
+  override fun getFeatureOtherOfUser(userId: Int?,
+      type: String?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
+    return bookRemoteDataSource.getFeatureOtherOfUser(userId, type)
+  }
 }
