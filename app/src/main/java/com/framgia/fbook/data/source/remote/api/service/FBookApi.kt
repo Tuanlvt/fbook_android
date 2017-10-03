@@ -103,4 +103,8 @@ interface FBookApi {
   @POST("/api/v0/users/follow")
   fun followOrUnFollowUser(
       @Body followOrUnFollowUserRequest: FollowOrUnFollowUserRequest?): Single<Any>
+
+  @GET("/api/v0/users/book/{user_id}/{type}")
+  fun getFeatureOtherOfUser(@Path("user_id") userId: Int?,
+      @Path("type") type: String?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 }

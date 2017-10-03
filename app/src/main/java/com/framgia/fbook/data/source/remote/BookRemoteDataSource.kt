@@ -114,4 +114,9 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
   override fun reviewBook(bookId: Int?, reviewBookRequest: ReviewBookRequest?): Single<Any> {
     return fbookApi.reviewBook(bookId, reviewBookRequest)
   }
+
+  override fun getFeatureOtherOfUser(userId: Int?,
+      type: String?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
+    return fbookApi.getFeatureOtherOfUser(userId, type)
+  }
 }

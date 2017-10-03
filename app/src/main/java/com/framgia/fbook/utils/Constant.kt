@@ -22,6 +22,8 @@ object Constant {
 
   val BOOK_DETAIL_EXTRA = "book_detail"
   val USER_BOOK_DETAIL_EXTRA = "user_book_detail"
+  val USER_DETAIL_EXTRAU = "user_detail"
+  val BOOK_DETAIL_IN_USER_EXTRA = "book_detail_in_user_extra"
 
   object Tab {
     val TAB_HOME: Int = 0
@@ -56,5 +58,13 @@ object Constant {
   object TabApproveDetail {
     val TAB_WAIT_AND_READ = 0
     val TAB_RETURNING_AND_RETURNED = 1
+  }
+
+  object RequestCodeBookInUser {
+    val TAB_READING_BOOK: String = "reading"
+    val TAB_DONE_BOOK: String = "done"
+    val TAB_WAITING_BOOK: String = "waiting"
+    val TAB_SHARING_BOOK: String = "sharing"
+    val TAB_REVIEWED: String = "reviewed"
   }
 }
