@@ -66,6 +66,6 @@ object Constant {
     val TAB_DONE_BOOK: String = "done"
     val TAB_WAITING_BOOK: String = "waiting"
     val TAB_SHARING_BOOK: String = "sharing"
-    val TAB_REVIEWED: String = "reviewed"
+    val TAB_REVIEWED_BOOK: String = "reviewed"
   }
 }
