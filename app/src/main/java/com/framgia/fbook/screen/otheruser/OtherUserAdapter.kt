@@ -4,8 +4,8 @@ import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.widget.Toast
 import com.framgia.fbook.R
+import com.framgia.fbook.screen.otheruser.bookInUser.BookInUserFragment
 import com.framgia.fbook.utils.Constant
 
 /**
@@ -20,21 +20,24 @@ class OtherUserAdapter(private val mContext: Context,
   }
 
   override fun getItem(position: Int): Fragment {
-    when (position) {
-      Constant.TabOtherInUser.TAB_READING_BOOK -> Toast.makeText(mContext,
-          R.string.reading_books, Toast.LENGTH_SHORT).show()
-      Constant.TabOtherInUser.TAB_WAITING_BOOK -> Toast.makeText(mContext,
-          R.string.waiting_books, Toast.LENGTH_SHORT).show()
-      Constant.TabOtherInUser.TAB_READ_BOOK -> Toast.makeText(mContext,
-          R.string.read_book, Toast.LENGTH_SHORT).show()
-      Constant.TabOtherInUser.TAB_SHARING_BOOK -> Toast.makeText(mContext,
-          R.string.sharing_books, Toast.LENGTH_SHORT).show()
-      Constant.TabOtherInUser.TAB_SUGGESTED_BOOK -> Toast.makeText(mContext,
-          R.string.suggested_books, Toast.LENGTH_SHORT).show()
-      Constant.TabOtherInUser.TAB_REVIEW_BOOK -> Toast.makeText(mContext,
-          R.string.reviewed_books, Toast.LENGTH_SHORT).show()
+    return when (position) {
+      Constant.TabOtherInUser.TAB_READING_BOOK -> BookInUserFragment.newInstance(
+          Constant.RequestCodeBookInUser.TAB_READING_BOOK)
+
+      Constant.TabOtherInUser.TAB_WAITING_BOOK -> BookInUserFragment.newInstance(
+          Constant.RequestCodeBookInUser.TAB_WAITING_BOOK)
+      Constant.TabOtherInUser.TAB_READ_BOOK -> BookInUserFragment.newInstance(
+          Constant.RequestCodeBookInUser.TAB_READING_BOOK)
+      Constant.TabOtherInUser.TAB_SHARING_BOOK -> BookInUserFragment.newInstance(
+          Constant.RequestCodeBookInUser.TAB_SHARING_BOOK)
+      Constant.TabOtherInUser.TAB_SUGGESTED_BOOK -> BookInUserFragment.newInstance(
+          Constant.RequestCodeBookInUser.TAB_DONE_BOOK)
+      Constant.TabOtherInUser.TAB_REVIEW_BOOK -> BookInUserFragment.newInstance(
+          Constant.RequestCodeBookInUser.TAB_REVIEWED_BOOK)
+      else -> {
+        Fragment()
+      }
     }
-    return Fragment()
   }
 
   override fun getPageTitle(position: Int): CharSequence {
