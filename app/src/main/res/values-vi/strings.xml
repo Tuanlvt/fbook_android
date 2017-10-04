@@ -68,6 +68,7 @@
     <string name="approve_returning_returned_requests">Phê duyệt yêu cầu trả-về</string>
     <string name="people">%s người</string>
 
+    <string name="unapprove">Bỏ đồng ý</string>
 
     <string name="desc">Giảm dần</string>
     <string name="asc">Tăng dần</string>

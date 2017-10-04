@@ -32,7 +32,8 @@ class ApproveDetailActivity : BaseActivity(), ApproveDetailContract.ViewModel, o
   @Inject
   internal lateinit var mApproveDetailOwnerAdapter: ApproveDetailOwnerAdapter
   private lateinit var mApproveDetailComponent: ApproveDetailComponent
-  private lateinit var mGetListUserListener: GetListUserListener
+  private lateinit var mGetListUserWaitAndReadListener: GetListUserListener.GetListUserWaitAndRead
+  private lateinit var mGetListUserReturnAndReturningListener: GetListUserListener.GetListUserReturnAndReturning
 
   val mBook: ObservableField<Book> = ObservableField()
 
@@ -64,8 +65,13 @@ class ApproveDetailActivity : BaseActivity(), ApproveDetailContract.ViewModel, o
     super.onStop()
   }
 
-  fun setGetListUserListener(getListUserListener: GetListUserListener) {
-    mGetListUserListener = getListUserListener
+  fun setGetListUserWaitAndRead(getListUserListener: GetListUserListener.GetListUserWaitAndRead) {
+    mGetListUserWaitAndReadListener = getListUserListener
+  }
+
+  fun setGetListUserReturnAndReturning(
+      getListUserListener: GetListUserListener.GetListUserReturnAndReturning) {
+    mGetListUserReturnAndReturningListener = getListUserListener
   }
 
   override fun onDismissProgressDialog() {
@@ -88,10 +94,10 @@ class ApproveDetailActivity : BaseActivity(), ApproveDetailContract.ViewModel, o
     book?.let {
       mBook.set(book)
       mApproveDetailOwnerAdapter.updateData(it.owners)
-      mGetListUserListener.onGetListUserWaiting(it.usersWaitings)
-      mGetListUserListener.onGetListUserReading(it.usersReadings)
-      mGetListUserListener.onGetListUserReturning(it.usersReturnings)
-      mGetListUserListener.onGetListUserReturned(it.usersReturneds)
+      mGetListUserWaitAndReadListener.onGetListUserWaiting(it.usersWaitings)
+      mGetListUserWaitAndReadListener.onGetListUserReading(it.usersReadings)
+      mGetListUserReturnAndReturningListener.onGetListUserReturning(it.usersReturnings)
+      mGetListUserReturnAndReturningListener.onGetListUserReturned(it.usersReturneds)
     }
   }
 

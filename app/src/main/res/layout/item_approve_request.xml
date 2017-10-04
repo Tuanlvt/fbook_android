@@ -62,7 +62,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:maxLines="2"
+                        android:maxLines="1"
                         android:text="@{viewModel.mBook.title}"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/sp_17"

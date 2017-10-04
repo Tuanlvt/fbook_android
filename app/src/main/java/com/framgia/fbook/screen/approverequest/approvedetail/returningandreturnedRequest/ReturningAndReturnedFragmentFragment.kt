@@ -46,6 +46,7 @@ class ReturningAndReturnedFragmentFragment : BaseFragment(), ReturningAndReturne
   }
 
   companion object {
+    private val TAG = ReturningAndReturnedFragmentFragment::class.java.simpleName
 
     fun newInstance(): ReturningAndReturnedFragmentFragment {
       return ReturningAndReturnedFragmentFragment()

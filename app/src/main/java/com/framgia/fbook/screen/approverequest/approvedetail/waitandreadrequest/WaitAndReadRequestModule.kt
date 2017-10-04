@@ -1,6 +1,7 @@
 package com.framgia.fbook.screen.approverequest.approvedetail.waitandreadrequest
 
 import android.support.v4.app.Fragment
+import com.framgia.fbook.screen.approverequest.approvedetail.adapterlistrequest.ListRequestAdapter
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import dagger.Module
@@ -15,10 +16,17 @@ class WaitAndReadRequestModule(private val mFragment: Fragment) {
 
   @FragmentScope
   @Provides
-  fun providePresenter(schedulerProvider: BaseSchedulerProvider): WaitAndReadRequestContract.Presenter {
+  fun providePresenter(
+      schedulerProvider: BaseSchedulerProvider): WaitAndReadRequestContract.Presenter {
     val presenter = WaitAndReadRequestPresenter()
     presenter.setViewModel(mFragment as WaitAndReadRequestContract.ViewModel)
     presenter.setSchedulerProvider(schedulerProvider)
     return presenter
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideListRequestAdapter(): ListRequestAdapter {
+    return ListRequestAdapter(mFragment.context)
   }
 }
