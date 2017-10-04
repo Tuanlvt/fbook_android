@@ -7,6 +7,7 @@ import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.navigator.Navigator
+import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import dagger.Module
 import dagger.Provides
 
@@ -15,24 +16,28 @@ import dagger.Provides
  * the [CategoryFavoritePresenter].
  */
 @Module
-class CategoryFavoriteModule(private val fragment: Fragment) {
+class CategoryFavoriteModule(private val mFragment: Fragment) {
 
   @FragmentScope
   @Provides
-  internal fun providePresenter(): CategoryFavoriteContract.Presenter {
-    return CategoryFavoritePresenter()
+  internal fun providePresenter(userRepository: UserRepository,
+      baseSchedulerProvider: BaseSchedulerProvider): CategoryFavoriteContract.Presenter {
+    val presenter = CategoryFavoritePresenter(userRepository)
+    presenter.setBaseSchedulerProvider(baseSchedulerProvider)
+    presenter.setViewModel(mFragment as CategoryFavoriteContract.ViewModel)
+    return presenter
   }
 
   @FragmentScope
   @Provides
   fun provideCategoryAdapter(): CategoryAdapter {
-    return CategoryAdapter(fragment.context)
+    return CategoryAdapter(mFragment.context)
   }
 
   @FragmentScope
   @Provides
   fun provideNavigator(): Navigator {
-    return Navigator(fragment)
+    return Navigator(mFragment)
   }
 
   @FragmentScope
