@@ -18,16 +18,13 @@ class ImageViewLabel : ImageView {
 
   private val mPaintBackground by lazy { Paint() }
   private val mPaintText by lazy { Paint() }
-  private val mPaintStroke by lazy { Paint() }
   private val mRectPath by lazy { Path() }
   private val mTextPath by lazy { Path() }
   private val mTextBound = Rect()
   private var mText: String? = ""
-
-  companion object {
-    private val mDistance = 130F
-    private val mHeightLabel = 60F
-  }
+  private var mDistance = 0F
+  private var mHeightLabel = resources.getDimension(R.dimen.dp_30)
+  private var mDistanceWriteText = resources.getDimension(R.dimen.dp_20)
 
   constructor(context: Context) : this(context, null)
   constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -54,17 +51,13 @@ class ImageViewLabel : ImageView {
     mTextPath.lineTo(endPosX.toFloat(), mDistance + middle)
     mTextPath.close()
     canvas?.drawPath(mRectPath, mPaintBackground)
-    canvas?.drawPath(mRectPath, mPaintStroke)
 
     mText?.let {
       mPaintText.getTextBounds(mText, 0, it.length, mTextBound)
     }
-    val actualDistance = mDistance + mHeightLabel / 2
-    var begin_w_offset = 1.4142135f * actualDistance / 2 - mTextBound.width() / 2
-    if (begin_w_offset < 0) begin_w_offset = 0f
     mText?.let {
-      canvas?.drawTextOnPath(mText, mTextPath, begin_w_offset, (mTextBound.height() / 2).toFloat(),
-          mPaintText)
+      canvas?.drawTextOnPath(mText, mTextPath, mDistanceWriteText,
+          (mTextBound.height() / 2).toFloat(), mPaintText)
     }
     setLayerType(View.LAYER_TYPE_SOFTWARE, null)
   }
@@ -74,10 +67,6 @@ class ImageViewLabel : ImageView {
     mPaintBackground.isDither = true
     mPaintBackground.color = ContextCompat.getColor(context, R.color.colorPrimary)
 
-    mPaintStroke.isDither = true
-    mPaintStroke.isAntiAlias = true
-    mPaintStroke.style = Paint.Style.STROKE
-
     mPaintText.isAntiAlias = true
     mPaintText.isDither = true
     mPaintText.strokeJoin = Paint.Join.ROUND
@@ -85,6 +74,22 @@ class ImageViewLabel : ImageView {
     mPaintText.color = Color.WHITE
     mPaintText.textSize = resources.getDimension(R.dimen.sp_10)
 
+  }
+
+  fun setDistanceWriteText(distance: Int) {
+    mDistanceWriteText = distance.toFloat()
+  }
+
+  fun setHeightLabel(height: Int) {
+    mHeightLabel = height.toFloat()
+  }
+
+  fun setDistanceLabel(distance: Int) {
+    if (distance == 1) {
+      mDistance = resources.getDimension(R.dimen.dp_80)
+    } else {
+      mDistance = resources.getDimension(R.dimen.dp_60)
+    }
   }
 
   fun updateText(text: String?) {

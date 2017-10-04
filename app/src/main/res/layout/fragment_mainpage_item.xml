@@ -28,6 +28,7 @@
                 android:layout_height="@dimen/dp_170"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
+                app:setDistanceLabel="@{1}"
                 bind:imageUrl="@{viewModel.book.Image.mobileImage.smallPath}"
                 />
             <TextView
