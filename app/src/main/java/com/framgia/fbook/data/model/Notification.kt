@@ -1,7 +1,5 @@
 package com.framgia.fbook.data.model
 
-import android.os.Parcel
-import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -10,76 +8,37 @@ import com.google.gson.annotations.SerializedName
  * Contact me thuanpx1710@gmail.com.
  * Thank you !
  */
-class Notification() : BaseModel(), Parcelable {
+class Notification : BaseModel() {
 
-  @SerializedName("id")
+  @SerializedName("current_page")
   @Expose
-  var id: Int? = null
-  @SerializedName("user_send_id")
+  var currentPage: Int? = null
+  @SerializedName("last_page")
   @Expose
-  var userSendId: Int? = null
-  @SerializedName("user_receive_id")
-  var uSerReceiveId: Int? = null
-  @SerializedName("target_id")
+  var lastPage: Int? = null
+  @SerializedName("next_page_url")
   @Expose
-  var targetId: Int? = null
-  @SerializedName("viewed")
+  var nextPageUrl: String? = null
+  @SerializedName("path")
   @Expose
-  var viewed: Int? = null
-  @SerializedName("type")
+  var path: String? = null
+  @SerializedName("per_page")
   @Expose
-  var type: String? = null
-  @SerializedName("created_at")
+  var perPage: Int? = null
+  @SerializedName("prev_page_url")
   @Expose
-  var createdAt: String? = null
-  @SerializedName("updated_at")
+  var pervPageUrl: String? = null
+  @SerializedName("from")
   @Expose
-  var updateAt: String? = null
-  @SerializedName("book")
+  var from: Int? = null
+  @SerializedName("to")
   @Expose
-  var book: Book? = null
-  @SerializedName("user_send")
+  var to: Int? = null
+  @SerializedName("total")
   @Expose
-  var user: User? = null
-
-  constructor(parcel: Parcel) : this() {
-    id = parcel.readValue(Int::class.java.classLoader) as? Int
-    userSendId = parcel.readValue(Int::class.java.classLoader) as? Int
-    uSerReceiveId = parcel.readValue(Int::class.java.classLoader) as? Int
-    targetId = parcel.readValue(Int::class.java.classLoader) as? Int
-    viewed = parcel.readValue(Int::class.java.classLoader) as? Int
-    type = parcel.readString()
-    createdAt = parcel.readString()
-    updateAt = parcel.readString()
-    book = parcel.readParcelable(Book::class.java.classLoader)
-    user = parcel.readParcelable(User::class.java.classLoader)
-  }
-
-  override fun writeToParcel(parcel: Parcel, flags: Int) {
-    parcel.writeValue(id)
-    parcel.writeValue(userSendId)
-    parcel.writeValue(uSerReceiveId)
-    parcel.writeValue(targetId)
-    parcel.writeValue(viewed)
-    parcel.writeString(type)
-    parcel.writeString(createdAt)
-    parcel.writeString(updateAt)
-    parcel.writeParcelable(book, flags)
-    parcel.writeParcelable(user, flags)
-  }
-
-  override fun describeContents(): Int {
-    return 0
-  }
-
-  companion object CREATOR : Parcelable.Creator<Notification> {
-    override fun createFromParcel(parcel: Parcel): Notification {
-      return Notification(parcel)
-    }
-
-    override fun newArray(size: Int): Array<Notification?> {
-      return arrayOfNulls(size)
-    }
-  }
+  var total: Int? = null
+  @SerializedName("data")
+  @Expose
+  var listNotification: List<ItemNotification>? = null
 
 }
