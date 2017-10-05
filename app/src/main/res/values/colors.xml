@@ -24,5 +24,7 @@
     <color name="color_green">#388E3C</color>
     <color name="color_black">#5c5050</color>
     <color name="color_green_mos">#1B5E20</color>
+    <color name="color_yellow_light">#FFFDE7</color>
+    <color name="color_white_low">#e8e8e9</color>
 
 </resources>

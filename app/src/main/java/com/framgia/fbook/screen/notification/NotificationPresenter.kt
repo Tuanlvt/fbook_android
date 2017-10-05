@@ -1,6 +1,7 @@
 package com.framgia.fbook.screen.notification
 
 import com.framgia.fbook.data.source.UserRepository
+import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 
@@ -20,6 +21,21 @@ class NotificationPresenter(
 
   override fun onStop() {
     mCompositeDisposable.clear()
+  }
+
+  override fun getNotification() {
+    val disposable = mUserRepository.getNotification()
+        .subscribeOn(mSchedulerProvider.io())
+        .doOnSubscribe { mViewModel.onShowProgressDialog() }
+        .doAfterSuccess { mViewModel.onDismissProgressDialog() }
+        .observeOn(mSchedulerProvider.ui())
+        .subscribe({ notificationResponse ->
+          mViewModel.onGetNotificationSuccess(notificationResponse.items)
+        }, {
+          error ->
+          mViewModel.onError(error as BaseException)
+        })
+    mCompositeDisposable.add(disposable)
   }
 
   override fun setViewModel(viewModel: NotificationContract.ViewModel) {

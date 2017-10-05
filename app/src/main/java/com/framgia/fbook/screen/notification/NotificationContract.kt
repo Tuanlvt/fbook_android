@@ -1,5 +1,7 @@
 package com.framgia.fbook.screen.notification
 
+import com.framgia.fbook.data.source.remote.api.error.BaseException
+import com.framgia.fbook.data.source.remote.api.response.NotificationResponse
 import com.framgia.fbook.screen.BasePresenter
 import com.framgia.fbook.screen.BaseViewModel
 
@@ -10,10 +12,20 @@ interface NotificationContract {
   /**
    * View.
    */
-  interface ViewModel : BaseViewModel
+  interface ViewModel : BaseViewModel {
+    fun onError(error: BaseException)
+
+    fun onGetNotificationSuccess(notificationResponse: NotificationResponse?)
+
+    fun onShowProgressDialog()
+
+    fun onDismissProgressDialog()
+  }
 
   /**
    * Presenter.
    */
-  interface Presenter : BasePresenter<ViewModel>
+  interface Presenter : BasePresenter<ViewModel> {
+    fun getNotification()
+  }
 }
