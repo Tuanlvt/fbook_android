@@ -9,6 +9,7 @@ import com.framgia.fbook.data.source.remote.api.request.FollowOrUnFollowUserRequ
 import com.framgia.fbook.data.source.remote.api.request.SignInRequest
 import com.framgia.fbook.data.source.remote.api.request.UserApproveBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
+import com.framgia.fbook.data.source.remote.api.response.NotificationResponse
 import com.framgia.fbook.data.source.remote.api.response.TokenResponse
 import com.framgia.fbook.data.source.remote.api.service.FBookApi
 import io.reactivex.Single
@@ -56,5 +57,9 @@ constructor(nameApi: FBookApi) : BaseRemoteDataSource(nameApi), UserDataSource.R
   override fun followOrUnFollowUser(
       followOrUnFollowUserRequest: FollowOrUnFollowUserRequest?): Single<Any> {
     return fbookApi.followOrUnFollowUser(followOrUnFollowUserRequest)
+  }
+
+  override fun getNotification(): Single<BaseResponse<NotificationResponse>> {
+    return fbookApi.getNotification()
   }
 }

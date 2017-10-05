@@ -1,7 +1,13 @@
 package com.framgia.fbook.screen.notification
 
 import android.support.v4.app.Fragment
+import com.framgia.fbook.data.source.UserRepository
+import com.framgia.fbook.data.source.UserRepositoryImpl
+import com.framgia.fbook.data.source.local.UserLocalDataSource
+import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.utils.dagger.FragmentScope
+import com.fstyle.structure_android.widget.dialog.DialogManager
+import com.fstyle.structure_android.widget.dialog.DialogManagerImpl
 import dagger.Module
 import dagger.Provides
 
@@ -10,11 +16,25 @@ import dagger.Provides
  * the [NotificationPresenter].
  */
 @Module
-class NotificationModule(fragment: Fragment) {
+class NotificationModule(private val mFragment: Fragment) {
 
   @FragmentScope
   @Provides
-  fun providePresenter(): NotificationContract.Presenter {
-    return NotificationPresenter()
+  fun providePresenter(userRepository: UserRepository): NotificationContract.Presenter {
+    val presenter = NotificationPresenter(userRepository)
+    return presenter
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideUserRepository(userRemoteDataSource: UserRemoteDataSource,
+      userLocalDataSource: UserLocalDataSource): UserRepository {
+    return UserRepositoryImpl(userRemoteDataSource, userLocalDataSource)
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideDialogManager(): DialogManager {
+    return DialogManagerImpl(mFragment.context)
   }
 }

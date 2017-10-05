@@ -2,10 +2,7 @@ package com.framgia.fbook.data.source.remote.api.service
 
 import com.framgia.fbook.data.model.*
 import com.framgia.fbook.data.source.remote.api.request.*
-import com.framgia.fbook.data.source.remote.api.response.BaseBookByCategoryResponse
-import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
-import com.framgia.fbook.data.source.remote.api.response.BaseResponse
-import com.framgia.fbook.data.source.remote.api.response.TokenResponse
+import com.framgia.fbook.data.source.remote.api.response.*
 import io.reactivex.Single
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -107,4 +104,7 @@ interface FBookApi {
   @GET("/api/v0/users/book/{user_id}/{type}")
   fun getFeatureOtherOfUser(@Path("user_id") userId: Int?,
       @Path("type") type: String?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+
+  @GET("/api/v0/notifications")
+  fun getNotification():Single<BaseResponse<NotificationResponse>>
 }
