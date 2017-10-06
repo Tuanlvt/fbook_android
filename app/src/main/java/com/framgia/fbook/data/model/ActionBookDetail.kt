@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName
  * Created by framgia on 19/09/2017.
  */
 class ActionBookDetail : BaseRequest() {
+
   @Expose
   @SerializedName("book_id")
   var bookId: Int? = null
