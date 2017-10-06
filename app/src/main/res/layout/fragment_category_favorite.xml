@@ -28,6 +28,7 @@
             android:text="@string/edit_category_favorite"
             android:textAllCaps="false"
             android:textColor="@color/color_white"
+            android:visibility="@{viewModel.mIsViSiBleButtonUpdateCategoryFavorite? View.VISIBLE : View.GONE}"
             app:layout_constraintTop_toTopOf="parent"
             />
 

@@ -101,6 +101,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
 
   override fun onFollowOrUnFollowSuccess() {
     mIsVisibleButtonFollow.set(!mFollow.get().isFollow)
+    mPresenter.getFollowInfomationOfUser(mUser.get().id)
   }
 
   fun onClickOther() {
@@ -114,7 +115,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
 
   fun fillData() {
     val idUser: Int? = intent.getIntExtra(Constant.BOOK_DETAIL_EXTRA, 0)
-    if (idUser != Constant.EXTRA_ZERO) {
+    if (idUser != mUserRepository.getUserLocal()?.id && idUser != Constant.EXTRA_ZERO) {
       mPresenter.getUserOtherProfile(idUser)
       mPresenter.getFollowInfomationOfUser(idUser)
       return
