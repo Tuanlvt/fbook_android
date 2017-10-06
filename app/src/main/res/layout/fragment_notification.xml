@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.framgia.fbook.screen.notification.NotificationFragment"
+            type="com.framgia.fbook.screen.notification.notificationUser.NotificationFragment"
             />
 
     </data>

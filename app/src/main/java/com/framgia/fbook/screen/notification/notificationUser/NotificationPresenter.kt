@@ -1,4 +1,4 @@
-package com.framgia.fbook.screen.notification
+package com.framgia.fbook.screen.notification.notificationUser
 
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException

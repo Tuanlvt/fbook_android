@@ -10,7 +10,7 @@ import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.mainpage.MainPageFragment
 import com.framgia.fbook.screen.menuprofile.MenuProfileFragment
 import com.framgia.fbook.screen.mybook.MyBookFragment
-import com.framgia.fbook.screen.notification.NotificationFragment
+import com.framgia.fbook.screen.notification.NotificationContainerFragment
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.NavigateAnim
 import com.framgia.fbook.utils.navigator.Navigator
@@ -33,7 +33,7 @@ class MainContainerFragment : BaseFragment() {
       Constant.Tab.TAB_MY_BOOK -> mNavigator.goNextChildFragment(containerId,
           MyBookFragment.newInstance(), true, NavigateAnim.NONE, MyBookFragment.TAG)
       Constant.Tab.TAB_NOTIFICATION -> mNavigator.goNextChildFragment(containerId,
-          NotificationFragment.newInstance(), true, NavigateAnim.NONE, MyBookFragment.TAG)
+          NotificationContainerFragment.newInstance(), true, NavigateAnim.NONE, MyBookFragment.TAG)
       Constant.Tab.TAB_ACCOUNT -> mNavigator.goNextChildFragment(containerId,
           MenuProfileFragment.newInstance(), false, NavigateAnim.NONE,
           MenuProfileFragment.TAG)

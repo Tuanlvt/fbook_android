@@ -1,4 +1,4 @@
-package com.framgia.fbook.screen.notification
+package com.framgia.fbook.screen.notification.notificationUser
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -11,6 +11,7 @@ import com.framgia.fbook.data.source.remote.api.response.NotificationResponse
 import com.framgia.fbook.databinding.FragmentNotificationBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.main.MainActivity
+import com.framgia.fbook.screen.notification.NotificationAdapter
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
