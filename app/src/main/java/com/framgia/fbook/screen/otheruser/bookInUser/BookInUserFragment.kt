@@ -1,7 +1,6 @@
 package com.framgia.fbook.screen.otheruser.bookInUser
 
 import android.databinding.DataBindingUtil
-import android.databinding.ObservableField
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,7 +19,7 @@ import javax.inject.Inject
 /**
  * BookInUser Screen.
  */
-class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel {
+class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBookInUserClickListener {
 
   companion object {
     val TAG: String? = BookInUserFragment::class.java.name
@@ -40,7 +39,9 @@ class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel {
   internal lateinit var mUserRepository: UserRepository
   @Inject
   internal lateinit var mPresenter: BookInUserContract.Presenter
-  private var mBook: ObservableField<Book> = ObservableField()
+  @Inject
+  internal lateinit var mAdapter: BookInUserAdapter
+  var mBook: List<Book> = ArrayList()
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -68,8 +69,13 @@ class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel {
     super.onStop()
   }
 
-  override fun onGetBookInUserProfileSuccess(book: List<Book>?) {
-    //Todo Edit Later
+  override fun onGetBookInUserProfileSuccess(book: List<Book>) {
+    mBook = book
+    mAdapter.updateData(mBook)
+  }
+
+  override fun onItemBookInUserClick(book: Book?) {
+    //Tod edit later
   }
 
   override fun onError(exception: BaseException) {
@@ -77,8 +83,9 @@ class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel {
   }
 
   fun fillData() {
-    //Todo edit later
     val typeRequest: String? = arguments.getString(BOOK_IN_USER_PROFILE)
     mPresenter.getBookInUserProfile(mUserRepository.getUserLocal()?.id, typeRequest)
+    mAdapter.setItemBookInUserClickListener(this)
+
   }
 }

@@ -13,7 +13,7 @@ interface BookInUserContract {
    * View.
    */
   interface ViewModel : BaseViewModel {
-    fun onGetBookInUserProfileSuccess(book: List<Book>?)
+    fun onGetBookInUserProfileSuccess(book: List<Book>)
 
     fun onError(exception: BaseException)
   }
