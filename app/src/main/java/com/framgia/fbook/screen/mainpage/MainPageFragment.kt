@@ -120,31 +120,31 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItem
   }
 
   fun onClickMoreLateBook() {
-    mNavigator.goNextChildFragment(R.id.contentMainPage,
+    mNavigator.goNextChildFragment(R.id.layout_content_main,
         ListBookFragment.newInstance(Constant.LATE), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }
 
   fun onClickMoreViewBook() {
-    mNavigator.goNextChildFragment(R.id.contentMainPage,
+    mNavigator.goNextChildFragment(R.id.layout_content_main,
         ListBookFragment.newInstance(Constant.VIEW), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }
 
   fun onClickMoreRatingBook() {
-    mNavigator.goNextChildFragment(R.id.contentMainPage,
+    mNavigator.goNextChildFragment(R.id.layout_content_main,
         ListBookFragment.newInstance(Constant.RATING), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }
 
   fun onClickMoreWaitingBook() {
-    mNavigator.goNextChildFragment(R.id.contentMainPage,
+    mNavigator.goNextChildFragment(R.id.layout_content_main,
         ListBookFragment.newInstance(Constant.WAITING), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }
 
   fun onClickMoreReadBook() {
-    mNavigator.goNextChildFragment(R.id.contentMainPage,
+    mNavigator.goNextChildFragment(R.id.layout_content_main,
         ListBookFragment.newInstance(Constant.READ), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }

@@ -16,10 +16,12 @@ import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentListbookBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.EndlessRecyclerOnScrollListener
+import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.listbookseemore.adapter.ListBookAdapter
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.framgia.fbook.utils.Constant
+import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.library.MaterialDialog
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
@@ -35,6 +37,8 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
   internal lateinit var mDialogManager: DialogManager
   @Inject
   internal lateinit var mListBookAdapter: ListBookAdapter
+  @Inject
+  internal lateinit var mNavigator: Navigator
   private val mListCategory = mutableListOf<Category>()
   private val mListSortBook = mutableListOf<SortBook>()
   private var mCurrentCategoryPosition = 0
@@ -67,7 +71,7 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
     mPresenter.getListCategory()
     mPresenter.getListSortBook()
     mIsOrderByAsc.set(false)
-    val gridLayoutManager = GridLayoutManager(context, 2)
+    val gridLayoutManager = GridLayoutManager(context, 3)
     binding.recyclerListBook.layoutManager = gridLayoutManager
     binding.recyclerListBook.addOnScrollListener(
         object : EndlessRecyclerOnScrollListener(gridLayoutManager) {
@@ -141,7 +145,9 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
   }
 
   override fun onItemClickListener(any: Any?) {
-    //TODO dev later
+    val bundle = Bundle()
+    bundle.putParcelable(Constant.BOOK_DETAIL_EXTRA, any as Book)
+    mNavigator.startActivity(BookDetailActivity::class.java, bundle)
   }
 
   fun onClickOrderBy() {

@@ -33,7 +33,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 >
-                <ImageView
+                <com.framgia.fbook.widget.view.ImageViewLabel
                     android:id="@+id/image_cover"
                     android:layout_width="@dimen/dp_130"
                     android:layout_height="@dimen/dp_170"
@@ -44,6 +44,8 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0"
+                    app:setDistanceLabel="@{2}"
+                    app:updateText="@{viewModel.mBook.office.name}"
                     bind:imageUrl="@{viewModel.mBook.Image.mobileImage.smallPath}"
                     tools:ignore="ContentDescription"
                     />
@@ -151,39 +153,36 @@
                         android:rating="@{viewModel.mBook.avgStar}"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_tile_publish_date"
-                        style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
+                        style="@style/Base.Widget.AppCompat.RatingBar.Small"
                         />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
                         android:layout_marginEnd="@dimen/dp_5"
                         android:layout_marginRight="@dimen/dp_5"
-                        android:background="@drawable/border_button_background_red"
+                        android:background="@drawable/border_button_backround_blue"
                         android:gravity="center"
                         android:padding="@dimen/dp_5"
                         android:text="@{viewModel.NumberOfWaiting}"
                         android:textColor="@color/color_white"
-                        android:textSize="@dimen/sp_13"
+                        android:textSize="@dimen/sp_12"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toLeftOf="@+id/text_view_request"
-                        app:layout_constraintTop_toBottomOf="@+id/ratingBar"
                         />
                     <TextView
                         android:id="@+id/text_view_request"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:background="@drawable/border_button_stroke_red"
+                        android:background="@drawable/border_button_stroke_blue"
                         android:onClick="@{()-> viewModel.onClickViewRequest()}"
                         android:padding="@dimen/dp_5"
                         android:text="@string/view_all_request"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/sp_13"
+                        android:textAllCaps="true"
+                        android:textColor="@color/color_blue"
+                        android:textSize="@dimen/sp_12"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/ratingBar"
                         />
                 </android.support.constraint.ConstraintLayout>
 

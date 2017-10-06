@@ -2,6 +2,10 @@ package com.framgia.fbook.screen.main
 
 import android.app.Activity
 import android.support.v4.app.FragmentActivity
+import com.framgia.fbook.data.source.UserRepository
+import com.framgia.fbook.data.source.UserRepositoryImpl
+import com.framgia.fbook.data.source.local.UserLocalDataSource
+import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.utils.dagger.ActivityScope
 import com.framgia.fbook.utils.navigator.Navigator
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
@@ -36,5 +40,12 @@ class MainModule(private val mActivity: Activity) {
   fun providePageAdapter(): MainContainerPagerAdapter {
     return MainContainerPagerAdapter(
         (mActivity as FragmentActivity).supportFragmentManager)
+  }
+
+  @ActivityScope
+  @Provides
+  fun providerUserRepository(userRemoteDataSource: UserRemoteDataSource,
+      userLocalDataSource: UserLocalDataSource): UserRepository {
+    return UserRepositoryImpl(userRemoteDataSource, userLocalDataSource)
   }
 }
