@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.notification.notificationUser
 
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.framgia.fbook.data.source.remote.api.response.NotificationResponse
 import com.framgia.fbook.databinding.FragmentNotificationBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.main.MainActivity
+import com.framgia.fbook.screen.main.NotificationListener
 import com.framgia.fbook.screen.notification.NotificationAdapter
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.fstyle.structure_android.widget.dialog.DialogManager
@@ -27,6 +29,7 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
   internal lateinit var mDialogManager: DialogManager
   @Inject
   internal lateinit var mNotificationAdapter: NotificationAdapter
+  private lateinit var mNotificationListener: NotificationListener
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -56,6 +59,17 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
     super.onStop()
   }
 
+  override fun onAttach(context: Context?) {
+    super.onAttach(context)
+    if (context is MainActivity) {
+      mNotificationListener = context
+    }
+  }
+
+  fun setNotificationListener(notificationListener: NotificationListener) {
+    mNotificationListener = notificationListener
+  }
+
   override fun onDismissProgressDialog() {
     mDialogManager.dismissProgressDialog()
   }
@@ -76,6 +90,9 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
     notificationResponse?.let {
       notificationResponse.notificationUser?.let {
         mNotificationAdapter.updateData(it.listNotification)
+      }
+      notificationResponse.notificationFollow?.let {
+        mNotificationListener.getNotificationFollow(it)
       }
     }
   }

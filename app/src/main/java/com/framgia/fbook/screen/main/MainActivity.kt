@@ -10,17 +10,19 @@ import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
+import com.framgia.fbook.data.model.Notification
 import com.framgia.fbook.databinding.ActivityMainBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.SearchBook.SearchBookActivity
 import com.framgia.fbook.screen.login.LoginActivity
+import com.framgia.fbook.screen.notification.notificationFollow.NotificationFollowListener
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import com.framia.fbook.screen.main.MainContract
 import com.roughike.bottombar.BottomBar
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), MainContract.ViewModel {
+class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListener {
 
   private val DELAY_TIME_TWO_TAP_BACK_BUTTON = 2000
   private val PAGE_LIMIT = 3
@@ -41,6 +43,7 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
   private lateinit var mRunnable: Runnable
   val mAvatar: ObservableField<String> = ObservableField()
   val mIsVisibleAvatar: ObservableField<Boolean> = ObservableField()
+  private lateinit var mNotificationFollowListener: NotificationFollowListener
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -70,6 +73,10 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
   override fun onResume() {
     super.onResume()
     setAvatar()
+  }
+
+  fun setNotificationFollowListener(notificationFollowListener: NotificationFollowListener) {
+    mNotificationFollowListener = notificationFollowListener
   }
 
   fun setCurrentTab(tab: Int) {
@@ -117,6 +124,10 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
 
   fun onClickChooseDomain(view: View) {
     //Todo dev later
+  }
+
+  override fun getNotificationFollow(notification: Notification?) {
+    mNotificationFollowListener.getNotificationFollow(notification)
   }
 
   fun getMainComponent(): MainComponent {

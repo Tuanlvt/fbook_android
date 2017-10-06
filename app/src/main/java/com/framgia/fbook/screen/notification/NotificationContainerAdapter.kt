@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.framgia.fbook.R
+import com.framgia.fbook.screen.notification.notificationFollow.NotificationFollowFragment
 import com.framgia.fbook.screen.notification.notificationUser.NotificationFragment
 import com.framgia.fbook.utils.Constant
 
@@ -24,8 +25,7 @@ class NotificationContainerAdapter(private val context: Context,
   override fun getItem(position: Int): Fragment {
     return when (position) {
       Constant.TabNotification.TAB_USER -> NotificationFragment.newInstance()
-    //TODO edit later
-    //Constant.TabNotification.TAB_FOLLOW ->
+      Constant.TabNotification.TAB_FOLLOW -> NotificationFollowFragment.newInstance()
       else -> {
         Fragment()
       }
