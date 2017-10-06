@@ -8,7 +8,9 @@ import com.framgia.fbook.data.source.CategoryRepositoryImpl
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.data.source.remote.CategoryRemoteDataSource
 import com.framgia.fbook.screen.listbookseemore.adapter.ListBookAdapter
+import com.framgia.fbook.utils.dagger.ActivityScope
 import com.framgia.fbook.utils.dagger.FragmentScope
+import com.framgia.fbook.utils.navigator.Navigator
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import com.fstyle.structure_android.widget.dialog.DialogManagerImpl
@@ -55,5 +57,11 @@ class ListBookModule(private val mFragment: Fragment) {
   fun provideCategoryRepository(
       categoryRemoteDataSource: CategoryRemoteDataSource): CategoryRepository {
     return CategoryRepositoryImpl(categoryRemoteDataSource)
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideNavigator(): Navigator {
+    return Navigator(mFragment)
   }
 }

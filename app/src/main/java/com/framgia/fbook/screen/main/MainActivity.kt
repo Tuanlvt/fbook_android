@@ -8,6 +8,8 @@ import android.view.View
 import android.widget.Toast
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
+import com.framgia.fbook.data.model.User
+import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.ActivityMainBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.SearchBook.SearchBookActivity
@@ -29,12 +31,16 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
   lateinit var mNavigator: Navigator
   @Inject
   lateinit var mAdapter: MainContainerPagerAdapter
+  @Inject
+  internal lateinit var mUserRepository: UserRepository
   lateinit var mMainComponent: MainComponent
   val mCurrentTab: ObservableField<Int> = ObservableField()
   val mPageLimit: ObservableField<Int> = ObservableField(PAGE_LIMIT)
   private var mIsDoubleTapBack = false
   private lateinit var mHandler: Handler
   private lateinit var mRunnable: Runnable
+  val mAvatar: ObservableField<String> = ObservableField()
+  val mIsVisibleAvatar: ObservableField<Boolean> = ObservableField()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -59,6 +65,11 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
   override fun onStop() {
     presenter.onStop()
     super.onStop()
+  }
+
+  override fun onResume() {
+    super.onResume()
+    setAvatar()
   }
 
   fun setCurrentTab(tab: Int) {
@@ -96,6 +107,7 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
         R.id.tab_notification -> setCurrentTab(Constant.Tab.TAB_NOTIFICATION)
         R.id.tab_account -> setCurrentTab(Constant.Tab.TAB_ACCOUNT)
       }
+      setVisibleAvatar(idView)
     }
   }
 
@@ -113,5 +125,18 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
 
   fun onClickLogin(view: View) {
     mNavigator.startActivity(LoginActivity::class.java)
+  }
+
+  fun setVisibleAvatar(idView: Int?) {
+    if (idView == R.id.tab_account) {
+      mIsVisibleAvatar.set(false)
+      return
+    }
+    mIsVisibleAvatar.set(true)
+  }
+
+  fun setAvatar() {
+    val user: User? = mUserRepository.getUserLocal()
+    mAvatar.set(user?.avatar)
   }
 }

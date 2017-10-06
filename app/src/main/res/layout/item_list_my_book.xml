@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_5"
             >
-            <ImageView
+            <com.framgia.fbook.widget.view.ImageViewLabel
                 android:id="@+id/image_cover"
                 android:layout_width="@dimen/dp_130"
                 android:layout_height="@dimen/dp_170"
@@ -35,23 +35,10 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
+                app:setDistanceLabel="@{2}"
+                app:updateText="@{viewModel.book.office.name}"
                 bind:imageUrl="@{viewModel.book.Image.mobileImage.smallPath}"
                 tools:ignore="ContentDescription"
-                />
-            <TextView
-                android:id="@+id/text_branch"
-                android:layout_width="@dimen/dp_130"
-                android:layout_height="@dimen/dp_30"
-                android:background="@color/color_hint_foreground_light"
-                android:gravity="center"
-                android:text="@{viewModel.book.publishDate}"
-                android:textColor="@color/color_white"
-                android:textSize="@dimen/sp_13"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintVertical_bias="0.0"
                 />
             <android.support.constraint.ConstraintLayout
                 android:layout_width="0dp"
@@ -132,19 +119,22 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
-                    android:background="@drawable/border_button_stroke_green"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/dp_3"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:paddingLeft="@dimen/dp_10"
-                    android:paddingRight="@dimen/dp_10"
-                    android:paddingStart="@dimen/dp_10"
-                    android:paddingTop="@dimen/dp_3"
-                    android:text="@{viewModel.book.office.name}"
-                    android:textColor="@android:color/holo_green_dark"
-                    android:textSize="@dimen/sp_12"
+                    android:text="@string/publish_date_two_dots"
+                    android:textColor="@android:color/black"
+                    android:textStyle="italic"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_count_view"
+                    />
+                <TextView
+                    android:id="@+id/text_publish_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:text="@{viewModel.book.publishDate}"
+                    app:layout_constraintLeft_toRightOf="@+id/text_tile_publish_date"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/text_tile_publish_date"
                     />
                 <Button
                     android:id="@+id/button_view_all"
