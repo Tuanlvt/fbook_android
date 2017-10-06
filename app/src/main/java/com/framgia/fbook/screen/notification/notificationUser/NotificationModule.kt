@@ -1,10 +1,11 @@
-package com.framgia.fbook.screen.notification
+package com.framgia.fbook.screen.notification.notificationUser
 
 import android.support.v4.app.Fragment
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.UserRepositoryImpl
 import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
+import com.framgia.fbook.screen.notification.NotificationAdapter
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.fstyle.structure_android.widget.dialog.DialogManager
@@ -23,7 +24,8 @@ class NotificationModule(private val mFragment: Fragment) {
   @Provides
   fun providePresenter(userRepository: UserRepository,
       schedulerProvider: BaseSchedulerProvider): NotificationContract.Presenter {
-    val presenter = NotificationPresenter(userRepository)
+    val presenter = NotificationPresenter(
+        userRepository)
     presenter.setViewModel(mFragment as NotificationContract.ViewModel)
     presenter.setSchedulerProvider(schedulerProvider)
     return presenter

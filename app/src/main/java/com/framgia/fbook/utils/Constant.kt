@@ -68,4 +68,9 @@ object Constant {
     val TAB_SHARING_BOOK: String = "sharing"
     val TAB_REVIEWED_BOOK: String = "reviewed"
   }
+
+  object TabNotification {
+    val TAB_USER = 0
+    val TAB_FOLLOW = 1
+  }
 }
