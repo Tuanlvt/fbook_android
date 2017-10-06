@@ -49,4 +49,10 @@ class BookInUserModule(private val mFragment: Fragment) {
   fun provideBookRepository(bookRemoteDataSource: BookRemoteDataSource): BookRepository {
     return BookRepositoryImpl(bookRemoteDataSource)
   }
+
+  @FragmentScope
+  @Provides
+  fun provideBookInUserAdapter(): BookInUserAdapter {
+    return BookInUserAdapter(mFragment.context.applicationContext)
+  }
 }

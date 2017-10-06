@@ -14,9 +14,10 @@
             />
 
     </data>
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         >
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -56,7 +57,7 @@
                                 tools:ignore="ContentDescription,RtlSymmetry"
                                 />
                             <TextView
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_30"
                                 android:layout_marginStart="@dimen/dp_30"
@@ -65,7 +66,7 @@
                                 android:maxLines="1"
                                 android:text="@string/other"
                                 android:textColor="@color/color_white"
-                                android:textSize="@dimen/sp_18"
+                                android:textSize="@dimen/sp_22"
                                 />
                         </android.support.v7.widget.Toolbar>
                         <android.support.design.widget.TabLayout
@@ -99,5 +100,5 @@
                 bind:viewPageAdapter="@{viewModel.mAdapter}"
                 />
         </android.support.v4.widget.NestedScrollView>
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 </layout>

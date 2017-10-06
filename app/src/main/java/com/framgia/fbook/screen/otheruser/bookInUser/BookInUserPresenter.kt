@@ -32,9 +32,8 @@ internal class BookInUserPresenter(
     val disposable: Disposable = bookRepository.getFeatureOtherOfUser(userId, type)
         .subscribeOn(mBaseSchedulerProvider.io())
         .observeOn(mBaseSchedulerProvider.ui())
-        .subscribe({
-          book ->
-          mViewModel?.onGetBookInUserProfileSuccess(book.items?.data)
+        .subscribe({ book ->
+          book.items?.data?.let { mViewModel?.onGetBookInUserProfileSuccess(it) }
         }, { error
           ->
           mViewModel?.onError(error as BaseException)
