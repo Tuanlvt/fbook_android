@@ -20,7 +20,7 @@ object RetrofitUtils {
       return null
     }
     val requestFileAvatar = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-    return MultipartBody.Part.createFormData("medias$position[file]", file.name,
+    return MultipartBody.Part.createFormData("medias[$position][file]", file.name,
         requestFileAvatar)
   }
 }
