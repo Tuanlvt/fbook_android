@@ -37,6 +37,7 @@ class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewMo
   @Inject
   internal lateinit var mUserRepository: UserRepository
   val mUser: ObservableField<User> = ObservableField()
+  val mIsViSiBleButtonUpdateCategoryFavorite: ObservableField<Boolean> = ObservableField(false)
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -64,6 +65,11 @@ class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewMo
 
   override fun onGetUser(user: User?) {
     mUser.set(user)
+    if (mUserRepository.getUserLocal()?.id != mUser.get().id) {
+      mIsViSiBleButtonUpdateCategoryFavorite.set(false)
+    } else {
+      mIsViSiBleButtonUpdateCategoryFavorite.set(true)
+    }
     mAdapter.updateData(mUser.get().categories)
   }
 
@@ -96,9 +102,10 @@ class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewMo
 
   private fun fillData() {
     mUser.let {
-      it?.set(mUserRepository.getUserLocal())
-      mAdapter.updateData(it?.get()?.categories)
+      it.set(mUserRepository.getUserLocal())
+      mAdapter.updateData(it.get()?.categories)
     }
+    mIsViSiBleButtonUpdateCategoryFavorite.set(true)
   }
 
   fun onClickEditCategoryFavorite() {
