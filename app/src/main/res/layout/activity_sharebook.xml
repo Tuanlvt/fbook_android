@@ -118,6 +118,7 @@
                     android:id="@+id/text_author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
                     bind:errorText="@{viewModel.authorError}"
                     >
                     <EditText
@@ -130,6 +131,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:baselineAligned="false"
                     android:orientation="horizontal"
                     >
@@ -162,6 +164,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center|end"
+                            android:tint="@color/color_black"
                             app:srcCompat="@drawable/ic_arrow_drop_down"
                             />
                     </FrameLayout>
@@ -194,6 +197,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center|end"
+                            android:tint="@color/color_black"
                             app:srcCompat="@drawable/ic_arrow_drop_down"
                             />
                     </FrameLayout>
@@ -201,6 +205,7 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
                     >
                     <EditText
                         android:layout_width="match_parent"
@@ -215,25 +220,26 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
                     bind:errorText="@{viewModel.descriptionError}"
                     >
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/description"
-                        android:minHeight="@dimen/dp_100"
                         android:text="@={viewModel.mBookRequest.description}"
                         />
                 </android.support.design.widget.TextInputLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:gravity="center"
                     android:orientation="horizontal"
                     >
                     <ImageView
-                        android:layout_width="@dimen/dp_100"
-                        android:layout_height="@dimen/dp_100"
+                        android:layout_width="@dimen/dp_60"
+                        android:layout_height="@dimen/dp_60"
                         android:onClick="@{() -> viewModel.onClickAddImage()}"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_add_image"
