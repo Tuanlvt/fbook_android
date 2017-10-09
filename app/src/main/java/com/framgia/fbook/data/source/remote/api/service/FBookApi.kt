@@ -4,6 +4,7 @@ import com.framgia.fbook.data.model.*
 import com.framgia.fbook.data.source.remote.api.request.*
 import com.framgia.fbook.data.source.remote.api.response.*
 import io.reactivex.Single
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
 
@@ -48,7 +49,8 @@ interface FBookApi {
   @Multipart
   @POST("/api/v0/books")
   fun addBook(
-      @PartMap params: Map<String, @JvmSuppressWildcards RequestBody?>): Single<BaseResponse<Book>>
+      @PartMap params: Map<String, @JvmSuppressWildcards RequestBody?>,
+      @Part listFile: MutableList<MultipartBody.Part>?): Single<BaseResponse<Book>>
 
   @GET("api/v0/books/add-owner/{book_id}")
   fun addUserHaveThisBook(@Path("book_id") bookId: Int?): Single<Any>
@@ -106,5 +108,5 @@ interface FBookApi {
       @Path("type") type: String?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 
   @GET("/api/v0/notifications")
-  fun getNotification():Single<BaseResponse<NotificationResponse>>
+  fun getNotification(): Single<BaseResponse<NotificationResponse>>
 }

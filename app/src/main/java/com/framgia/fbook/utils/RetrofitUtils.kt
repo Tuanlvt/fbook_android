@@ -15,11 +15,12 @@ object RetrofitUtils {
         MediaType.parse("text/plain"), value)
   }
 
-  fun toMutilPartBody(file: File?): MultipartBody.Part? {
+  fun toMutilPartBody(position: Int?, file: File?): MultipartBody.Part? {
     if (file == null) {
       return null
     }
     val requestFileAvatar = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-    return MultipartBody.Part.createFormData("user[avatar]", file.name, requestFileAvatar)
+    return MultipartBody.Part.createFormData("medias$position[file]", file.name,
+        requestFileAvatar)
   }
 }

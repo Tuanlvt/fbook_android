@@ -11,9 +11,11 @@ import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.service.FBookApi
 import com.framgia.fbook.utils.RetrofitUtils
 import io.reactivex.Single
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 /**
  * Created by Hyperion on 9/5/2017.
@@ -28,6 +30,7 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
   }
 
   companion object {
+    private val PARAM_TYPE = "1"
     private val PARAM_BOOK_NAME = "q"
     private val PARAM_TITLE = "title"
     private val PARAM_AUTHOR = "author"
@@ -81,7 +84,16 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
     bookRequest.categoryId?.let {
       params.put(PARAM_CATEGORY_ID, RetrofitUtils.toRequestBody(it.toString()))
     }
-    return fbookApi.addBook(params)
+
+    val listFile: MutableList<MultipartBody.Part> = ArrayList()
+    bookRequest.listImage.let { listImage ->
+      for (i in 0 until listImage.size - 1) {
+        params.put("medias$i[type]", RetrofitUtils.toRequestBody(PARAM_TYPE))
+        RetrofitUtils.toMutilPartBody(i, listImage[i].image)?.let { it -> listFile.add(it) }
+      }
+    }
+
+    return fbookApi.addBook(params, listFile)
   }
 
   override fun addUserHaveThisBook(bookId: Int?): Single<Any> {
