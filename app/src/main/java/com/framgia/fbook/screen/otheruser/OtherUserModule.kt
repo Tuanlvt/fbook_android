@@ -2,6 +2,7 @@ package com.framgia.fbook.screen.otheruser;
 
 import android.app.Activity
 import android.support.v4.app.FragmentActivity
+import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.dagger.ActivityScope
 import com.framgia.fbook.utils.navigator.Navigator
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
@@ -28,7 +29,8 @@ class OtherUserModule(private val mActivity: Activity) {
   @ActivityScope
   @Provides
   fun provideOtherUserAdapter(): OtherUserAdapter {
-    return OtherUserAdapter(mActivity,
+    val userId: Int? = mActivity.intent.getIntExtra(Constant.BOOK_DETAIL_IN_USER_EXTRA, 0)
+    return OtherUserAdapter(mActivity, userId,
         (mActivity as FragmentActivity).supportFragmentManager)
   }
 

@@ -22,7 +22,6 @@ object Constant {
 
   val BOOK_DETAIL_EXTRA = "book_detail"
   val USER_BOOK_DETAIL_EXTRA = "user_book_detail"
-  val USER_DETAIL_EXTRAU = "user_detail"
   val BOOK_DETAIL_IN_USER_EXTRA = "book_detail_in_user_extra"
 
   object Tab {
@@ -65,6 +64,7 @@ object Constant {
     val TAB_READING_BOOK: String = "reading"
     val TAB_DONE_BOOK: String = "done"
     val TAB_WAITING_BOOK: String = "waiting"
+    val TAB_READ_BOOK: String = "read"
     val TAB_SHARING_BOOK: String = "sharing"
     val TAB_REVIEWED_BOOK: String = "reviewed"
   }

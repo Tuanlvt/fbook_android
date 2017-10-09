@@ -25,7 +25,6 @@ class OtherUserActivity : BaseActivity(), OtherUserContract.ViewModel {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
     mOtherUserComponent = DaggerOtherUserComponent.builder()
         .appComponent((application as MainApplication).appComponent)
         .otherUserModule(OtherUserModule(this))
@@ -57,9 +56,7 @@ class OtherUserActivity : BaseActivity(), OtherUserContract.ViewModel {
 
   companion object {
     val TAG: String = OtherUserActivity::class.java.name
-    fun newInstance(userId: Int): OtherUserActivity {
-      val bundle = Bundle()
-      bundle.getInt(userId.toString())
+    fun newInstance(): OtherUserActivity {
       return OtherUserActivity()
     }
   }
