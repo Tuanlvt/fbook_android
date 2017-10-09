@@ -108,7 +108,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     val bundle = Bundle()
     val idUser: Int? = mUser.get().id
     if (idUser != null) {
-      bundle.putInt(ProfileActivity.TAG, idUser)
+      bundle.putInt(Constant.BOOK_DETAIL_IN_USER_EXTRA, idUser)
       mNavigator.startActivity(OtherUserActivity::class.java, bundle)
     }
   }

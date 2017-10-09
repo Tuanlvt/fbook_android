@@ -24,10 +24,12 @@ class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBoo
   companion object {
     val TAG: String? = BookInUserFragment::class.java.name
     private val BOOK_IN_USER_PROFILE: String = "BOOK_IN_USER_PROFILE"
-    fun newInstance(type: String?): BookInUserFragment {
+    private val USER_ID: String = "USER_ID"
+    fun newInstance(type: String?, userId: Int?): BookInUserFragment {
       val fragment = BookInUserFragment()
       val bundle = Bundle()
       bundle.putString(BOOK_IN_USER_PROFILE, type)
+      userId?.let { bundle.putInt(USER_ID, it) }
       fragment.arguments = bundle
       return fragment
     }
@@ -84,8 +86,8 @@ class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBoo
 
   fun fillData() {
     val typeRequest: String? = arguments.getString(BOOK_IN_USER_PROFILE)
-    mPresenter.getBookInUserProfile(mUserRepository.getUserLocal()?.id, typeRequest)
+    val userId: Int? = arguments.getInt(USER_ID)
+    mPresenter.getBookInUserProfile(userId, typeRequest)
     mAdapter.setItemBookInUserClickListener(this)
-
   }
 }

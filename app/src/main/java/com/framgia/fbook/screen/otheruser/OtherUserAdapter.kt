@@ -11,7 +11,7 @@ import com.framgia.fbook.utils.Constant
 /**
  * Created by levutantuan on 9/27/17.
  */
-class OtherUserAdapter(private val mContext: Context,
+class OtherUserAdapter(private val mContext: Context, private val mUserId: Int?,
     fragmentManager: FragmentManager) : FragmentPagerAdapter(
     fragmentManager) {
 
@@ -22,18 +22,17 @@ class OtherUserAdapter(private val mContext: Context,
   override fun getItem(position: Int): Fragment {
     return when (position) {
       Constant.TabOtherInUser.TAB_READING_BOOK -> BookInUserFragment.newInstance(
-          Constant.RequestCodeBookInUser.TAB_READING_BOOK)
-
+          Constant.RequestCodeBookInUser.TAB_READING_BOOK, mUserId)
       Constant.TabOtherInUser.TAB_WAITING_BOOK -> BookInUserFragment.newInstance(
-          Constant.RequestCodeBookInUser.TAB_WAITING_BOOK)
+          Constant.RequestCodeBookInUser.TAB_WAITING_BOOK, mUserId)
       Constant.TabOtherInUser.TAB_READ_BOOK -> BookInUserFragment.newInstance(
-          Constant.RequestCodeBookInUser.TAB_READING_BOOK)
+          Constant.RequestCodeBookInUser.TAB_READ_BOOK, mUserId)
       Constant.TabOtherInUser.TAB_SHARING_BOOK -> BookInUserFragment.newInstance(
-          Constant.RequestCodeBookInUser.TAB_SHARING_BOOK)
+          Constant.RequestCodeBookInUser.TAB_SHARING_BOOK, mUserId)
       Constant.TabOtherInUser.TAB_SUGGESTED_BOOK -> BookInUserFragment.newInstance(
-          Constant.RequestCodeBookInUser.TAB_DONE_BOOK)
+          Constant.RequestCodeBookInUser.TAB_DONE_BOOK, mUserId)
       Constant.TabOtherInUser.TAB_REVIEW_BOOK -> BookInUserFragment.newInstance(
-          Constant.RequestCodeBookInUser.TAB_REVIEWED_BOOK)
+          Constant.RequestCodeBookInUser.TAB_REVIEWED_BOOK, mUserId)
       else -> {
         Fragment()
       }
