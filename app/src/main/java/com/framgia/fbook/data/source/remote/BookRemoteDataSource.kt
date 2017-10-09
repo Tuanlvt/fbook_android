@@ -30,7 +30,8 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
   }
 
   companion object {
-    private val PARAM_TYPE = "1"
+    private val PARAM_TYPE_IMAGE_BOOK = "0"
+    private val PARAM_TYPE_COVER_BOOK = "1"
     private val PARAM_BOOK_NAME = "q"
     private val PARAM_TITLE = "title"
     private val PARAM_AUTHOR = "author"
@@ -88,7 +89,12 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
     val listFile: MutableList<MultipartBody.Part> = ArrayList()
     bookRequest.listImage.let { listImage ->
       for (i in 0 until listImage.size - 1) {
-        params.put("medias$i[type]", RetrofitUtils.toRequestBody(PARAM_TYPE))
+        val typeImage: String = if (i == 0) {
+          PARAM_TYPE_COVER_BOOK
+        } else {
+          PARAM_TYPE_IMAGE_BOOK
+        }
+        params.put("medias[$i][type]", RetrofitUtils.toRequestBody(typeImage))
         RetrofitUtils.toMutilPartBody(i, listImage[i].image)?.let { it -> listFile.add(it) }
       }
     }
