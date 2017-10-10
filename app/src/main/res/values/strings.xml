@@ -81,6 +81,8 @@
     <string name="approve_returning_returned_requests">Approve returning-returned requests</string>
     <string name="unapprove">Unapprove</string>
     <string name="newsfeed">News Feed</string>
+    <string name="are_you_sure_approve_this_request">Are you sure approve this request?</string>
+    <string name="warning">Warning !</string>
 
     <!-- Dialog -->
     <string name="agree">Agree</string>

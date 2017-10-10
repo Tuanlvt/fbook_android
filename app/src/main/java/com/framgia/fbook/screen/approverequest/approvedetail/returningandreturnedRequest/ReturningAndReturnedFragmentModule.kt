@@ -1,6 +1,7 @@
 package com.framgia.fbook.screen.approverequest.approvedetail.returningandreturnedRequest
 
 import android.support.v4.app.Fragment
+import com.framgia.fbook.screen.approverequest.approvedetail.adapterlistrequest.ListRequestAdapter
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import dagger.Module
@@ -21,5 +22,11 @@ class ReturningAndReturnedFragmentModule(private val mFragment: Fragment) {
     presenter.setViewModel(mFragment as ReturningAndReturnedFragmentContract.ViewModel)
     presenter.setSchedulerProvider(schedulerProvider)
     return presenter
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideListRequestAdapter(): ListRequestAdapter {
+    return ListRequestAdapter(mFragment.context)
   }
 }

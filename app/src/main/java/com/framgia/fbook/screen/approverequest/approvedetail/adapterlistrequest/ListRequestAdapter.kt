@@ -18,7 +18,7 @@ import com.framgia.fbook.screen.BaseRecyclerViewAdapter
 class ListRequestAdapter(
     context: Context) : BaseRecyclerViewAdapter<ListRequestAdapter.ItemViewHolder>(
     context) {
-
+  private lateinit var mItemRequestClickListener: ItemRequestClickListener
   private val mListUser = mutableListOf<User>()
   private var mIsApproved = false
   private var sizeApprove: Int = 0
@@ -38,13 +38,18 @@ class ListRequestAdapter(
     mIsApproved = approved
   }
 
+  fun setItemRequestClickListener(
+      itemRequestClickListener: ItemRequestClickListener) {
+    mItemRequestClickListener = itemRequestClickListener
+  }
+
   override fun getItemCount(): Int = mListUser.size
 
   override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ItemViewHolder {
     val binding = DataBindingUtil.inflate<ItemListRequestBinding>(
         LayoutInflater.from(parent?.context),
         R.layout.item_list_request, parent, false)
-    return ItemViewHolder(binding)
+    return ItemViewHolder(binding, mItemRequestClickListener)
   }
 
   override fun onBindViewHolder(holder: ItemViewHolder?, position: Int) {
@@ -56,11 +61,13 @@ class ListRequestAdapter(
   }
 
   inner class ItemViewHolder(
-      private val mBinding: ItemListRequestBinding) : RecyclerView.ViewHolder
+      private val mBinding: ItemListRequestBinding,
+      private val mItemRequestClickListener: ItemRequestClickListener) : RecyclerView.ViewHolder
   (mBinding.root) {
 
     fun bindData(user: User, approve: Boolean) {
-      mBinding.viewModel = ItemListRequestViewModel(context, user, approve, mIsApproved)
+      mBinding.viewModel = ItemListRequestViewModel(context, user, approve, mIsApproved,
+          mItemRequestClickListener)
       mBinding.executePendingBindings()
     }
   }

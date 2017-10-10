@@ -13,10 +13,12 @@ import com.framgia.fbook.data.model.User
  * Thank you !
  */
 class ItemListRequestViewModel(private val mContext: Context, val user: User,
-    private val mIsApproved: Boolean, private val mIsWaiting: Boolean) : BaseObservable() {
+    private val mIsApproved: Boolean, private val mIsWaiting: Boolean,
+    private val mItemRequestClickListener: ItemRequestClickListener?) : BaseObservable() {
   private var mVisibleApprove = false
 
   fun onItemClicked() {
+    mItemRequestClickListener?.onItemRequestClick(user.pivot, mIsApproved)
   }
 
   fun getTextApprove(): String {

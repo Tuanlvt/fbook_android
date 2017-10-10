@@ -19,6 +19,8 @@ object Constant {
   val EXTRA_COMMA = ","
   val EXTRA_EMTY = ""
   val EXTRA_ZERO = 0
+  val APPROVE = "approve"
+  val UNAPPROVE = "unapprove"
 
   val BOOK_DETAIL_EXTRA = "book_detail"
   val USER_BOOK_DETAIL_EXTRA = "user_book_detail"
