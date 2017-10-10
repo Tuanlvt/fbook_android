@@ -10,9 +10,11 @@ import com.framgia.fbook.data.model.Owner
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.databinding.FragmentUserReadingWaitingReturnBinding
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.profile.ProfileActivity
 import com.framgia.fbook.screen.userinbookdetail.UserInBookDetailActivity
 import com.framgia.fbook.screen.userinbookdetail.UserReadingWaitingReturn.ItemUserClickListener
 import com.framgia.fbook.screen.userinbookdetail.UserReadingWaitingReturn.UserReadingWaitingReturnAdapter
+import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import javax.inject.Inject
 
@@ -73,7 +75,9 @@ class UserReadingWaitingReturnFragment : BaseFragment(), UserReadingWaitingRetur
   }
 
   override fun onItemUserClick(user: User?) {
-    //TODO edit later
+    val bundle = Bundle()
+    user?.id?.let { it -> bundle.putInt(Constant.BOOK_DETAIL_EXTRA, it) }
+    mNavigator.startActivity(ProfileActivity::class.java, bundle)
   }
 
   private fun initData() {

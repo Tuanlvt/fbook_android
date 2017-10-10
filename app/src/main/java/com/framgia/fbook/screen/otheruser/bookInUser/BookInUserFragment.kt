@@ -1,6 +1,7 @@
 package com.framgia.fbook.screen.otheruser.bookInUser
 
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.otheruser.OtherUserActivity
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
+import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
 
 /**
@@ -45,8 +47,12 @@ class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBoo
   @Inject
   internal lateinit var mPresenter: BookInUserContract.Presenter
   @Inject
+  internal lateinit var mDialogManager: DialogManager
+  @Inject
   internal lateinit var mAdapter: BookInUserAdapter
   var mBook: List<Book> = ArrayList()
+  val mIsVisibleLayoutNoData: ObservableField<Boolean> = ObservableField(false)
+
   var mUserId: Int? = 0
   var mTypeRequest: String? = ""
 
@@ -77,8 +83,14 @@ class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBoo
   }
 
   override fun onGetBookInUserProfileSuccess(book: List<Book>) {
-    mBook = book
-    mAdapter.updateData(mBook)
+    if (book.isNotEmpty()) {
+      mBook = book
+      mAdapter.updateData(mBook)
+      mIsVisibleLayoutNoData.set(false)
+    } else {
+      mIsVisibleLayoutNoData.set(true)
+    }
+    mDialogManager.dismissProgressDialog()
   }
 
   override fun onReturnBookSuccess() {
@@ -93,6 +105,7 @@ class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBoo
 
   override fun onError(exception: BaseException) {
     Log.d(TAG, exception.getMessageError())
+    mDialogManager.dismissProgressDialog()
   }
 
   override fun onReturnBookClick() {
@@ -104,7 +117,13 @@ class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBoo
     mUserId = arguments.getInt(USER_ID)
     val positionTab: Int? = arguments.getInt(POSITION_TAB)
     mPresenter.getBookInUserProfile(mUserId, mTypeRequest)
+    mIsVisibleLayoutNoData.set(true)
+    mDialogManager.showIndeterminateProgressDialog()
     mAdapter.setItemBookInUserClickListener(this)
     positionTab?.let { mAdapter.getPositionTab(it) }
+  }
+
+  fun onClickReloadData(view: View) {
+    fillData()
   }
 }
