@@ -8,22 +8,29 @@ import android.view.View
 import android.view.ViewGroup
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.User
+import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentWaitandreadrequestBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.approverequest.approvedetail.ApproveDetailActivity
 import com.framgia.fbook.screen.approverequest.approvedetail.GetListUserListener
+import com.framgia.fbook.screen.approverequest.approvedetail.adapterlistrequest.ItemRequestClickListener
 import com.framgia.fbook.screen.approverequest.approvedetail.adapterlistrequest.ListRequestAdapter
+import com.framgia.fbook.utils.Constant
+import com.fstyle.library.MaterialDialog
+import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
 
 /**
  * WaitAndReadRequest Screen.
  */
-class WaitAndReadRequestFragment : BaseFragment(), WaitAndReadRequestContract.ViewModel, GetListUserListener.GetListUserWaitAndRead {
+class WaitAndReadRequestFragment : BaseFragment(), WaitAndReadRequestContract.ViewModel, GetListUserListener.GetListUserWaitAndRead, ItemRequestClickListener {
 
   @Inject
   internal lateinit var mPresenter: WaitAndReadRequestContract.Presenter
   @Inject
   internal lateinit var mListRequestAdapter: ListRequestAdapter
+  @Inject
+  internal lateinit var mDialogManager: DialogManager
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -38,6 +45,7 @@ class WaitAndReadRequestFragment : BaseFragment(), WaitAndReadRequestContract.Vi
         R.layout.fragment_waitandreadrequest, container,
         false)
     binding.viewModel = this
+    mListRequestAdapter.setItemRequestClickListener(this)
     return binding.root
   }
 
@@ -56,6 +64,35 @@ class WaitAndReadRequestFragment : BaseFragment(), WaitAndReadRequestContract.Vi
   override fun onStop() {
     mPresenter.onStop()
     super.onStop()
+  }
+
+  override fun onError(e: BaseException) {
+    mDialogManager.dialogError(e.getMessageError())
+  }
+
+  override fun onShowProgressDialog() {
+    mDialogManager.showIndeterminateProgressDialog()
+  }
+
+  override fun onDismissProgressDialog() {
+    mDialogManager.dismissProgressDialog()
+  }
+
+  override fun onApproveOrUnApproveBookSuccess() {
+  }
+
+  override fun onItemRequestClick(pivot: User.Pivot?, isApprove: Boolean) {
+    mDialogManager.dialogBasic(context.getString(R.string.warning),
+        context.getString(R.string.are_you_sure_approve_this_request),
+        MaterialDialog.SingleButtonCallback { _, _ ->
+          pivot?.let {
+            if (isApprove) {
+              mPresenter.approveOrUnApproveBook(pivot.bookId, pivot.userId, Constant.UNAPPROVE)
+            } else {
+              mPresenter.approveOrUnApproveBook(pivot.bookId, pivot.userId, Constant.APPROVE)
+            }
+          }
+        })
   }
 
   override fun onGetListUserWaiting(listUser: List<User>?) {
