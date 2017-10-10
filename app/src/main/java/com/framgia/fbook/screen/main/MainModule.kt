@@ -10,6 +10,8 @@ import com.framgia.fbook.utils.dagger.ActivityScope
 import com.framgia.fbook.utils.navigator.Navigator
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.framia.fbook.screen.main.MainContract
+import com.fstyle.structure_android.widget.dialog.DialogManager
+import com.fstyle.structure_android.widget.dialog.DialogManagerImpl
 import dagger.Module
 import dagger.Provides
 
@@ -22,8 +24,9 @@ class MainModule(private val mActivity: Activity) {
 
   @ActivityScope
   @Provides
-  fun providePresenter(schedulerProvider: BaseSchedulerProvider): MainContract.Presenter {
-    val presenter = MainPresenter()
+  fun providePresenter(userRepository: UserRepository,
+      schedulerProvider: BaseSchedulerProvider): MainContract.Presenter {
+    val presenter = MainPresenter(userRepository)
     presenter.setViewModel(mActivity as MainContract.ViewModel)
     presenter.setSchedulerProvider(schedulerProvider)
     return presenter
@@ -47,5 +50,11 @@ class MainModule(private val mActivity: Activity) {
   fun providerUserRepository(userRemoteDataSource: UserRemoteDataSource,
       userLocalDataSource: UserLocalDataSource): UserRepository {
     return UserRepositoryImpl(userRemoteDataSource, userLocalDataSource)
+  }
+
+  @ActivityScope
+  @Provides
+  fun provideDialogManager(): DialogManager {
+    return DialogManagerImpl(mActivity)
   }
 }

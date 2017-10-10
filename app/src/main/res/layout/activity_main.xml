@@ -35,14 +35,25 @@
                 <ImageView
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="@dimen/dp_30"
-                    android:onClick="@{viewModel::onClickChooseDomain}"
+                    android:onClick="@{viewModel::onClickChooseWorkSpace}"
                     android:src="@drawable/ic_domain"
                     tools:ignore="ContentDescription,RtlHardcoded"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:onClick="@{viewModel::onClickChooseWorkSpace}"
+                    android:text="@{viewModel.mCurrentOffice}"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/sp_12"
                     />
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="?attr/actionBarSize"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_gravity="center"
+                    android:onClick="@{viewModel::onClickAvatar}"
                     android:padding="@dimen/dp_5"
                     android:visibility="@{viewModel.mIsVisibleAvatar ? View.VISIBLE : View.GONE}"
                     bind:imageUserUrl="@{viewModel.mAvatar}"

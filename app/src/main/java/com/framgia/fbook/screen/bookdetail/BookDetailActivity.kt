@@ -5,6 +5,7 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
+import android.support.v7.app.AppCompatDelegate
 import android.view.View
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
@@ -63,6 +64,9 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
+    AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+
     DaggerBookDetailComponent.builder()
         .appComponent((application as MainApplication).appComponent)
         .bookDetailModule(BookDetailModule(this))
