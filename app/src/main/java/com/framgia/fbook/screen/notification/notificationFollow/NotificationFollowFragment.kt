@@ -11,15 +11,19 @@ import com.framgia.fbook.data.model.Notification
 import com.framgia.fbook.databinding.FragmentNotificationfollowBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.main.MainActivity
+import com.framgia.fbook.screen.notification.NotificationAdapter
+import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import javax.inject.Inject
 
 /**
  * NotificationFollow Screen.
  */
-class NotificationFollowFragment : BaseFragment(), NotificationFollowContract.ViewModel, NotificationFollowListener {
+class NotificationFollowFragment : BaseFragment(), NotificationFollowContract.ViewModel, NotificationFollowListener, onItemRecyclerViewClickListener {
 
   @Inject
   internal lateinit var mPresenter: NotificationFollowContract.Presenter
+  @Inject
+  internal lateinit var mNotificationAdapter: NotificationAdapter
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -35,6 +39,7 @@ class NotificationFollowFragment : BaseFragment(), NotificationFollowContract.Vi
         R.layout.fragment_notificationfollow, container,
         false)
     binding.viewModel = this
+    mNotificationAdapter.setonItemRecyclerViewClickListener(this)
     return binding.root
   }
 
@@ -57,10 +62,14 @@ class NotificationFollowFragment : BaseFragment(), NotificationFollowContract.Vi
   }
 
   override fun getNotificationFollow(notification: Notification?) {
+    mNotificationAdapter.updateData(notification?.listNotification, TYPE_FOLLOW)
+  }
+
+  override fun onItemClickListener(any: Any?) {
   }
 
   companion object {
-
+    private val TYPE_FOLLOW = 1
     fun newInstance(): NotificationFollowFragment {
       return NotificationFollowFragment()
     }

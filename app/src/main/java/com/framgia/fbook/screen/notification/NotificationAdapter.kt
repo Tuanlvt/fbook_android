@@ -21,9 +21,11 @@ class NotificationAdapter(
 
   private val mListNotification = mutableListOf<ItemNotification>()
   private lateinit var mOnItemRecyclerViewClickListener: onItemRecyclerViewClickListener
+  private var mType = 0
 
-  fun updateData(listNotification: List<ItemNotification>?) {
+  fun updateData(listNotification: List<ItemNotification>?, type: Int) {
     mListNotification.addAll(listNotification!!)
+    mType = type
     notifyDataSetChanged()
   }
 
@@ -33,7 +35,7 @@ class NotificationAdapter(
   }
 
   override fun onBindViewHolder(holder: ItemViewHolder?, position: Int) {
-    holder?.bindData(mListNotification[position])
+    holder?.bindData(mListNotification[position], mType)
   }
 
   override fun getItemCount(): Int = mListNotification.size
@@ -47,9 +49,9 @@ class NotificationAdapter(
   inner class ItemViewHolder(
       private val mBinding: ItemNotificationBinding) : RecyclerView.ViewHolder(mBinding.root) {
 
-    fun bindData(itemNotification: ItemNotification) {
-      mBinding.viewModel = ItemNotificationViewModel(itemNotification,
-          mOnItemRecyclerViewClickListener)
+    fun bindData(itemNotification: ItemNotification, type: Int) {
+      mBinding.viewModel = ItemNotificationViewModel(context, itemNotification,
+          mOnItemRecyclerViewClickListener, type)
       mBinding.executePendingBindings()
     }
   }

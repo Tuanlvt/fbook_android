@@ -1,6 +1,7 @@
 package com.framgia.fbook.screen.notification.notificationFollow
 
 import android.support.v4.app.Fragment
+import com.framgia.fbook.screen.notification.NotificationAdapter
 import com.framgia.fbook.utils.dagger.FragmentScope
 import dagger.Module
 import dagger.Provides
@@ -19,5 +20,11 @@ class NotificationFollowModule(private val mFragment: Fragment) {
     val presenter = NotificationFollowPresenter()
     presenter.setViewModel(mFragment as NotificationFollowContract.ViewModel)
     return presenter
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideNotificationAdapter(): NotificationAdapter {
+    return NotificationAdapter(mFragment.context)
   }
 }

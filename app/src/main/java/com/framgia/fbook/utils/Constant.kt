@@ -25,17 +25,18 @@ object Constant {
   val BOOK_DETAIL_IN_USER_EXTRA = "book_detail_in_user_extra"
 
   object Tab {
-    val TAB_HOME: Int = 0
-    val TAB_MY_BOOK: Int = 1
-    val TAB_NOTIFICATION: Int = 2
-    val TAB_ACCOUNT: Int = 3
+    val TAB_HOME = 0
+    val TAB_MY_BOOK = 1
+    val TAB_NOTIFICATION = 2
+    val TAB_ACCOUNT = 3
   }
 
   object RequestCode {
-    val TAB_MY_BOOK_REQUEST: Int = 101
-    val TAB_PROFILE_REQUEST: Int = 102
-    val BOOK_DETAIL_REQUEST: Int = 103
-    val TAB_CATEGORY_FAVORITE_USER: Int = 104
+    val TAB_MY_BOOK_REQUEST = 101
+    val TAB_PROFILE_REQUEST = 102
+    val BOOK_DETAIL_REQUEST = 103
+    val TAB_CATEGORY_FAVORITE_USER = 104
+    val TAB_NOTIFICATION = 105
   }
 
   object TabUser {
@@ -61,12 +62,12 @@ object Constant {
   }
 
   object RequestCodeBookInUser {
-    val TAB_READING_BOOK: String = "reading"
-    val TAB_DONE_BOOK: String = "done"
-    val TAB_WAITING_BOOK: String = "waiting"
-    val TAB_READ_BOOK: String = "read"
-    val TAB_SHARING_BOOK: String = "sharing"
-    val TAB_REVIEWED_BOOK: String = "reviewed"
+    val TAB_READING_BOOK = "reading"
+    val TAB_DONE_BOOK = "done"
+    val TAB_WAITING_BOOK = "waiting"
+    val TAB_READ_BOOK = "read"
+    val TAB_SHARING_BOOK = "sharing"
+    val TAB_REVIEWED_BOOK = "reviewed"
   }
 
   object TabNotification {

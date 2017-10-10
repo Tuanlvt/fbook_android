@@ -12,7 +12,7 @@
             name="viewModel"
             type="com.framgia.fbook.screen.notification.notificationUser.NotificationFragment"
             />
-
+        <import type="android.view.View"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -30,5 +30,14 @@
             app:layout_constraintTop_toTopOf="parent"
             bind:recyclerAdapter="@{viewModel.mNotificationAdapter}"
             />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.mIsVisibleLayoutNotLoggedIn ? View.VISIBLE : View.GONE}"
+            >
+            <include
+                layout="@layout/layout_not_loggin"
+                />
+        </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
 </layout>
