@@ -26,7 +26,7 @@ class CategoryRepositoryImpl @Inject constructor(
   }
 
   override fun getListBookByCategory(
-      categoryId: Int?): Single<BaseResponse<BaseBookByCategoryResponse>> {
-    return categoryRemoteDataSource.getListBookByCategory(categoryId)
+      categoryId: Int?, officeId: Int?): Single<BaseResponse<BaseBookByCategoryResponse>> {
+    return categoryRemoteDataSource.getListBookByCategory(categoryId, officeId)
   }
 }

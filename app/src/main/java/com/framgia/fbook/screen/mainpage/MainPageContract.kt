@@ -30,7 +30,7 @@ interface MainPageContract {
    * Presenter.
    */
   interface Presenter : BasePresenter<ViewModel> {
-    fun getSectionListBook()
+    fun getSectionListBook(officeId: Int?)
 
     fun getListOffice()
   }

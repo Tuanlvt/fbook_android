@@ -48,10 +48,13 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
   private lateinit var mHandler: Handler
   private lateinit var mRunnable: Runnable
   private lateinit var mNotificationFollowListener: NotificationFollowListener
+  private lateinit var mListBookMainPageListener: ListBookMainPageListener
+  private lateinit var mListBookSeeMoreListener: ListBookSeeMoreListener
 
   private var mIsDoubleTapBack = false
   private var mListOffices = mutableListOf<Office>()
   private var mCurrentOfficePosition: Int = 0
+  private var mOfficeId: Int? = null
 
   val mCurrentTab: ObservableField<Int> = ObservableField()
   val mPageLimit: ObservableField<Int> = ObservableField(PAGE_LIMIT)
@@ -130,6 +133,7 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
       return
     }
     mUser = mUserRepository.getUserLocal()
+    mOfficeId = mUser?.officeId
     setAvatar(mUser?.avatar)
     setCurrentOffice(mListOffices)
   }
@@ -195,6 +199,14 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
     }
   }
 
+  fun setListBookMainPageListener(listBookMainPageListener: ListBookMainPageListener) {
+    mListBookMainPageListener = listBookMainPageListener
+  }
+
+  fun setListBookSeeMoreListener(listBookSeeMoreListener: ListBookSeeMoreListener) {
+    mListBookSeeMoreListener = listBookSeeMoreListener
+  }
+
   private fun updateCurrentOffice(position: Int) {
     mCurrentOffice.set(mListOffices[position].name)
   }
@@ -208,6 +220,13 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
         MaterialDialog.ListCallbackSingleChoice { _, _, position, _ ->
           mCurrentOfficePosition = position
           updateCurrentOffice(position)
+
+          mOfficeId = mListOffices[position].id
+          mListBookMainPageListener.onGetListBook(mOfficeId)
+          val isShowPrevious = mAdapter.getCurrentFragment().childFragmentManager.backStackEntryCount > 1
+          if (isShowPrevious) {
+            mListBookSeeMoreListener.onGetListBook(mOfficeId)
+          }
           true
         })
   }
@@ -230,4 +249,15 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
     showDialogListOffice()
   }
 
+  fun getCurrentOfficeId(): Int? {
+    return mOfficeId
+  }
+
+  interface ListBookMainPageListener {
+    fun onGetListBook(officeId: Int?)
+  }
+
+  interface ListBookSeeMoreListener {
+    fun onGetListBook(officeId: Int?)
+  }
 }

@@ -17,6 +17,7 @@ interface CategoryDateSource {
 
     fun addCategoryFavorite(addCategoryFavoriteRequest: AddCategoryFavoriteRequest?): Single<Any>
 
-    fun getListBookByCategory(categoryId: Int?): Single<BaseResponse<BaseBookByCategoryResponse>>
+    fun getListBookByCategory(categoryId: Int?,
+        officeId: Int?): Single<BaseResponse<BaseBookByCategoryResponse>>
   }
 }

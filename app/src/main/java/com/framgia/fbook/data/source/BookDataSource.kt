@@ -26,7 +26,7 @@ interface BookDataSource {
         bookName: String?): Single<BaseResponse<List<GoogleBook>>>
 
     fun getSectionListBook(type: String?,
-        page: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+        page: Int?, officeId: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 
     fun getBookDetail(bookId: Int?): Single<BaseResponse<Book>>
 
@@ -43,7 +43,7 @@ interface BookDataSource {
     fun getApproveRequest(): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 
     fun getListBookBySort(type: String?,
-        page: Int?, sort: Sort?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+        page: Int?, sort: Sort?, officeId: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 
     fun reviewBook(bookId: Int?, reviewBookRequest: ReviewBookRequest?): Single<Any>
 

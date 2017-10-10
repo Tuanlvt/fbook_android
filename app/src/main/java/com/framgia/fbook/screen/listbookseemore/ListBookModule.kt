@@ -8,7 +8,6 @@ import com.framgia.fbook.data.source.CategoryRepositoryImpl
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.data.source.remote.CategoryRemoteDataSource
 import com.framgia.fbook.screen.listbookseemore.adapter.ListBookAdapter
-import com.framgia.fbook.utils.dagger.ActivityScope
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.navigator.Navigator
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
@@ -26,9 +25,9 @@ class ListBookModule(private val mFragment: Fragment) {
 
   @FragmentScope
   @Provides
-  fun providePresenter(categoryRepository: CategoryRepository,bookRepository: BookRepository,
+  fun providePresenter(categoryRepository: CategoryRepository, bookRepository: BookRepository,
       schedulerProvider: BaseSchedulerProvider): ListBookContract.Presenter {
-    val presenter = ListBookPresenter(categoryRepository,bookRepository)
+    val presenter = ListBookPresenter(categoryRepository, bookRepository)
     presenter.setViewModel(mFragment as ListBookContract.ViewModel)
     presenter.setSchedulerProvider(schedulerProvider)
     return presenter

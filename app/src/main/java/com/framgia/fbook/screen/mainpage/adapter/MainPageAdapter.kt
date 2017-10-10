@@ -25,6 +25,7 @@ class MainPageAdapter(
 
   fun updateData(listBook: List<Book>?) {
     listBook?.let {
+      mListLateBook.clear()
       mListLateBook.addAll(listBook)
     }
   }

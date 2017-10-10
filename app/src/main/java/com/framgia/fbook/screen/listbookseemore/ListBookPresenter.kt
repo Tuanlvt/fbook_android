@@ -26,8 +26,8 @@ open class ListBookPresenter(private val mCategoryRepository: CategoryRepository
     mCompositeDisposable.clear()
   }
 
-  override fun getListBookBySort(type: String?, page: Int?, sort: Sort?) {
-    val disposable: Disposable = mBookRepository.getListBookBySort(type, page, sort)
+  override fun getListBookBySort(type: String?, page: Int?, sort: Sort?, officeId: Int?) {
+    val disposable: Disposable = mBookRepository.getListBookBySort(type, page, sort, officeId)
         .subscribeOn(mSchedulerProvider.io())
         .doOnSubscribe {
           mViewModel?.let {
@@ -64,8 +64,8 @@ open class ListBookPresenter(private val mCategoryRepository: CategoryRepository
     mCompositeDisposable.add(disposable)
   }
 
-  override fun getListBookByCategory(categoryId: Int?) {
-    val disposable: Disposable = mCategoryRepository.getListBookByCategory(categoryId)
+  override fun getListBookByCategory(categoryId: Int?, officeId: Int?) {
+    val disposable: Disposable = mCategoryRepository.getListBookByCategory(categoryId, officeId)
         .subscribeOn(mSchedulerProvider.io())
         .doOnSubscribe {
           mViewModel?.let {
@@ -101,64 +101,67 @@ open class ListBookPresenter(private val mCategoryRepository: CategoryRepository
     mCompositeDisposable.add(disposable)
   }
 
-  override fun getListBook(typeBook: String?, page: Int?) {
+  override fun getListBook(typeBook: String?, page: Int?, officeId: Int?) {
     typeBook?.let {
       when (typeBook) {
         Constant.LATE -> {
-          val disposable: Disposable = mBookRepository.getSectionListBook(Constant.LATE, page)
-              .subscribeOn(mSchedulerProvider.io())
-              .observeOn(mSchedulerProvider.ui())
-              .subscribe({ listBookLateResponse ->
-                mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
-              }, { error ->
-                mViewModel?.onError(error as BaseException)
-              })
+          val disposable: Disposable =
+              mBookRepository.getSectionListBook(Constant.LATE, page, officeId)
+                  .subscribeOn(mSchedulerProvider.io())
+                  .observeOn(mSchedulerProvider.ui())
+                  .subscribe({ listBookLateResponse ->
+                    mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
+                  }, { error ->
+                    mViewModel?.onError(error as BaseException)
+                  })
           mCompositeDisposable.add(disposable)
         }
         Constant.VIEW -> {
-          val disposable: Disposable = mBookRepository.getSectionListBook(Constant.VIEW, page)
-              .subscribeOn(mSchedulerProvider.io())
-              .observeOn(mSchedulerProvider.ui())
-              .subscribe({ listBookLateResponse ->
-                mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
-              }, { error ->
-                mViewModel?.onError(error as BaseException)
-              })
+          val disposable: Disposable =
+              mBookRepository.getSectionListBook(Constant.VIEW, page, officeId)
+                  .subscribeOn(mSchedulerProvider.io())
+                  .observeOn(mSchedulerProvider.ui())
+                  .subscribe({ listBookLateResponse ->
+                    mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
+                  }, { error ->
+                    mViewModel?.onError(error as BaseException)
+                  })
           mCompositeDisposable.add(disposable)
         }
         Constant.RATING -> {
-          val disposable: Disposable = mBookRepository.getSectionListBook(Constant.RATING,
-              page)
-              .subscribeOn(mSchedulerProvider.io())
-              .observeOn(mSchedulerProvider.ui())
-              .subscribe({ listBookLateResponse ->
-                mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
-              }, { error ->
-                mViewModel?.onError(error as BaseException)
-              })
+          val disposable: Disposable =
+              mBookRepository.getSectionListBook(Constant.RATING, page, officeId)
+                  .subscribeOn(mSchedulerProvider.io())
+                  .observeOn(mSchedulerProvider.ui())
+                  .subscribe({ listBookLateResponse ->
+                    mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
+                  }, { error ->
+                    mViewModel?.onError(error as BaseException)
+                  })
           mCompositeDisposable.add(disposable)
         }
         Constant.WAITING -> {
-          val disposable: Disposable = mBookRepository.getSectionListBook(Constant.WAITING,
-              page)
-              .subscribeOn(mSchedulerProvider.io())
-              .observeOn(mSchedulerProvider.ui())
-              .subscribe({ listBookLateResponse ->
-                mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
-              }, { error ->
-                mViewModel?.onError(error as BaseException)
-              })
+          val disposable: Disposable =
+              mBookRepository.getSectionListBook(Constant.WAITING, page, officeId)
+                  .subscribeOn(mSchedulerProvider.io())
+                  .observeOn(mSchedulerProvider.ui())
+                  .subscribe({ listBookLateResponse ->
+                    mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
+                  }, { error ->
+                    mViewModel?.onError(error as BaseException)
+                  })
           mCompositeDisposable.add(disposable)
         }
         Constant.READ -> {
-          val disposable: Disposable = mBookRepository.getSectionListBook(Constant.READ, page)
-              .subscribeOn(mSchedulerProvider.io())
-              .observeOn(mSchedulerProvider.ui())
-              .subscribe({ listBookLateResponse ->
-                mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
-              }, { error ->
-                mViewModel?.onError(error as BaseException)
-              })
+          val disposable: Disposable =
+              mBookRepository.getSectionListBook(Constant.READ, page, officeId)
+                  .subscribeOn(mSchedulerProvider.io())
+                  .observeOn(mSchedulerProvider.ui())
+                  .subscribe({ listBookLateResponse ->
+                    mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
+                  }, { error ->
+                    mViewModel?.onError(error as BaseException)
+                  })
           mCompositeDisposable.add(disposable)
         }
         else -> {
