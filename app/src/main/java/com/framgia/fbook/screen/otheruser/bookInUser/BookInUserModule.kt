@@ -11,6 +11,8 @@ import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.navigator.Navigator
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
+import com.fstyle.structure_android.widget.dialog.DialogManager
+import com.fstyle.structure_android.widget.dialog.DialogManagerImpl
 import dagger.Module
 import dagger.Provides
 
@@ -54,5 +56,11 @@ class BookInUserModule(private val mFragment: Fragment) {
   @Provides
   fun provideBookInUserAdapter(): BookInUserAdapter {
     return BookInUserAdapter(mFragment.context.applicationContext)
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideDialogManager(): DialogManager {
+    return DialogManagerImpl(mFragment.context)
   }
 }

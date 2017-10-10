@@ -11,6 +11,7 @@
             name="viewModel"
             type="com.framgia.fbook.screen.otheruser.bookInUser.BookInUserFragment"
             />
+        <import type="android.view.View"/>
 
     </data>
 
@@ -27,6 +28,16 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             bind:recyclerAdapter="@{viewModel.mAdapter}"
             />
-
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_white_light"
+            android:onClick="@{viewModel::onClickReloadData}"
+            android:visibility="@{viewModel.mIsVisibleLayoutNoData ? View.VISIBLE : View.GONE}"
+            >
+            <include
+                layout="@layout/layout_no_data"
+                />
+        </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
 </layout>

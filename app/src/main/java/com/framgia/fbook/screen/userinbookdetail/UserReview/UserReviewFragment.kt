@@ -15,9 +15,11 @@ import com.framgia.fbook.data.source.remote.api.request.ReviewBookRequest
 import com.framgia.fbook.databinding.FragmentUserReviewBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.login.LoginActivity
+import com.framgia.fbook.screen.profile.ProfileActivity
 import com.framgia.fbook.screen.userinbookdetail.UserInBookDetailActivity
 import com.framgia.fbook.screen.userinbookdetail.UserReview.ItemUserReviewClickListener
 import com.framgia.fbook.screen.userinbookdetail.UserReview.UserReviewAdapter
+import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.library.MaterialDialog
 import com.fstyle.structure_android.widget.dialog.DialogManager
@@ -109,7 +111,9 @@ class UserReviewFragment : BaseFragment(), UserReviewContract.ViewModel, ItemUse
   }
 
   override fun onItemUserReviewClick(reviewDetail: Book.ReviewDetail?) {
-    //TODO edit later
+    val bundle = Bundle()
+    reviewDetail?.user?.id?.let { it -> bundle.putInt(Constant.BOOK_DETAIL_EXTRA, it) }
+    mNavigator.startActivity(ProfileActivity::class.java, bundle)
   }
 
   private fun initData() {

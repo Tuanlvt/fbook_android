@@ -44,6 +44,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
   val mPageLimit: ObservableField<Int> = ObservableField(PAGE_LIMIT)
   val mIsVisibleButtonFollow: ObservableField<Boolean> = ObservableField()
   val mIsVisibleLayoutButtonFollow: ObservableField<Boolean> = ObservableField(true)
+  val mIsVisibleLayoutNoData: ObservableField<Boolean> = ObservableField(false)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -87,6 +88,8 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
       mGetUserListenerPersonal.onGetUser(user)
       mGetUserListenerCategory.onGetUser(user)
     }
+    mIsVisibleLayoutNoData.set(false)
+    mDialogManager.dismissProgressDialog()
   }
 
   override fun onGetFollowInfomationOfUserSuccess(follow: Follow?) {
@@ -97,6 +100,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
 
   override fun onError(exception: BaseException) {
     Log.e(TAG, exception.getMessageError())
+    mDialogManager.dismissProgressDialog()
   }
 
   override fun onFollowOrUnFollowSuccess() {
@@ -118,6 +122,8 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     if (idUser != mUserRepository.getUserLocal()?.id && idUser != Constant.EXTRA_ZERO) {
       mPresenter.getUserOtherProfile(idUser)
       mPresenter.getFollowInfomationOfUser(idUser)
+      mDialogManager.showIndeterminateProgressDialog()
+      mIsVisibleLayoutNoData.set(true)
       return
     }
     mIsVisibleLayoutButtonFollow.set(false)
@@ -128,6 +134,10 @@ class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
 
   fun onClickArrowBack() {
     mNavigator.finishActivity()
+  }
+
+  fun onClickReloadData(view: View) {
+    fillData()
   }
 
   fun onClickFollowOrUnFollowUser(view: View) {
