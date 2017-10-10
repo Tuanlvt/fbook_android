@@ -144,6 +144,7 @@ object BindingUtils {
   @JvmStatic
   @BindingAdapter("setSize")
   fun setSize(textView: TextView, size: Int?) {
-    textView.setText(size.toString())
+    textView.text = size.toString()
+    textView.setBackgroundResource(R.drawable.background_hexagon)
   }
 }
