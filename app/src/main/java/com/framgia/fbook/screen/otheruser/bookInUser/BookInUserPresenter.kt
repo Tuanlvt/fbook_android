@@ -41,6 +41,10 @@ internal class BookInUserPresenter(
     mCompositeDisposable.add(disposable)
   }
 
+  override fun returnBook() {
+    //Todo Edit Later
+  }
+
   fun setSchedulerProvider(baseSchedulerProvider: BaseSchedulerProvider) {
     mBaseSchedulerProvider = baseSchedulerProvider
   }

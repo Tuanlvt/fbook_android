@@ -20,12 +20,17 @@ class BookInUserAdapter constructor(context: Context)
 
   private val mBooks = arrayListOf<Book>()
   private lateinit var mItemBookInUserClickListener: ItemBookInUserClickListener
+  private var mPositionTab: Int = 0
   fun updateData(reviewDetails: List<Book>?) {
     reviewDetails?.let {
       mBooks.clear()
       mBooks.addAll(it)
     }
     notifyDataSetChanged()
+  }
+
+  fun getPositionTab(positionTab: Int) {
+    positionTab.let { mPositionTab = positionTab }
   }
 
   fun setItemBookInUserClickListener(
@@ -37,7 +42,7 @@ class BookInUserAdapter constructor(context: Context)
     val binding = DataBindingUtil.inflate<ItemBookInUserProfileBinding>(
         LayoutInflater.from(parent.context),
         R.layout.item_book_in_user_profile, parent, false)
-    return ItemViewHolder(binding, mItemBookInUserClickListener)
+    return ItemViewHolder(binding, mItemBookInUserClickListener, mPositionTab)
   }
 
   override fun onBindViewHolder(holder: BookInUserAdapter.ItemViewHolder,
@@ -50,11 +55,12 @@ class BookInUserAdapter constructor(context: Context)
   }
 
   class ItemViewHolder(private val mBinding: ItemBookInUserProfileBinding,
-      private val mItemBookInUserClickListener: ItemBookInUserClickListener?) : RecyclerView.ViewHolder(
+      private val mItemBookInUserClickListener: ItemBookInUserClickListener?,
+      val positionTab: Int?) : RecyclerView.ViewHolder(
       mBinding.root) {
 
     fun bind(book: Book) {
-      mBinding.viewModel = ItemBookInUserViewModel(book, mItemBookInUserClickListener)
+      mBinding.viewModel = ItemBookInUserViewModel(book, mItemBookInUserClickListener, positionTab)
       mBinding.executePendingBindings()
     }
   }
