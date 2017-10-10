@@ -12,24 +12,27 @@ import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentBookInUserBinding
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.otheruser.OtherUserActivity
+import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import javax.inject.Inject
 
 /**
  * BookInUser Screen.
  */
-class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBookInUserClickListener {
-
+class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBookInUserClickListener, OnReturnBookListener {
   companion object {
     val TAG: String? = BookInUserFragment::class.java.name
     private val BOOK_IN_USER_PROFILE: String = "BOOK_IN_USER_PROFILE"
     private val USER_ID: String = "USER_ID"
-    fun newInstance(type: String?, userId: Int?): BookInUserFragment {
+    private val POSITION_TAB = "POSITION_TAB"
+    fun newInstance(type: String?, userId: Int?, positionTab: Int?): BookInUserFragment {
       val fragment = BookInUserFragment()
       val bundle = Bundle()
       bundle.putString(BOOK_IN_USER_PROFILE, type)
       userId?.let { bundle.putInt(USER_ID, it) }
+      positionTab?.let { bundle.putInt(POSITION_TAB, it) }
       fragment.arguments = bundle
       return fragment
     }
@@ -44,6 +47,8 @@ class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBoo
   @Inject
   internal lateinit var mAdapter: BookInUserAdapter
   var mBook: List<Book> = ArrayList()
+  var mUserId: Int? = 0
+  var mTypeRequest: String? = ""
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -76,18 +81,30 @@ class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBoo
     mAdapter.updateData(mBook)
   }
 
+  override fun onReturnBookSuccess() {
+    mPresenter.getBookInUserProfile(mUserId, mTypeRequest)
+  }
+
   override fun onItemBookInUserClick(book: Book?) {
-    //Tod edit later
+    val bundle = Bundle()
+    bundle.putParcelable(Constant.BOOK_DETAIL_EXTRA, book)
+    mNavigator.startActivity(BookDetailActivity::class.java, bundle)
   }
 
   override fun onError(exception: BaseException) {
     Log.d(TAG, exception.getMessageError())
   }
 
+  override fun onReturnBookClick() {
+    //Todo Edit Later
+  }
+
   fun fillData() {
-    val typeRequest: String? = arguments.getString(BOOK_IN_USER_PROFILE)
-    val userId: Int? = arguments.getInt(USER_ID)
-    mPresenter.getBookInUserProfile(userId, typeRequest)
+    mTypeRequest = arguments.getString(BOOK_IN_USER_PROFILE)
+    mUserId = arguments.getInt(USER_ID)
+    val positionTab: Int? = arguments.getInt(POSITION_TAB)
+    mPresenter.getBookInUserProfile(mUserId, mTypeRequest)
     mAdapter.setItemBookInUserClickListener(this)
+    positionTab?.let { mAdapter.getPositionTab(it) }
   }
 }

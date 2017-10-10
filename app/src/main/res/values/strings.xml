@@ -126,4 +126,5 @@
     <string name="reviewed_books">Reviewed Books</string>
     <string name="follow">Follow</string>
     <string name="unfollow">UnFollow</string>
+    <string name="return_book">Return Book</string>
 </resources>

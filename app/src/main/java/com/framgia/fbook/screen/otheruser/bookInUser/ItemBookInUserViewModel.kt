@@ -10,10 +10,20 @@ import com.framgia.fbook.data.model.Book
  * Thank you !
  */
 class ItemBookInUserViewModel(val book: Book?,
-    private val mItemBookInUserClickListener: ItemBookInUserClickListener?) : BaseObservable() {
+    private val mItemBookInUserClickListener: ItemBookInUserClickListener?,
+    val positionTab: Int?) : BaseObservable() {
   val name: String = book?.author.toString()
+  private lateinit var mReturnBookClick: OnReturnBookListener
+
+  fun getVisibleButtonReturnBook(): Boolean {
+    return positionTab == 0
+  }
 
   fun onItemBookInUserClick(view: View) {
     mItemBookInUserClickListener?.onItemBookInUserClick(book)
+  }
+
+  fun onReturnBookClick(view: View) {
+    mReturnBookClick.onReturnBookClick()
   }
 }

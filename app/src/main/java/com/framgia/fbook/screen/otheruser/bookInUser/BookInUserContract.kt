@@ -15,6 +15,8 @@ interface BookInUserContract {
   interface ViewModel : BaseViewModel {
     fun onGetBookInUserProfileSuccess(book: List<Book>)
 
+    fun onReturnBookSuccess()
+
     fun onError(exception: BaseException)
   }
 
@@ -23,5 +25,7 @@ interface BookInUserContract {
    */
   interface Presenter : BasePresenter<ViewModel> {
     fun getBookInUserProfile(userId: Int?, type: String?)
+
+    fun returnBook()
   }
 }

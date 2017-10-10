@@ -22,17 +22,17 @@ class OtherUserAdapter(private val mContext: Context, private val mUserId: Int?,
   override fun getItem(position: Int): Fragment {
     return when (position) {
       Constant.TabOtherInUser.TAB_READING_BOOK -> BookInUserFragment.newInstance(
-          Constant.RequestCodeBookInUser.TAB_READING_BOOK, mUserId)
+          Constant.RequestCodeBookInUser.TAB_READING_BOOK, mUserId, position)
       Constant.TabOtherInUser.TAB_WAITING_BOOK -> BookInUserFragment.newInstance(
-          Constant.RequestCodeBookInUser.TAB_WAITING_BOOK, mUserId)
+          Constant.RequestCodeBookInUser.TAB_WAITING_BOOK, mUserId, position)
       Constant.TabOtherInUser.TAB_READ_BOOK -> BookInUserFragment.newInstance(
-          Constant.RequestCodeBookInUser.TAB_READ_BOOK, mUserId)
+          Constant.RequestCodeBookInUser.TAB_READ_BOOK, mUserId, position)
       Constant.TabOtherInUser.TAB_SHARING_BOOK -> BookInUserFragment.newInstance(
-          Constant.RequestCodeBookInUser.TAB_SHARING_BOOK, mUserId)
+          Constant.RequestCodeBookInUser.TAB_SHARING_BOOK, mUserId, position)
       Constant.TabOtherInUser.TAB_SUGGESTED_BOOK -> BookInUserFragment.newInstance(
-          Constant.RequestCodeBookInUser.TAB_DONE_BOOK, mUserId)
+          Constant.RequestCodeBookInUser.TAB_DONE_BOOK, mUserId, position)
       Constant.TabOtherInUser.TAB_REVIEW_BOOK -> BookInUserFragment.newInstance(
-          Constant.RequestCodeBookInUser.TAB_REVIEWED_BOOK, mUserId)
+          Constant.RequestCodeBookInUser.TAB_REVIEWED_BOOK, mUserId, position)
       else -> {
         Fragment()
       }
