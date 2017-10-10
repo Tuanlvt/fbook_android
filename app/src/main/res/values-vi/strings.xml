@@ -103,4 +103,10 @@
     <string name="follow">Theo dõi</string>
     <string name="unfollow">Bỏ theo dõi</string>
     <string name="return_book">Trả sách</string>
+    <string name="waiting_book">Sách đang chờ:</string>
+    <string name="review_book">Sách được đánh giá:</string>
+    <string name="cancel_book">Sách đã hủy:</string>
+    <string name="accept_your_request_waiting_book">Chấp nhận yêu cầu của bạn:</string>
+    <string name="return_books_successfully">Trả lại sách thành công:</string>
+    <string name="add_book">Sách đã thêm:</string>
 </resources>

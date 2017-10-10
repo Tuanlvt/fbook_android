@@ -127,4 +127,11 @@
     <string name="follow">Follow</string>
     <string name="unfollow">UnFollow</string>
     <string name="return_book">Return Book</string>
+
+    <string name="waiting_book">Waiting Book:</string>
+    <string name="review_book">Review Book:</string>
+    <string name="cancel_book">Cancel Book:</string>
+    <string name="accept_your_request_waiting_book">Accept your request waiting book:</string>
+    <string name="return_books_successfully">Return books successfully:</string>
+    <string name="add_book">Add Book:</string>
 </resources>

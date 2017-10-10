@@ -1,12 +1,16 @@
 package com.framgia.fbook.screen.notification.notificationUser
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.framgia.fbook.R
+import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.data.source.remote.api.response.NotificationResponse
 import com.framgia.fbook.databinding.FragmentNotificationBinding
@@ -15,6 +19,8 @@ import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.main.NotificationListener
 import com.framgia.fbook.screen.notification.NotificationAdapter
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
+import com.framgia.fbook.utils.Constant
+import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
 
@@ -29,11 +35,17 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
   internal lateinit var mDialogManager: DialogManager
   @Inject
   internal lateinit var mNotificationAdapter: NotificationAdapter
+  @Inject
+  internal lateinit var mNavigator: Navigator
+  @Inject
+  internal lateinit var mUserRepository: UserRepository
   private lateinit var mNotificationListener: NotificationListener
+  private var mIsLoadDataFirstTime = true
+  val mIsVisibleLayoutNotLoggedIn: ObservableField<Boolean> = ObservableField()
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
-
+    userVisibleHint = false
     DaggerNotificationComponent.builder()
         .mainComponent((activity as MainActivity).getMainComponent())
         .notificationModule(NotificationModule(this))
@@ -44,7 +56,6 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
         R.layout.fragment_notification, container,
         false)
     binding.viewModel = this
-    mPresenter.getNotification()
     mNotificationAdapter.setonItemRecyclerViewClickListener(this)
     return binding.root
   }
@@ -66,8 +77,45 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
     }
   }
 
-  fun setNotificationListener(notificationListener: NotificationListener) {
-    mNotificationListener = notificationListener
+  override fun setMenuVisibility(menuVisible: Boolean) {
+    super.setMenuVisibility(menuVisible)
+
+  }
+
+  override fun onResume() {
+    super.onResume()
+  }
+
+  override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+    super.setUserVisibleHint(isVisibleToUser)
+    if (!isVisibleToUser) {
+      return
+    }
+    //TODO edit later
+//      if (mIsLoadDataFirstTime) {
+//        val user = mUserRepository.getUserLocal()
+//        if (user == null) {
+//          mDialogManager.dialogBasic(getString(R.string.inform),
+//              getString(R.string.you_must_be_login_into_perform_this_function),
+//              MaterialDialog.SingleButtonCallback { _, _ ->
+//                mNavigator.startActivityForResultFromFragment(LoginActivity::class.java,
+//                    Constant.RequestCode.TAB_NOTIFICATION)
+//              })
+//
+//          mIsVisibleLayoutNotLoggedIn.set(true)
+//          return
+//        }
+//        mIsVisibleLayoutNotLoggedIn.set(false)
+//        mPresenter.getNotification()
+//      }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_NOTIFICATION) {
+      mIsVisibleLayoutNotLoggedIn.set(false)
+      mPresenter.getNotification()
+    }
   }
 
   override fun onDismissProgressDialog() {
@@ -79,6 +127,7 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
   }
 
   override fun onError(error: BaseException) {
+    mIsLoadDataFirstTime = false
     mDialogManager.dialogError(error.getMessageError())
   }
 
@@ -87,9 +136,10 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
   }
 
   override fun onGetNotificationSuccess(notificationResponse: NotificationResponse?) {
+    mIsLoadDataFirstTime = false
     notificationResponse?.let {
       notificationResponse.notificationUser?.let {
-        mNotificationAdapter.updateData(it.listNotification)
+        mNotificationAdapter.updateData(it.listNotification, TYPE_USER)
       }
       notificationResponse.notificationFollow?.let {
         mNotificationListener.getNotificationFollow(it)
@@ -99,6 +149,7 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
 
   companion object {
 
+    private val TYPE_USER = 0
     val TAG: String = NotificationFragment::class.java.name
 
     fun newInstance(): NotificationFragment {

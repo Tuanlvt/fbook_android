@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     tools:context="com.framgia.fbook.screen.notification.notificationFollow.screen.NotificationFollow.NotificationFollowActivity"
     >
 
@@ -23,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"
+            bind:recyclerAdapter="@{viewModel.mNotificationAdapter}"
             />
     </LinearLayout>
 </layout>
