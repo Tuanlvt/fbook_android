@@ -11,12 +11,12 @@ import com.framgia.fbook.data.model.Book
  */
 class ItemBookInUserViewModel(val book: Book?,
     private val mItemBookInUserClickListener: ItemBookInUserClickListener?,
-    val positionTab: Int?) : BaseObservable() {
+    private val mReturnBookListener: OnReturnBookListener,
+    val positionTab: Int?, val checkCurrentUser: Boolean) : BaseObservable() {
   val name: String = book?.author.toString()
-  private lateinit var mReturnBookClick: OnReturnBookListener
 
   fun getVisibleButtonReturnBook(): Boolean {
-    return positionTab == 0
+    return positionTab == 0 && checkCurrentUser
   }
 
   fun onItemBookInUserClick(view: View) {
@@ -24,6 +24,6 @@ class ItemBookInUserViewModel(val book: Book?,
   }
 
   fun onReturnBookClick(view: View) {
-    mReturnBookClick.onReturnBookClick()
+    mReturnBookListener.onReturnBookClick(book)
   }
 }

@@ -52,10 +52,9 @@ object Constant {
   object TabOtherInUser {
     val TAB_READING_BOOK = 0
     val TAB_WAITING_BOOK = 1
-    val TAB_READ_BOOK = 2
-    val TAB_SHARING_BOOK = 3
-    val TAB_SUGGESTED_BOOK = 4
-    val TAB_REVIEW_BOOK = 5
+    val TAB_SHARING_BOOK = 2
+    val TAB_SUGGESTED_BOOK = 3
+    val TAB_REVIEW_BOOK = 4
   }
 
   object TabApproveDetail {
@@ -65,9 +64,8 @@ object Constant {
 
   object RequestCodeBookInUser {
     val TAB_READING_BOOK = "reading"
-    val TAB_DONE_BOOK = "done"
+    val TAB_RETURN_BOOK = "returned"
     val TAB_WAITING_BOOK = "waiting"
-    val TAB_READ_BOOK = "read"
     val TAB_SHARING_BOOK = "sharing"
     val TAB_REVIEWED_BOOK = "reviewed"
   }

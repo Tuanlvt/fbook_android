@@ -20,7 +20,9 @@ class BookInUserAdapter constructor(context: Context)
 
   private val mBooks = arrayListOf<Book>()
   private lateinit var mItemBookInUserClickListener: ItemBookInUserClickListener
+  private lateinit var mReturnBookListener: OnReturnBookListener
   private var mPositionTab: Int = 0
+  private var mCheckCurrentUser: Boolean = false
   fun updateData(reviewDetails: List<Book>?) {
     reviewDetails?.let {
       mBooks.clear()
@@ -31,6 +33,12 @@ class BookInUserAdapter constructor(context: Context)
 
   fun getPositionTab(positionTab: Int) {
     positionTab.let { mPositionTab = positionTab }
+    notifyDataSetChanged()
+  }
+
+  fun getCheckCurrentUser(checkCurrentUser: Boolean) {
+    checkCurrentUser.let { mCheckCurrentUser = checkCurrentUser }
+    notifyDataSetChanged()
   }
 
   fun setItemBookInUserClickListener(
@@ -38,11 +46,16 @@ class BookInUserAdapter constructor(context: Context)
     mItemBookInUserClickListener = itemBookInUserClickListener
   }
 
+  fun setReturnBookListener(returnBookListener: OnReturnBookListener) {
+    mReturnBookListener = returnBookListener
+  }
+
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
     val binding = DataBindingUtil.inflate<ItemBookInUserProfileBinding>(
         LayoutInflater.from(parent.context),
         R.layout.item_book_in_user_profile, parent, false)
-    return ItemViewHolder(binding, mItemBookInUserClickListener, mPositionTab)
+    return ItemViewHolder(binding, mItemBookInUserClickListener, mReturnBookListener, mPositionTab,
+        mCheckCurrentUser)
   }
 
   override fun onBindViewHolder(holder: BookInUserAdapter.ItemViewHolder,
@@ -56,11 +69,14 @@ class BookInUserAdapter constructor(context: Context)
 
   class ItemViewHolder(private val mBinding: ItemBookInUserProfileBinding,
       private val mItemBookInUserClickListener: ItemBookInUserClickListener?,
-      val positionTab: Int?) : RecyclerView.ViewHolder(
+      private val mReturnBookListener: OnReturnBookListener,
+      val positionTab: Int?, val mCheckCurrentUser: Boolean) : RecyclerView.ViewHolder(
       mBinding.root) {
 
     fun bind(book: Book) {
-      mBinding.viewModel = ItemBookInUserViewModel(book, mItemBookInUserClickListener, positionTab)
+      mBinding.viewModel = ItemBookInUserViewModel(book, mItemBookInUserClickListener,
+          mReturnBookListener, positionTab,
+          mCheckCurrentUser)
       mBinding.executePendingBindings()
     }
   }

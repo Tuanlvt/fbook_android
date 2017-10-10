@@ -16,7 +16,7 @@ class OtherUserAdapter(private val mContext: Context, private val mUserId: Int?,
     fragmentManager) {
 
   companion object {
-    val TOTAL_TAB: Int = 6
+    val TOTAL_TAB: Int = 5
   }
 
   override fun getItem(position: Int): Fragment {
@@ -25,12 +25,10 @@ class OtherUserAdapter(private val mContext: Context, private val mUserId: Int?,
           Constant.RequestCodeBookInUser.TAB_READING_BOOK, mUserId, position)
       Constant.TabOtherInUser.TAB_WAITING_BOOK -> BookInUserFragment.newInstance(
           Constant.RequestCodeBookInUser.TAB_WAITING_BOOK, mUserId, position)
-      Constant.TabOtherInUser.TAB_READ_BOOK -> BookInUserFragment.newInstance(
-          Constant.RequestCodeBookInUser.TAB_READ_BOOK, mUserId, position)
       Constant.TabOtherInUser.TAB_SHARING_BOOK -> BookInUserFragment.newInstance(
           Constant.RequestCodeBookInUser.TAB_SHARING_BOOK, mUserId, position)
       Constant.TabOtherInUser.TAB_SUGGESTED_BOOK -> BookInUserFragment.newInstance(
-          Constant.RequestCodeBookInUser.TAB_DONE_BOOK, mUserId, position)
+          Constant.RequestCodeBookInUser.TAB_RETURN_BOOK, mUserId, position)
       Constant.TabOtherInUser.TAB_REVIEW_BOOK -> BookInUserFragment.newInstance(
           Constant.RequestCodeBookInUser.TAB_REVIEWED_BOOK, mUserId, position)
       else -> {
@@ -43,7 +41,6 @@ class OtherUserAdapter(private val mContext: Context, private val mUserId: Int?,
     when (position) {
       Constant.TabOtherInUser.TAB_READING_BOOK -> return mContext.getString(R.string.reading_books)
       Constant.TabOtherInUser.TAB_WAITING_BOOK -> return mContext.getString(R.string.waiting_books)
-      Constant.TabOtherInUser.TAB_READ_BOOK -> return mContext.getString(R.string.read_book)
       Constant.TabOtherInUser.TAB_SHARING_BOOK -> return mContext.getString(R.string.sharing_books)
       Constant.TabOtherInUser.TAB_SUGGESTED_BOOK -> return mContext.getString(
           R.string.suggested_books)

@@ -111,4 +111,6 @@
     <string name="accept_your_request_waiting_book">Chấp nhận yêu cầu của bạn:</string>
     <string name="return_books_successfully">Trả lại sách thành công:</string>
     <string name="add_book">Sách đã thêm:</string>
+    <string name="do_you_want_to_return_this_book">Bạn có chắc chắn muốn trả cuốn sách này?</string>
+    <string name="you_are_the_owner_this_book">Bạn là chủ sỡ hữu của cuốn sách này !</string>
 </resources>

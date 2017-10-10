@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.framgia.fbook.R
+import com.framgia.fbook.data.model.ActionBookDetail
 import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.data.model.Owner
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentBookInUserBinding
@@ -17,6 +19,7 @@ import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.otheruser.OtherUserActivity
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
+import com.fstyle.library.MaterialDialog
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
 
@@ -108,8 +111,28 @@ class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBoo
     mDialogManager.dismissProgressDialog()
   }
 
-  override fun onReturnBookClick() {
-    //Todo Edit Later
+  override fun onReturnBookClick(book: Book?) {
+    val actionBookDetail = ActionBookDetail()
+    val mOwners = arrayListOf<Owner>()
+    val ownerNames: MutableList<String?> = mutableListOf()
+    val RETURN_BOOK = 3
+    actionBookDetail.status = RETURN_BOOK
+
+    book?.owners?.let { mOwners.addAll(it) }
+    actionBookDetail.bookId = book?.id
+    mOwners.mapTo(ownerNames) { it.name }
+
+    mDialogManager.dialogListSingleChoice(getString(R.string.do_you_want_to_return_this_book),
+        ownerNames, 0, MaterialDialog.ListCallbackSingleChoice({ _, _, position, _ ->
+      val currentOwnerId = (mOwners[position]).id
+      if (mUserId == currentOwnerId) {
+        mDialogManager.dialogError(getString(R.string.you_are_the_owner_this_book))
+      } else {
+        actionBookDetail.ownerId = currentOwnerId
+        mPresenter.returnBook(actionBookDetail)
+      }
+      true
+    }))
   }
 
   fun fillData() {
@@ -120,6 +143,8 @@ class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBoo
     mIsVisibleLayoutNoData.set(true)
     mDialogManager.showIndeterminateProgressDialog()
     mAdapter.setItemBookInUserClickListener(this)
+    mAdapter.setReturnBookListener(this)
+    mAdapter.getCheckCurrentUser(mUserId == mUserRepository.getUserLocal()?.id)
     positionTab?.let { mAdapter.getPositionTab(it) }
   }
 

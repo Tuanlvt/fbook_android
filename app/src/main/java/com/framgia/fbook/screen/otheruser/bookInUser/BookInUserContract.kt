@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.otheruser.bookInUser
 
+import com.framgia.fbook.data.model.ActionBookDetail
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.screen.BasePresenter
@@ -26,6 +27,6 @@ interface BookInUserContract {
   interface Presenter : BasePresenter<ViewModel> {
     fun getBookInUserProfile(userId: Int?, type: String?)
 
-    fun returnBook()
+    fun returnBook(actionBookDetail: ActionBookDetail?)
   }
 }

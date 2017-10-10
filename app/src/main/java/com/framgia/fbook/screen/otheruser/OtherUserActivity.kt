@@ -21,7 +21,7 @@ class OtherUserActivity : BaseActivity(), OtherUserContract.ViewModel {
   @Inject
   internal lateinit var mAdapter: OtherUserAdapter
   private lateinit var mOtherUserComponent: OtherUserComponent
-  val mPageLimit: ObservableField<Int> = ObservableField(5)
+  val mPageLimit: ObservableField<Int> = ObservableField(4)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
