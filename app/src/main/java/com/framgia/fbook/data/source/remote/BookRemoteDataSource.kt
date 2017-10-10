@@ -137,4 +137,10 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
       type: String?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
     return fbookApi.getFeatureOtherOfUser(userId, type)
   }
+
+  override fun returnBook(actionBookDetail: ActionBookDetail?): Single<Any> {
+    val readingOrCancelBookRequest = ReadingOrCancelBookRequest()
+    readingOrCancelBookRequest.actionBookDetail = actionBookDetail
+    return fbookApi.returnBook(readingOrCancelBookRequest)
+  }
 }

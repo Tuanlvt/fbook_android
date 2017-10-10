@@ -79,4 +79,8 @@ class BookRepositoryImpl @Inject constructor(
       type: String?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
     return bookRemoteDataSource.getFeatureOtherOfUser(userId, type)
   }
+
+  override fun returnBook(actionBookDetail: ActionBookDetail?): Single<Any> {
+    return bookRemoteDataSource.returnBook(actionBookDetail)
+  }
 }

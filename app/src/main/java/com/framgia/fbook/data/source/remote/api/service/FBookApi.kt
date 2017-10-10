@@ -109,4 +109,7 @@ interface FBookApi {
 
   @GET("/api/v0/notifications")
   fun getNotification(): Single<BaseResponse<NotificationResponse>>
+
+  @POST("/api/v0/books/booking")
+  fun returnBook(@Body readingOrCancelBookRequest: ReadingOrCancelBookRequest?): Single<Any>
 }

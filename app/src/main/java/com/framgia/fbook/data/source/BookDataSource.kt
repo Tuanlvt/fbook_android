@@ -49,5 +49,7 @@ interface BookDataSource {
 
     fun getFeatureOtherOfUser(userId: Int?,
         type: String?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+
+    fun returnBook(actionBookDetail: ActionBookDetail?): Single<Any>
   }
 }

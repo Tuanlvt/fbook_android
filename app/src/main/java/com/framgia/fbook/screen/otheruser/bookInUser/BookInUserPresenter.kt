@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.otheruser.bookInUser
 
+import com.framgia.fbook.data.model.ActionBookDetail
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
@@ -41,8 +42,17 @@ internal class BookInUserPresenter(
     mCompositeDisposable.add(disposable)
   }
 
-  override fun returnBook() {
-    //Todo Edit Later
+  override fun returnBook(actionBookDetail: ActionBookDetail?) {
+    val disposable: Disposable = bookRepository.returnBook(actionBookDetail)
+        .subscribeOn(mBaseSchedulerProvider.io())
+        .observeOn(mBaseSchedulerProvider.ui())
+        .subscribe({
+          mViewModel?.onReturnBookSuccess()
+        }, {
+          error ->
+          mViewModel?.onError(error as BaseException)
+        })
+    mCompositeDisposable.add(disposable)
   }
 
   fun setSchedulerProvider(baseSchedulerProvider: BaseSchedulerProvider) {
