@@ -82,6 +82,7 @@ dependencies {
   compile dependencies.bottombar
   compile dependencies.imageCircle
   compile dependencies.animationbutton
+  compile dependencies.fcm
 
   compile dependencies.easyimage
   kapt dependencies.dagger2Compile
@@ -100,3 +101,4 @@ dependencies {
     transitive = true
   }
 }
+apply plugin: 'com.google.gms.google-services'
