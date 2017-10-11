@@ -35,15 +35,14 @@ interface ListBookContract {
    * Presenter.
    */
   interface Presenter : BasePresenter<ViewModel> {
-    fun getListBook(typeBook: String?, page: Int?)
+    fun getListBook(typeBook: String?, page: Int?, officeId: Int?)
 
     fun getListCategory()
 
-    fun getListBookByCategory(categoryId: Int?)
+    fun getListBookByCategory(categoryId: Int?, officeId: Int?)
 
     fun getListSortBook()
 
-    fun getListBookBySort(type: String?,
-        page: Int?, sort: Sort?)
+    fun getListBookBySort(type: String?, page: Int?, sort: Sort?, officeId: Int?)
   }
 }

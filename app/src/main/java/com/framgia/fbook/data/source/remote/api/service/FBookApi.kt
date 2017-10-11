@@ -37,8 +37,9 @@ interface FBookApi {
   fun getOffices(): Single<BaseResponse<List<Office>>>
 
   @GET("/api/v0/books/")
-  fun getSectionListBook(@Query("field") type: String?, @Query(
-      "page") page: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+  fun getSectionListBook(@Query("field") type: String?,
+      @Query("page") page: Int?,
+      @Query("office_id") officeId: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 
   @GET("/api/v0/categories")
   fun getCategory(): Single<BaseResponse<List<Category>>>
@@ -65,16 +66,17 @@ interface FBookApi {
   fun addCategoryFavorite(
       @Body addCategoryFavoriteRequest: AddCategoryFavoriteRequest?): Single<Any>
 
-  @GET("/api/v0/books/category/{category_id}?office_id=1")
-  fun getListBookByCategory(@Path(
-      "category_id") categoryId: Int?): Single<BaseResponse<BaseBookByCategoryResponse>>
+  @GET("/api/v0/books/category/{category_id}")
+  fun getListBookByCategory(@Path("category_id") categoryId: Int?,
+      @Query("office_id") officeId: Int?): Single<BaseResponse<BaseBookByCategoryResponse>>
 
   @GET("/api/v0/books/sort-by/?office_id=1")
   fun getListSortBook(): Single<BaseResponse<List<SortBook>>>
 
   @POST("/api/v0/books/filters?")
-  fun getListBookBySort(@Query("field") type: String?, @Query(
-      "page") page: Int?, @Body sort: Sort?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+  fun getListBookBySort(@Query("field") type: String?,
+      @Query("page") page: Int?, @Body sort: Sort?,
+      @Query("office_id") officeId: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 
   @GET("/api/v0/user/books/waiting_approve")
   fun getApproveRequest(): Single<BaseResponse<BaseBookRespone<List<Book>>>>

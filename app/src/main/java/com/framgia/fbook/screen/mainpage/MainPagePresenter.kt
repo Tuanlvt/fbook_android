@@ -37,30 +37,31 @@ open class MainPagePresenter(private val mUserRepository: UserRepository,
     mCompositeDisposable.add(disposable)
   }
 
-  override fun getSectionListBook() {
-    val disposable: Disposable = mBookRepository.getSectionListBook(Constant.LATE, Constant.PAGE)
+  override fun getSectionListBook(officeId: Int?) {
+    val disposable: Disposable = mBookRepository.getSectionListBook(Constant.LATE, Constant.PAGE,
+        officeId)
         .subscribeOn(mSchedulerProvider.io())
         .doOnSubscribe { mViewModel.onShowProgressDialog() }
         .doAfterTerminate { mViewModel.onDismissProgressDialog() }
         .flatMap { listBookLateResponse ->
           mViewModel.onGetSectionListBookSuccess(TypeBook.LATE_BOOK,
               listBookLateResponse.items?.data)
-          mBookRepository.getSectionListBook(Constant.RATING, Constant.PAGE)
+          mBookRepository.getSectionListBook(Constant.RATING, Constant.PAGE, officeId)
         }
         .flatMap { listBookRatingResponse ->
           mViewModel.onGetSectionListBookSuccess(TypeBook.RATING_BOOK,
               listBookRatingResponse.items?.data)
-          mBookRepository.getSectionListBook(Constant.VIEW, Constant.PAGE)
+          mBookRepository.getSectionListBook(Constant.VIEW, Constant.PAGE, officeId)
         }
         .flatMap { listBookViewResponse ->
           mViewModel.onGetSectionListBookSuccess(TypeBook.VIEW_BOOK,
               listBookViewResponse.items?.data)
-          mBookRepository.getSectionListBook(Constant.WAITING, Constant.PAGE)
+          mBookRepository.getSectionListBook(Constant.WAITING, Constant.PAGE, officeId)
         }
         .flatMap { listBookWaitingResponse ->
           mViewModel.onGetSectionListBookSuccess(TypeBook.WAITING_BOOK,
               listBookWaitingResponse.items?.data)
-          mBookRepository.getSectionListBook(Constant.READ, Constant.PAGE)
+          mBookRepository.getSectionListBook(Constant.READ, Constant.PAGE, officeId)
         }
         .observeOn(mSchedulerProvider.ui())
         .subscribe({ listBookReadResponse ->

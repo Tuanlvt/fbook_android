@@ -38,8 +38,8 @@ class BookRepositoryImpl @Inject constructor(
   }
 
   override fun getSectionListBook(type: String?,
-      page: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
-    return bookRemoteDataSource.getSectionListBook(type, page)
+      page: Int?, officeId: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
+    return bookRemoteDataSource.getSectionListBook(type, page, officeId)
   }
 
   override fun getBookDetail(bookId: Int?): Single<BaseResponse<Book>> {
@@ -67,8 +67,8 @@ class BookRepositoryImpl @Inject constructor(
   }
 
   override fun getListBookBySort(type: String?,
-      page: Int?, sort: Sort?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
-    return bookRemoteDataSource.getListBookBySort(type, page, sort)
+      page: Int?, sort: Sort?, officeId: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
+    return bookRemoteDataSource.getListBookBySort(type, page, sort, officeId)
   }
 
   override fun reviewBook(bookId: Int?, reviewBookRequest: ReviewBookRequest?): Single<Any> {

@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.listbookseemore
 
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
@@ -29,8 +30,8 @@ import javax.inject.Inject
 /**
  * ListBook Screen.
  */
-open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItemRecyclerViewClickListener {
-
+open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel,
+    onItemRecyclerViewClickListener, MainActivity.ListBookSeeMoreListener {
   @Inject
   internal lateinit var mPresenter: ListBookContract.Presenter
   @Inject
@@ -39,6 +40,7 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
   internal lateinit var mListBookAdapter: ListBookAdapter
   @Inject
   internal lateinit var mNavigator: Navigator
+
   private val mListCategory = mutableListOf<Category>()
   private val mListSortBook = mutableListOf<SortBook>()
   private var mCurrentCategoryPosition = 0
@@ -48,6 +50,7 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
   private var mTypeGetBook: Int = 0
   private val mSort by lazy { Sort() }
   private var mIsShowProgressDialog = true
+  private var mOfficeId: Int? = null
   val mShowProgress: ObservableField<Boolean> = ObservableField()
   val mCurrentCategory: ObservableField<String> = ObservableField()
   val mCurrentSortBy: ObservableField<String> = ObservableField()
@@ -65,35 +68,7 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
     val binding = DataBindingUtil.inflate<FragmentListbookBinding>(inflater,
         R.layout.fragment_listbook, container, false)
     binding.viewModel = this
-    mListBookAdapter.setItemInternalBookListener(this)
-    mTypeBook = arguments.getString(Constant.LIST_BOOK_EXTRA)
-    mPresenter.getListBook(mTypeBook, Constant.PAGE)
-    mPresenter.getListCategory()
-    mPresenter.getListSortBook()
-    mIsOrderByAsc.set(false)
-    val gridLayoutManager = GridLayoutManager(context, 3)
-    binding.recyclerListBook.layoutManager = gridLayoutManager
-    binding.recyclerListBook.addOnScrollListener(
-        object : EndlessRecyclerOnScrollListener(gridLayoutManager) {
-          override fun onLoadMore(page: Int) {
-            mIsLoadMore = true
-            mIsShowProgressDialog = false
-            mShowProgress.set(true)
-            when (mTypeGetBook) {
-              BOOK_NORMAL -> {
-                mPresenter.getListBook(mTypeBook, page)
-              }
-              BOOK_CATEGORY -> {
-                //TODO edit later
-              }
-              BOOK_SORT -> {
-                mPresenter.getListBookBySort(mTypeBook, page, mSort)
-              }
-            }
-
-          }
-        })
-
+    initData(binding)
     return binding.root
   }
 
@@ -105,6 +80,13 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
   override fun onStop() {
     mPresenter.onStop()
     super.onStop()
+  }
+
+  override fun onAttach(context: Context?) {
+    super.onAttach(context)
+    if (context is MainActivity) {
+      context.setListBookSeeMoreListener(this)
+    }
   }
 
   override fun onDismissProgressBarDialog() {
@@ -144,10 +126,48 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
     mShowProgress.set(false)
   }
 
+  override fun onGetListBook(officeId: Int?) {
+    mOfficeId = officeId
+    mIsLoadMore = false
+    mPresenter.getListBook(mTypeBook, Constant.PAGE, officeId)
+  }
+
   override fun onItemClickListener(any: Any?) {
     val bundle = Bundle()
     bundle.putParcelable(Constant.BOOK_DETAIL_EXTRA, any as Book)
     mNavigator.startActivity(BookDetailActivity::class.java, bundle)
+  }
+
+  private fun initData(binding: FragmentListbookBinding) {
+    mOfficeId = arguments.getInt(OFFICE_ID_EXTRA)
+    mTypeBook = arguments.getString(TYPE_BOOK_EXTRA)
+    mPresenter.getListCategory()
+    mPresenter.getListSortBook()
+    mPresenter.getListBook(mTypeBook, Constant.PAGE, mOfficeId)
+    mListBookAdapter.setItemInternalBookListener(this)
+    mIsOrderByAsc.set(false)
+
+    val gridLayoutManager = GridLayoutManager(context, 3)
+    binding.recyclerListBook.layoutManager = gridLayoutManager
+    binding.recyclerListBook.addOnScrollListener(
+        object : EndlessRecyclerOnScrollListener(gridLayoutManager) {
+          override fun onLoadMore(page: Int) {
+            mIsLoadMore = true
+            mIsShowProgressDialog = false
+            mShowProgress.set(true)
+            when (mTypeGetBook) {
+              BOOK_NORMAL -> {
+                mPresenter.getListBook(mTypeBook, page, mOfficeId)
+              }
+              BOOK_CATEGORY -> {
+                //TODO edit later
+              }
+              BOOK_SORT -> {
+                mPresenter.getListBookBySort(mTypeBook, page, mSort, mOfficeId)
+              }
+            }
+          }
+        })
   }
 
   fun onClickOrderBy() {
@@ -167,9 +187,9 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
             mCurrentCategoryPosition = position
             mCurrentCategory.set(charSequence.toString())
             mIsShowProgressDialog = true
-            mPresenter.getListBookByCategory(mListCategory[position].id)
-            mTypeGetBook = BOOK_CATEGORY
             mIsLoadMore = false
+            mPresenter.getListBookByCategory(mListCategory[position].id, mOfficeId)
+            mTypeGetBook = BOOK_CATEGORY
             EndlessRecyclerOnScrollListener.resetLoadMore()
           }
           true
@@ -195,9 +215,9 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
             }
             mSort.orderBy = mListSortBook[position].field
             mIsShowProgressDialog = true
-            mPresenter.getListBookBySort(mTypeBook, Constant.PAGE, mSort)
-            mTypeGetBook = BOOK_SORT
             mIsLoadMore = false
+            mPresenter.getListBookBySort(mTypeBook, Constant.PAGE, mSort, mOfficeId)
+            mTypeGetBook = BOOK_SORT
             EndlessRecyclerOnScrollListener.resetLoadMore()
           }
           true
@@ -206,18 +226,20 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
   }
 
   companion object {
-
     val TAG = ListBookFragment::class.java.simpleName
+    private val TYPE_BOOK_EXTRA = "TYPE_BOOK_EXTRA"
+    private val OFFICE_ID_EXTRA = "OFFFICE_ID_EXTRA"
     private val DESC = "desc"
     private val ASC = "asc"
     private val BOOK_NORMAL = 0
     private val BOOK_CATEGORY = 1
     private val BOOK_SORT = 2
 
-    fun newInstance(typeBook: String): ListBookFragment {
+    fun newInstance(typeBook: String?, officeId: Int?): ListBookFragment {
       val listBookFragment = ListBookFragment()
       val bundle = Bundle()
-      bundle.putString(Constant.LIST_BOOK_EXTRA, typeBook)
+      bundle.putString(TYPE_BOOK_EXTRA, typeBook)
+      officeId?.let { bundle.putInt(OFFICE_ID_EXTRA, it) }
       listBookFragment.arguments = bundle
       return listBookFragment
     }

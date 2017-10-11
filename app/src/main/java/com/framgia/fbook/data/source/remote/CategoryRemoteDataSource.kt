@@ -1,11 +1,9 @@
 package com.framgia.fbook.data.source.remote
 
-import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Category
 import com.framgia.fbook.data.source.CategoryDateSource
 import com.framgia.fbook.data.source.remote.api.request.AddCategoryFavoriteRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookByCategoryResponse
-import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.service.FBookApi
 import io.reactivex.Single
@@ -27,7 +25,7 @@ class CategoryRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemo
   }
 
   override fun getListBookByCategory(
-      categoryId: Int?): Single<BaseResponse<BaseBookByCategoryResponse>> {
-    return fbookApi.getListBookByCategory(categoryId)
+      categoryId: Int?, officeId: Int?): Single<BaseResponse<BaseBookByCategoryResponse>> {
+    return fbookApi.getListBookByCategory(categoryId, officeId)
   }
 }

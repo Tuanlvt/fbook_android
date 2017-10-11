@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.mainpage
 
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Office
+import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentMainPageBinding
 import com.framgia.fbook.screen.BaseFragment
@@ -18,7 +20,6 @@ import com.framgia.fbook.screen.mainpage.adapter.MainPageAdapter
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.NavigateAnim
-
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
@@ -27,12 +28,14 @@ import javax.inject.Named
 /**
  * MainPage Screen.
  */
-open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItemRecyclerViewClickListener {
-
+open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel,
+    onItemRecyclerViewClickListener, MainActivity.ListBookMainPageListener {
   @Inject
   internal lateinit var mPresenter: MainPageContract.Presenter
   @Inject
   lateinit var mDialogManager: DialogManager
+  @Inject
+  internal lateinit var mUserRepository: UserRepository
 
   @field:[Inject Named("AdapterLate")]
   lateinit var mMainPageAdapterLateBook: MainPageAdapter
@@ -47,6 +50,8 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItem
   @Inject
   lateinit var mNavigator: Navigator
 
+  private var mOfficeId: Int? = null
+
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
     DaggerMainPageComponent.builder()
@@ -58,12 +63,7 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItem
     val binding = DataBindingUtil.inflate<FragmentMainPageBinding>(inflater,
         R.layout.fragment_main_page, container, false)
     binding.viewModel = this
-    mPresenter.getSectionListBook()
-    mMainPageAdapterLateBook.setItemInternalBookListener(this)
-    mMainPageAdapterRatingBook.setItemInternalBookListener(this)
-    mMainPageAdapterViewBook.setItemInternalBookListener(this)
-    mMainPageAdapterWaitingBook.setItemInternalBookListener(this)
-    mMainPageAdapterReadBook.setItemInternalBookListener(this)
+    initData()
     return binding.root
   }
 
@@ -75,6 +75,13 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItem
   override fun onStop() {
     mPresenter.onStop()
     super.onStop()
+  }
+
+  override fun onAttach(context: Context?) {
+    super.onAttach(context)
+    if (context is MainActivity) {
+      context.setListBookMainPageListener(this)
+    }
   }
 
   override fun onShowProgressDialog() {
@@ -113,6 +120,21 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItem
     }
   }
 
+  override fun onGetListBook(officeId: Int?) {
+    mOfficeId = officeId
+    mPresenter.getSectionListBook(officeId)
+  }
+
+  private fun initData() {
+    mOfficeId = (activity as MainActivity).getCurrentOfficeId()
+    mPresenter.getSectionListBook(mOfficeId)
+    mMainPageAdapterLateBook.setItemInternalBookListener(this)
+    mMainPageAdapterRatingBook.setItemInternalBookListener(this)
+    mMainPageAdapterViewBook.setItemInternalBookListener(this)
+    mMainPageAdapterWaitingBook.setItemInternalBookListener(this)
+    mMainPageAdapterReadBook.setItemInternalBookListener(this)
+  }
+
   override fun onItemClickListener(any: Any?) {
     val bundle = Bundle()
     bundle.putParcelable(Constant.BOOK_DETAIL_EXTRA, any as Book)
@@ -121,31 +143,31 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItem
 
   fun onClickMoreLateBook() {
     mNavigator.goNextChildFragment(R.id.layout_content_main,
-        ListBookFragment.newInstance(Constant.LATE), true,
+        ListBookFragment.newInstance(Constant.LATE, mOfficeId), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }
 
   fun onClickMoreViewBook() {
     mNavigator.goNextChildFragment(R.id.layout_content_main,
-        ListBookFragment.newInstance(Constant.VIEW), true,
+        ListBookFragment.newInstance(Constant.VIEW, mOfficeId), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }
 
   fun onClickMoreRatingBook() {
     mNavigator.goNextChildFragment(R.id.layout_content_main,
-        ListBookFragment.newInstance(Constant.RATING), true,
+        ListBookFragment.newInstance(Constant.RATING, mOfficeId), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }
 
   fun onClickMoreWaitingBook() {
     mNavigator.goNextChildFragment(R.id.layout_content_main,
-        ListBookFragment.newInstance(Constant.WAITING), true,
+        ListBookFragment.newInstance(Constant.WAITING, mOfficeId), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }
 
   fun onClickMoreReadBook() {
     mNavigator.goNextChildFragment(R.id.layout_content_main,
-        ListBookFragment.newInstance(Constant.READ), true,
+        ListBookFragment.newInstance(Constant.READ, mOfficeId), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }
 
