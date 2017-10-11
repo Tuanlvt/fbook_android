@@ -23,8 +23,12 @@ class ItemNotificationViewModel(private val mContext: Context,
     private val REVIEW = "review"
     private val CANCEL = "cancel"
     private val APPROVE_WAITING = "approve_waiting"
+    private val UNAPPROVE_WAITING = "unapprove_waiting"
     private val APPROVE_RETURNING = "approve_returning"
     private val ADD_OWNER = "add_owner"
+    private val REMOVE_OWNER = "remove_owner"
+    private val RETURNING = "returning"
+    private val TWO_DOT = ":"
   }
 
   fun onItemClicked() {
@@ -41,22 +45,16 @@ class ItemNotificationViewModel(private val mContext: Context,
       REVIEW -> mContext.getString(R.string.review_book) + BLANK + itemNotification.book?.title
       CANCEL -> mContext.getString(R.string.cancel_book) + BLANK + itemNotification.book?.title
       APPROVE_WAITING -> mContext.getString(
-          R.string.approve_waiting_reading_requests) + BLANK + itemNotification.book?.title
-      APPROVE_RETURNING -> mContext.getString(
-          R.string.approve_returning_returned_requests) + BLANK + itemNotification.book?.title
-      ADD_OWNER -> mContext.getString(R.string.add_book) + BLANK + itemNotification.book?.title
-      else -> ""
-    }
-  }
-
-  fun getTypeFollow(): String {
-    return when (itemNotification.type) {
-      WAITING -> mContext.getString(R.string.waiting_book) + BLANK + itemNotification.book?.title
-      APPROVE_WAITING -> mContext.getString(
+          R.string.accept_your_request_waiting_book) + BLANK + itemNotification.book?.title
+      UNAPPROVE_WAITING -> mContext.getString(
           R.string.accept_your_request_waiting_book) + BLANK + itemNotification.book?.title
       APPROVE_RETURNING -> mContext.getString(
           R.string.return_books_successfully) + BLANK + itemNotification.book?.title
       ADD_OWNER -> mContext.getString(R.string.add_book) + BLANK + itemNotification.book?.title
+      REMOVE_OWNER -> mContext.getString(
+          R.string.remove_book) + BLANK + itemNotification.book?.title
+      RETURNING -> mContext.getString(
+          R.string.return_book) + TWO_DOT + BLANK + itemNotification.book?.title
       else -> ""
     }
   }

@@ -113,4 +113,5 @@
     <string name="add_book">Sách đã thêm:</string>
     <string name="do_you_want_to_return_this_book">Bạn có chắc chắn muốn trả cuốn sách này?</string>
     <string name="you_are_the_owner_this_book">Bạn là chủ sỡ hữu của cuốn sách này !</string>
+    <string name="remove_book">Xóa sách:</string>
 </resources>

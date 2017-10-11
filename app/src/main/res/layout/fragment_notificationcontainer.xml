@@ -13,20 +13,21 @@
             name="viewModel"
             type="com.framgia.fbook.screen.notification.NotificationContainerFragment"
             />
-
+        <import type="android.view.View"/>
     </data>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         >
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
             android:background="@color/color_white"
-            app:layout_goneMarginTop="@dimen/dp_3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextColor="@color/colorAccent"
@@ -34,11 +35,24 @@
             />
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@color/color_white"
             android:padding="@dimen/dp_1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             bind:viewPageAdapter="@{viewModel.NotificationContainerAdapter}"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tab_layout"
             />
-    </LinearLayout>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.mIsVisibleLayoutNotLoggedIn ? View.VISIBLE : View.GONE}"
+            >
+            <include
+                layout="@layout/layout_not_loggin"
+                />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 </layout>

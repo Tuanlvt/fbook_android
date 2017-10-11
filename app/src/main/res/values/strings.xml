@@ -43,7 +43,7 @@
     <string name="want_to_read">Want to read</string>
     <string name="author_two_dots">Author:</string>
     <string name="i_have_this_book">I have this book</string>
-    <string name="remove_owner_this_book">Remove onwer this book</string>
+    <string name="remove_owner_this_book">Remove owner this book</string>
     <string name="cancel_waiting_this_book">Cancel waiting this book</string>
     <string name="view_count">Count view:</string>
     <string name="publish_date_two_dots">Publish date:</string>
@@ -138,4 +138,5 @@
     <string name="accept_your_request_waiting_book">Accept your request waiting book:</string>
     <string name="return_books_successfully">Return books successfully:</string>
     <string name="add_book">Add Book:</string>
+    <string name="remove_book">Remove Book:</string>
 </resources>
