@@ -11,7 +11,8 @@ import io.reactivex.disposables.Disposable
  * Listens to user actions from the UI ({@link ProfileActivity}), retrieves the data and updates
  * the UI as required.
  */
-class ProfilePresenter(private val mUserRepository: UserRepository) : ProfileContract.Presenter {
+open class ProfilePresenter(
+    private val mUserRepository: UserRepository) : ProfileContract.Presenter {
 
   private var mViewModel: ProfileContract.ViewModel? = null
   private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }

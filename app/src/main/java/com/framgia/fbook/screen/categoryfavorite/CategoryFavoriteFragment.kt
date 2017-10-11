@@ -26,7 +26,7 @@ import javax.inject.Inject
 /**
  * CategoryFavorite Screen.
  */
-class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewModel, GetUserListener.onGetUserCategory {
+open class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewModel, GetUserListener.onGetUserCategory {
 
   @Inject
   internal lateinit var mNavigator: Navigator

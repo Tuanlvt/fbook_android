@@ -26,7 +26,7 @@ import javax.inject.Inject
 /**
  * BookInUser Screen.
  */
-class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBookInUserClickListener, OnReturnBookListener {
+open class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBookInUserClickListener, OnReturnBookListener {
   companion object {
     val TAG: String? = BookInUserFragment::class.java.name
     private val BOOK_IN_USER_PROFILE: String = "BOOK_IN_USER_PROFILE"

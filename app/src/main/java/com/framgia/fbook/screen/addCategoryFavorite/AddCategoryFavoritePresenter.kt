@@ -13,7 +13,7 @@ import io.reactivex.disposables.Disposable
  * Listens to user actions from the UI ({@link AddCategoryFavoriteActivity}), retrieves the data and updates
  * the UI as required.
  */
-class AddCategoryFavoritePresenter(private val
+open class AddCategoryFavoritePresenter(private val
 mCategoryRepository: CategoryRepository,
     private val userRepository: UserRepository) : AddCategoryFavoriteContract.Presenter {
 
