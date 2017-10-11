@@ -11,7 +11,7 @@ import io.reactivex.disposables.Disposable
  * Listens to user actions from the UI ([BookInUserFragment]), retrieves the data and updates
  * the UI as required.
  */
-internal class BookInUserPresenter(
+open class BookInUserPresenter(
     private val bookRepository: BookRepository) : BookInUserContract.Presenter {
 
   private var mViewModel: BookInUserContract.ViewModel? = null

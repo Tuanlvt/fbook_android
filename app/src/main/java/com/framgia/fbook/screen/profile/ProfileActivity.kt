@@ -23,7 +23,7 @@ import javax.inject.Inject
 /**
  * Profile Screen.
  */
-class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
+open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
 
   private val mNavigator: Navigator by lazy { Navigator(this) }
   @Inject

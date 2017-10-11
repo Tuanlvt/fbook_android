@@ -11,7 +11,7 @@ import io.reactivex.disposables.Disposable
  * updates
  * the UI as required.
  */
-internal class CategoryFavoritePresenter(
+open class CategoryFavoritePresenter(
     private val userRepository: UserRepository) : CategoryFavoriteContract.Presenter {
 
   private var mViewModel: CategoryFavoriteContract.ViewModel? = null

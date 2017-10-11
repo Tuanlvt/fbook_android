@@ -8,7 +8,7 @@ import com.framgia.fbook.screen.BaseViewModel
 /**
  * This specifies the contract between the view and the presenter.
  */
-internal interface CategoryFavoriteContract {
+interface CategoryFavoriteContract {
   /**
    * View.
    */

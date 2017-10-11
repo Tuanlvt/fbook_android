@@ -22,7 +22,7 @@ import javax.inject.Inject
 /**
  * AddCategoryFavorite Screen.
  */
-class AddCategoryFavoriteActivity : BaseActivity(), AddCategoryFavoriteContract.ViewModel, ItemClickSelectCategoryListener {
+open class AddCategoryFavoriteActivity : BaseActivity(), AddCategoryFavoriteContract.ViewModel, ItemClickSelectCategoryListener {
 
   @Inject
   internal lateinit var mPresenter: AddCategoryFavoriteContract.Presenter
