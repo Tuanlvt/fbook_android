@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.data.model.Image
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.ActivityApprovedetailBinding
 import com.framgia.fbook.screen.BaseActivity
@@ -34,8 +35,8 @@ class ApproveDetailActivity : BaseActivity(), ApproveDetailContract.ViewModel, o
   private lateinit var mApproveDetailComponent: ApproveDetailComponent
   private lateinit var mGetListUserWaitAndReadListener: GetListUserListener.GetListUserWaitAndRead
   private lateinit var mGetListUserReturnAndReturningListener: GetListUserListener.GetListUserReturnAndReturning
-
   val mBook: ObservableField<Book> = ObservableField()
+  val mCoverBook: ObservableField<String> = ObservableField()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -98,6 +99,16 @@ class ApproveDetailActivity : BaseActivity(), ApproveDetailContract.ViewModel, o
       mGetListUserWaitAndReadListener.onGetListUserReading(it.usersReadings)
       mGetListUserReturnAndReturningListener.onGetListUserReturning(it.usersReturnings)
       mGetListUserReturnAndReturningListener.onGetListUserReturned(it.usersReturneds)
+
+      setCoverBook(book.images)
+    }
+  }
+
+  private fun setCoverBook(images: List<Image>?) {
+    images?.let {
+      if (it.isNotEmpty()) {
+        mCoverBook.set(it[0].mobileImage?.smallPath)
+      }
     }
   }
 
