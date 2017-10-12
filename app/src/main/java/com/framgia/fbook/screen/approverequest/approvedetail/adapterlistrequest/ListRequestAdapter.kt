@@ -21,6 +21,7 @@ class ListRequestAdapter(
   private lateinit var mItemRequestClickListener: ItemRequestClickListener
   private val mListUser = mutableListOf<User>()
   private var mIsApproved = false
+  private var mIsReturned = false
   private var sizeApprove: Int = 0
 
   fun updateData(listUser: List<User>?) {
@@ -36,6 +37,10 @@ class ListRequestAdapter(
 
   fun setIsApproved(approved: Boolean) {
     mIsApproved = approved
+  }
+
+  fun setIsReturned(returned: Boolean) {
+    mIsReturned = returned
   }
 
   fun setItemRequestClickListener(
@@ -67,7 +72,7 @@ class ListRequestAdapter(
 
     fun bindData(user: User, approve: Boolean) {
       mBinding.viewModel = ItemListRequestViewModel(context, user, approve, mIsApproved,
-          mItemRequestClickListener)
+          mIsReturned, mItemRequestClickListener)
       mBinding.executePendingBindings()
     }
   }

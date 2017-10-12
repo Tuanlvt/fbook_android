@@ -14,6 +14,7 @@ import com.framgia.fbook.data.model.User
  */
 class ItemListRequestViewModel(private val mContext: Context, val user: User,
     private val mIsApproved: Boolean, private val mIsWaiting: Boolean,
+    private val mIsReturned: Boolean,
     private val mItemRequestClickListener: ItemRequestClickListener?) : BaseObservable() {
   private var mVisibleApprove = false
 
@@ -22,15 +23,16 @@ class ItemListRequestViewModel(private val mContext: Context, val user: User,
   }
 
   fun getTextApprove(): String {
-    if (!mIsWaiting) {
+    if (mIsReturned) {
+      return ""
+    } else if (!mIsWaiting) {
       setVisibleApprove(true)
       return mContext.getString(R.string.approve)
     } else {
       if (mIsApproved) {
         setVisibleApprove(true)
         return mContext.getString(R.string.unapprove)
-      }
-      if (!getVisibleApprove()) {
+      } else if (!getVisibleApprove()) {
         return mContext.getString(R.string.approve)
       }
     }

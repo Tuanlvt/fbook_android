@@ -16,6 +16,7 @@ import com.framgia.fbook.screen.approverequest.approvedetail.GetListUserListener
 import com.framgia.fbook.screen.approverequest.approvedetail.adapterlistrequest.ItemRequestClickListener
 import com.framgia.fbook.screen.approverequest.approvedetail.adapterlistrequest.ListRequestAdapter
 import com.framgia.fbook.utils.Constant
+import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.library.MaterialDialog
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
@@ -31,6 +32,8 @@ class WaitAndReadRequestFragment : BaseFragment(), WaitAndReadRequestContract.Vi
   internal lateinit var mListRequestAdapter: ListRequestAdapter
   @Inject
   internal lateinit var mDialogManager: DialogManager
+  @Inject
+  internal lateinit var mNavigator: Navigator
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -79,6 +82,7 @@ class WaitAndReadRequestFragment : BaseFragment(), WaitAndReadRequestContract.Vi
   }
 
   override fun onApproveOrUnApproveBookSuccess() {
+    mNavigator.finishActivity()
   }
 
   override fun onItemRequestClick(pivot: User.Pivot?, isApprove: Boolean) {
