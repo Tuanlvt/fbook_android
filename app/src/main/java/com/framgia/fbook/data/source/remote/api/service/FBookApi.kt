@@ -114,4 +114,7 @@ interface FBookApi {
 
   @POST("/api/v0/books/booking")
   fun returnBook(@Body readingOrCancelBookRequest: ReadingOrCancelBookRequest?): Single<Any>
+
+  @GET("/api/v0/notifications/count/user")
+  fun getCountNotificationUser(): Single<BaseResponse<CountNotification>>
 }

@@ -134,7 +134,11 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel,
 
   override fun onItemClickListener(any: Any?) {
     val bundle = Bundle()
-    bundle.putParcelable(Constant.BOOK_DETAIL_EXTRA, any as Book)
+    if (any is Book) {
+      any.id?.let {
+        bundle.putInt(Constant.BOOK_DETAIL_EXTRA, it)
+      }
+    }
     mNavigator.startActivity(BookDetailActivity::class.java, bundle)
   }
 

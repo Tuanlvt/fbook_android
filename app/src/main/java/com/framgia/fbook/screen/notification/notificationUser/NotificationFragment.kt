@@ -8,15 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.framgia.fbook.R
+import com.framgia.fbook.data.model.ItemNotification
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.data.source.remote.api.response.NotificationResponse
 import com.framgia.fbook.databinding.FragmentNotificationBinding
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.approverequest.approvedetail.ApproveDetailActivity
+import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.main.NotificationListener
+import com.framgia.fbook.screen.notification.ItemNotificationViewModel
 import com.framgia.fbook.screen.notification.NotificationAdapter
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
+import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
@@ -89,7 +94,24 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
   }
 
   override fun onItemClickListener(any: Any?) {
-    //TODO edit later
+    any?.let {
+      if (any is ItemNotification) {
+        val bundle = Bundle()
+        any.book?.id?.let {
+          bundle.putInt(Constant.BOOK_DETAIL_EXTRA, it)
+        }
+        when (any.type) {
+          ItemNotificationViewModel.WAITING, ItemNotificationViewModel.APPROVE_RETURNING,
+          ItemNotificationViewModel.RETURNING, ItemNotificationViewModel.UNAPPROVE_WAITING
+          -> {
+            mNavigator.startActivity(ApproveDetailActivity::class.java, bundle)
+          }
+          ItemNotificationViewModel.APPROVE_WAITING, ItemNotificationViewModel.REVIEW -> {
+            mNavigator.startActivity(BookDetailActivity::class.java, bundle)
+          }
+        }
+      }
+    }
   }
 
   override fun getEnable(enable: Boolean) {
