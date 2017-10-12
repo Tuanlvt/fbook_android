@@ -37,6 +37,10 @@ class ItemListRequestViewModel(private val mContext: Context, val user: User,
     return ""
   }
 
+  fun getStatusUser(): Boolean {
+    return !mIsApproved
+  }
+
   @Bindable
   fun getVisibleApprove(): Boolean {
     return mVisibleApprove

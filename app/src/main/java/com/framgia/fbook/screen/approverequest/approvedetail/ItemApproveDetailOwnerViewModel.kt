@@ -3,7 +3,7 @@ package com.framgia.fbook.screen.approverequest.approvedetail
 import android.databinding.BaseObservable
 import android.view.View
 import com.framgia.fbook.data.model.Owner
-import com.framgia.fbook.screen.onItemRecyclerViewClickListener
+import com.framgia.fbook.screen.bookdetail.ItemOwnerClickListener
 
 /**
  * Created by Hyperion on 29/09/2017.
@@ -11,9 +11,9 @@ import com.framgia.fbook.screen.onItemRecyclerViewClickListener
  * Thank you !
  */
 class ItemApproveDetailOwnerViewModel(val mOwner: Owner,
-    private val mOnItemRecyclerViewClickListener: onItemRecyclerViewClickListener?) : BaseObservable() {
+    private val mOnItemOwnerClickListener: ItemOwnerClickListener?) : BaseObservable() {
 
   fun onItemOwnerClick(view: View) {
-    mOnItemRecyclerViewClickListener?.onItemClickListener(mOwner)
+    mOnItemOwnerClickListener?.onItemOwnerClick(mOwner)
   }
 }
