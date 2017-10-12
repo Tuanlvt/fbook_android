@@ -4,6 +4,8 @@ import android.app.Activity
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.source.remote.api.error.BaseException
@@ -97,5 +99,10 @@ open class LoginActivity : BaseActivity(), LoginContract.ViewModel {
       return
     }
     mPresenter.login(email.get(), password.get())
+  }
+
+  fun ForgotPasswordClick(view: View) {
+    Toast.makeText(applicationContext, getString(R.string.this_frature_will_be_update_soon),
+        Toast.LENGTH_SHORT).show()
   }
 }
