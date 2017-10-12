@@ -1,9 +1,16 @@
 package com.framgia.fbook.screen.approverequest.approvedetail.returningandreturnedRequest
 
 import android.support.v4.app.Fragment
+import com.framgia.fbook.data.source.UserRepository
+import com.framgia.fbook.data.source.UserRepositoryImpl
+import com.framgia.fbook.data.source.local.UserLocalDataSource
+import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.screen.approverequest.approvedetail.adapterlistrequest.ListRequestAdapter
 import com.framgia.fbook.utils.dagger.FragmentScope
+import com.framgia.fbook.utils.navigator.Navigator
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
+import com.fstyle.structure_android.widget.dialog.DialogManager
+import com.fstyle.structure_android.widget.dialog.DialogManagerImpl
 import dagger.Module
 import dagger.Provides
 
@@ -16,9 +23,9 @@ class ReturningAndReturnedFragmentModule(private val mFragment: Fragment) {
 
   @FragmentScope
   @Provides
-  fun providePresenter(
+  fun providePresenter(userRepository: UserRepository,
       schedulerProvider: BaseSchedulerProvider): ReturningAndReturnedFragmentContract.Presenter {
-    val presenter = ReturningAndReturnedFragmentPresenter()
+    val presenter = ReturningAndReturnedFragmentPresenter(userRepository)
     presenter.setViewModel(mFragment as ReturningAndReturnedFragmentContract.ViewModel)
     presenter.setSchedulerProvider(schedulerProvider)
     return presenter
@@ -28,5 +35,24 @@ class ReturningAndReturnedFragmentModule(private val mFragment: Fragment) {
   @Provides
   fun provideListRequestAdapter(): ListRequestAdapter {
     return ListRequestAdapter(mFragment.context)
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideNavigator(): Navigator {
+    return Navigator(mFragment)
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideUserRepository(userLocalDataSource: UserLocalDataSource,
+      userRemoteDataSource: UserRemoteDataSource): UserRepository {
+    return UserRepositoryImpl(userRemoteDataSource, userLocalDataSource)
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideDialogManager(): DialogManager {
+    return DialogManagerImpl(mFragment.context)
   }
 }
