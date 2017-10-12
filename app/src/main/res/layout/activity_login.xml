@@ -26,89 +26,108 @@
             android:layout_height="wrap_content"
             android:background="@drawable/background"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:ignore="MissingConstraints"
+            tools:ignore="ContentDescription,MissingConstraints"
             tools:layout_editor_absoluteX="dp_0"
             />
         <ImageView
             android:id="@+id/image_logo"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
             android:layout_marginEnd="@dimen/dp_50"
             android:layout_marginStart="@dimen/dp_50"
-            android:src="@drawable/logo"
+            android:layout_marginTop="@dimen/dp_50"
+            android:background="@drawable/ic_books"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription"
             />
-
-        <LinearLayout
-            android:id="@+id/layout_text"
+        <TextView
+            android:id="@+id/text_name_app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_16"
+            android:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textAllCaps="true"
+            android:textColor="@color/color_red_translate"
+            android:textSize="@dimen/sp_35"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/image_logo"
+            />
+        <android.support.v7.widget.CardView
+            android:id="@+id/layout_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_7"
             android:layout_marginEnd="@dimen/dp_10"
             android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_24"
-            android:background="@android:color/transparent"
-            android:orientation="vertical"
-            android:padding="@dimen/dp_5"
+            android:padding="@dimen/dp_10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_logo"
-            tools:ignore="MissingConstraints"
+            app:layout_constraintTop_toBottomOf="@+id/text_name_app"
             >
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_white_translate_light"
-                android:textColorHint="@color/color_dark_gray"
-                bind:errorText="@{viewModel.emailErrorMsg}"
+                android:layout_margin="@dimen/dp_5"
+                android:background="@drawable/border_background_2"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints"
                 >
-                <EditText
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_user"
-                    android:drawablePadding="@dimen/dp_5"
-                    android:drawableStart="@drawable/ic_user"
-                    android:gravity="center_vertical"
-                    android:hint="@string/email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:padding="@dimen/dp_10"
-                    android:text="@={viewModel.email}"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="@android:color/darker_gray"
-                    />
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@color/color_white_translate_light"
-                android:textColorHint="@color/color_dark_gray"
-                bind:errorText="@{viewModel.passwordErrorMsg}"
-                >
-                <EditText
+                    android:textColorHint="@color/color_dark_gray"
+                    bind:errorText="@{viewModel.emailErrorMsg}"
+                    >
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_user"
+                        android:drawablePadding="@dimen/dp_5"
+                        android:drawableStart="@drawable/ic_user"
+                        android:gravity="center_vertical"
+                        android:hint="@string/email"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:padding="@dimen/dp_10"
+                        android:text="@={viewModel.email}"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/darker_gray"
+                        />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_password"
-                    android:drawablePadding="@dimen/dp_5"
-                    android:drawableStart="@drawable/ic_password"
-                    android:gravity="center_vertical"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:padding="@dimen/dp_10"
-                    android:text="@={viewModel.password}"
-                    android:textColor="@android:color/black"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:textColorHint="@color/color_dark_gray"
+                    bind:errorText="@{viewModel.passwordErrorMsg}"
+                    >
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_password"
+                        android:drawablePadding="@dimen/dp_5"
+                        android:drawableStart="@drawable/ic_password"
+                        android:gravity="center_vertical"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:padding="@dimen/dp_10"
+                        android:text="@={viewModel.password}"
+                        android:textColor="@android:color/black"
 
-                    />
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
+                        />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
         <FrameLayout
             android:id="@+id/layout_forgot_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_text"
@@ -121,6 +140,7 @@
                 android:layout_marginRight="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_10"
                 android:gravity="end"
+                android:onClick="@{viewModel::ForgotPasswordClick}"
                 android:text="@string/forgot_password"
                 />
         </FrameLayout>
