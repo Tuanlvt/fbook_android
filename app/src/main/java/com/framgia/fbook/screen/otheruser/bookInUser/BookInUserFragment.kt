@@ -102,7 +102,9 @@ open class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, It
 
   override fun onItemBookInUserClick(book: Book?) {
     val bundle = Bundle()
-    bundle.putParcelable(Constant.BOOK_DETAIL_EXTRA, book)
+    book?.id?.let {
+      bundle.putInt(Constant.BOOK_DETAIL_EXTRA, it)
+    }
     mNavigator.startActivity(BookDetailActivity::class.java, bundle)
   }
 

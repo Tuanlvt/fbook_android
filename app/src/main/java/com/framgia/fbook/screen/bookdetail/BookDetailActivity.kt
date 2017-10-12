@@ -169,8 +169,7 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
   }
 
   private fun initData() {
-    val book: Book = intent.getParcelableExtra(Constant.BOOK_DETAIL_EXTRA)
-    mBookId = book.id
+    mBookId = intent.getIntExtra(Constant.BOOK_DETAIL_EXTRA, 0)
     mActionBookDetail.bookId = mBookId
     mPresenter.getBookDetail(mBookId)
     mOwnerAdapter.setItemUserClickListener(this)

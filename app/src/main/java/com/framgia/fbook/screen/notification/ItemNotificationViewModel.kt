@@ -19,16 +19,16 @@ class ItemNotificationViewModel(private val mContext: Context,
   companion object {
     private val BLANK = " "
     //TODO Edit later
-    private val WAITING = "waiting"
-    private val REVIEW = "review"
-    private val CANCEL = "cancel"
-    private val APPROVE_WAITING = "approve_waiting"
-    private val UNAPPROVE_WAITING = "unapprove_waiting"
-    private val APPROVE_RETURNING = "approve_returning"
-    private val ADD_OWNER = "add_owner"
-    private val REMOVE_OWNER = "remove_owner"
-    private val RETURNING = "returning"
-    private val TWO_DOT = ":"
+     val WAITING = "waiting"
+     val REVIEW = "review"
+     val CANCEL = "cancel"
+     val APPROVE_WAITING = "approve_waiting"
+     val UNAPPROVE_WAITING = "unapprove_waiting"
+     val APPROVE_RETURNING = "approve_returning"
+     val ADD_OWNER = "add_owner"
+     val REMOVE_OWNER = "remove_owner"
+     val RETURNING = "returning"
+     val TWO_DOT = ":"
   }
 
   fun onItemClicked() {
