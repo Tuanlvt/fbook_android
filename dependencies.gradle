@@ -29,5 +29,6 @@ ext {
                   bottombar         : 'com.roughike:bottom-bar:2.3.1',
                   imageCircle       : 'de.hdodenhof:circleimageview:2.1.0',
                   easyimage         : 'com.github.jkwiecien:EasyImage:2.0.3',
+                  fcm               : 'com.google.firebase:firebase-messaging:9.4.0',
                   animationbutton   : 'com.sackcentury:shinebutton:0.1.9']
 }
