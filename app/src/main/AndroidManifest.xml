@@ -70,14 +70,14 @@
             android:theme="@style/AppTheme"/>
 
         <service
-            android:name=".fireBase.FireBaseMessageService"
+            android:name="com.pusher.android.notifications.fcm.FCMMessagingService"
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
         <service
-            android:name=".fireBase.FireBaseInstanceIDService"
+            android:name="com.pusher.android.notifications.fcm.FCMInstanceIDService"
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
