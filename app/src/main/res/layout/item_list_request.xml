@@ -12,50 +12,105 @@
             />
         <import type="android.view.View"/>
     </data>
-    <android.support.constraint.ConstraintLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_2"
+        android:padding="@dimen/dp_3"
         >
-        <ImageView
-            android:id="@+id/imageUser"
-            android:layout_width="@dimen/dp_60"
-            android:layout_height="@dimen/dp_60"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            bind:imageUserUrl="@{viewModel.user.avatar}"
-            />
-        <TextView
-            android:id="@+id/textName"
-            android:layout_width="wrap_content"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.user.name}"
-            app:layout_constraintLeft_toRightOf="@id/imageUser"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.user.email}"
-            app:layout_constraintLeft_toRightOf="@id/imageUser"
-            app:layout_constraintTop_toBottomOf="@id/textName"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="@dimen/dp_5"
-            android:layout_marginRight="@dimen/dp_5"
-            android:background="@drawable/border_button_backround_blue"
-            android:gravity="center"
-            android:onClick="@{() -> viewModel.onItemClicked()}"
+            android:layout_marginTop="@dimen/dp_5"
             android:padding="@dimen/dp_5"
-            android:text="@{viewModel.TextApprove}"
-            android:textColor="@color/color_white"
-            android:textSize="@dimen/sp_13"
-            android:visibility="@{viewModel.VisibleApprove ? View.VISIBLE : View.GONE}"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-    </android.support.constraint.ConstraintLayout>
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageUser"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                bind:imageUserUrl="@{viewModel.user.avatar}"
+                tools:ignore="ContentDescription"
+                />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_5"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/imageUser"
+                app:layout_constraintRight_toLeftOf="@+id/text_status"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+                <TextView
+                    android:id="@+id/textName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{viewModel.user.name}"
+                    android:textColor="@color/color_dark_gray"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{viewModel.user.email}"
+                    />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:background="@drawable/border_background_2"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/waiting"
+                        android:textColor="@color/color_yellow"
+                        android:textStyle="bold"
+                        android:visibility="@{viewModel.statusUser ? View.VISIBLE : View.GONE}"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reading"
+                        android:textColor="@color/color_green_mos"
+                        android:textStyle="bold"
+                        android:visibility="@{viewModel.statusUser ? View.GONE : View.VISIBLE}"
+                        />
+                </FrameLayout>
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/text_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/dp_5"
+                android:layout_marginRight="@dimen/dp_5"
+                android:background="@drawable/button_click_red"
+                android:gravity="center"
+                android:onClick="@{() -> viewModel.onItemClicked()}"
+                android:padding="@dimen/dp_10"
+                android:text="@{viewModel.TextApprove}"
+                android:textAllCaps="false"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/sp_13"
+                android:visibility="@{viewModel.VisibleApprove ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
 </layout>

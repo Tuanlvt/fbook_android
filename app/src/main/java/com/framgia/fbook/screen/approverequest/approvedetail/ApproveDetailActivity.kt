@@ -6,12 +6,14 @@ import android.os.Bundle
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.data.model.Owner
 import com.framgia.fbook.data.model.Image
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.ActivityApprovedetailBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.SearchBook.SearchBookActivity
-import com.framgia.fbook.screen.onItemRecyclerViewClickListener
+import com.framgia.fbook.screen.bookdetail.ItemOwnerClickListener
+import com.framgia.fbook.screen.profile.ProfileActivity
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.structure_android.widget.dialog.DialogManager
@@ -20,7 +22,7 @@ import javax.inject.Inject
 /**
  * ApproveDetailActivity Screen.
  */
-class ApproveDetailActivity : BaseActivity(), ApproveDetailContract.ViewModel, onItemRecyclerViewClickListener {
+class ApproveDetailActivity : BaseActivity(), ApproveDetailContract.ViewModel, ItemOwnerClickListener {
 
   @Inject
   internal lateinit var mPresenter: ApproveDetailContract.Presenter
@@ -53,7 +55,7 @@ class ApproveDetailActivity : BaseActivity(), ApproveDetailContract.ViewModel, o
     if (bookId != 0) {
       mPresenter.getApproveDetail(bookId)
     }
-    mApproveDetailOwnerAdapter.setOnItemRecyclerViewClickListener(this)
+    mApproveDetailOwnerAdapter.setOnItemOwnerClickListener(this)
   }
 
   override fun onStart() {
@@ -87,8 +89,10 @@ class ApproveDetailActivity : BaseActivity(), ApproveDetailContract.ViewModel, o
     mDialogManager.dialogError(e.getMessageError())
   }
 
-  override fun onItemClickListener(any: Any?) {
-    //TODO edit later
+  override fun onItemOwnerClick(owner: Owner?) {
+    val bundle = Bundle()
+    owner?.id?.let { bundle.putInt(Constant.BOOK_DETAIL_EXTRA, it) }
+    mNavigator.startActivity(ProfileActivity::class.java, bundle)
   }
 
   override fun onGetApproveDetailSuccess(book: Book?) {
