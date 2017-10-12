@@ -50,6 +50,7 @@ class ReturningAndReturnedFragmentFragment : BaseFragment(), ReturningAndReturne
         container, false)
     binding.viewModel = this
     mListRequestAdapter.setItemRequestClickListener(this)
+    mListRequestAdapter.setIsReturned(true)
     return binding.root
   }
 
@@ -89,7 +90,6 @@ class ReturningAndReturnedFragmentFragment : BaseFragment(), ReturningAndReturne
   override fun onGetListUserReturned(listUser: List<User>?) {
     listUser?.let {
       mListRequestAdapter.updateData(listUser)
-      mListRequestAdapter.setIsReturned(!listUser.isEmpty())
       mListRequestAdapter.setIsApproved(!listUser.isEmpty())
     }
   }

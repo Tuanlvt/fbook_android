@@ -6,8 +6,8 @@ import android.os.Bundle
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
-import com.framgia.fbook.data.model.Owner
 import com.framgia.fbook.data.model.Image
+import com.framgia.fbook.data.model.Owner
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.ActivityApprovedetailBinding
 import com.framgia.fbook.screen.BaseActivity
@@ -101,9 +101,8 @@ class ApproveDetailActivity : BaseActivity(), ApproveDetailContract.ViewModel, I
       mApproveDetailOwnerAdapter.updateData(it.owners)
       mGetListUserWaitAndReadListener.onGetListUserWaiting(it.usersWaitings)
       mGetListUserWaitAndReadListener.onGetListUserReading(it.usersReadings)
-      mGetListUserReturnAndReturningListener.onGetListUserReturning(it.usersReturnings)
       mGetListUserReturnAndReturningListener.onGetListUserReturned(it.usersReturneds)
-
+      mGetListUserReturnAndReturningListener.onGetListUserReturning(it.usersReturnings)
       setCoverBook(book.images)
     }
   }

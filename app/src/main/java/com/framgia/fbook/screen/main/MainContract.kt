@@ -19,6 +19,8 @@ interface MainContract {
     fun onError(baseException: BaseException)
 
     fun onGetOfficeSuccess(listOffice: List<Office>?)
+
+    fun onGetCountNotificationSuccess(count: Int?)
   }
 
   /**
@@ -27,5 +29,7 @@ interface MainContract {
   interface Presenter : BasePresenter<ViewModel> {
 
     fun getOffices()
+
+    fun getCountNotification()
   }
 }

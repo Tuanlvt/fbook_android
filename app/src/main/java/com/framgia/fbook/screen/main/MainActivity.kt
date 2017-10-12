@@ -57,6 +57,7 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
   private var mListOffices = mutableListOf<Office>()
   private var mCurrentOfficePosition: Int = 0
   private var mOfficeId: Int? = null
+  private lateinit var mBottomBar: BottomBar
 
   val mCurrentTab: ObservableField<Int> = ObservableField()
   val mPageLimit: ObservableField<Int> = ObservableField(PAGE_LIMIT)
@@ -108,6 +109,13 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
     mHandler.postDelayed(mRunnable, DELAY_TIME_TWO_TAP_BACK_BUTTON.toLong())
   }
 
+  override fun onGetCountNotificationSuccess(count: Int?) {
+    count?.let {
+      val notificationTab = mBottomBar.getTabWithId(R.id.tab_notification)
+      notificationTab.setBadgeCount(count)
+    }
+  }
+
   override fun getNotificationFollow(notification: Notification?) {
     mNotificationFollowListener.getNotificationFollow(notification)
   }
@@ -130,6 +138,7 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
   private fun initData() {
     onSelectItemMenu()
     presenter.getOffices()
+    presenter.getCountNotification()
     mHandler = Handler()
     mRunnable = Runnable { mIsDoubleTapBack = false }
   }
@@ -165,8 +174,8 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
   }
 
   private fun onSelectItemMenu() {
-    val bottomBar = findViewById(R.id.bottom_navigation) as BottomBar
-    bottomBar.setOnTabSelectListener { idView ->
+    mBottomBar = findViewById(R.id.bottom_navigation) as BottomBar
+    mBottomBar.setOnTabSelectListener { idView ->
       when (idView) {
         R.id.tab_home -> setCurrentTab(Constant.Tab.TAB_HOME)
         R.id.tab_my_book -> setCurrentTab(Constant.Tab.TAB_MY_BOOK)

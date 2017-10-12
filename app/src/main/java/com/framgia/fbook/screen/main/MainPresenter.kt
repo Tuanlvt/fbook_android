@@ -44,4 +44,18 @@ class MainPresenter(private val mUserRepository: UserRepository) : MainContract.
             })
     mCompositeDisposable.add(disposable)
   }
+
+  override fun getCountNotification() {
+    val disposable = mUserRepository.getCountNotification()
+        .subscribeOn(mBaseSchedulerProvider.io())
+        .observeOn(mBaseSchedulerProvider.ui())
+        .subscribe(
+            { countResponse ->
+              mMainViewModel.onGetCountNotificationSuccess(countResponse.item?.count)
+            },
+            { error ->
+              mMainViewModel.onError(error as BaseException)
+            })
+    mCompositeDisposable.add(disposable)
+  }
 }
