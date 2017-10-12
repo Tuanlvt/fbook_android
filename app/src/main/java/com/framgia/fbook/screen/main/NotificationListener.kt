@@ -9,4 +9,8 @@ import com.framgia.fbook.data.model.Notification
  */
 interface NotificationListener {
   fun getNotificationFollow(notification: Notification?)
+
+  interface UserListener {
+    fun getEnable(enable: Boolean)
+  }
 }

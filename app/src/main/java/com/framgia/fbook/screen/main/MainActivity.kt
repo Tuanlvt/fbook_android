@@ -18,6 +18,7 @@ import com.framgia.fbook.databinding.ActivityMainBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.SearchBook.SearchBookActivity
 import com.framgia.fbook.screen.notification.notificationFollow.NotificationFollowListener
+import com.framgia.fbook.screen.notification.notificationUser.NotificationUserListener
 import com.framgia.fbook.screen.profile.ProfileActivity
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
@@ -27,7 +28,7 @@ import com.fstyle.structure_android.widget.dialog.DialogManager
 import com.roughike.bottombar.BottomBar
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListener {
+class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListener, NotificationListener.UserListener {
 
   private val TAG: String = MainActivity::class.java.name
   private val DELAY_TIME_TWO_TAP_BACK_BUTTON = 2000
@@ -50,6 +51,7 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
   private lateinit var mNotificationFollowListener: NotificationFollowListener
   private lateinit var mListBookMainPageListener: ListBookMainPageListener
   private lateinit var mListBookSeeMoreListener: ListBookSeeMoreListener
+  private lateinit var mNotificationUserListener: NotificationUserListener
 
   private var mIsDoubleTapBack = false
   private var mListOffices = mutableListOf<Office>()
@@ -110,6 +112,10 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
     mNotificationFollowListener.getNotificationFollow(notification)
   }
 
+  override fun getEnable(enable: Boolean) {
+    mNotificationUserListener.getEnable(enable)
+  }
+
   override fun onGetOfficeSuccess(listOffice: List<Office>?) {
     listOffice?.let {
       mListOffices.addAll(it)
@@ -140,6 +146,10 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
 
   fun setNotificationFollowListener(notificationFollowListener: NotificationFollowListener) {
     mNotificationFollowListener = notificationFollowListener
+  }
+
+  fun setNotificationUserListener(notificationUserListener: NotificationUserListener) {
+    mNotificationUserListener = notificationUserListener
   }
 
   private fun setCurrentTab(tab: Int) {
