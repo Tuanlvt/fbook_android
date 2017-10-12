@@ -19,85 +19,124 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
         >
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/layout_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:padding="@dimen/dp_3"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+            <ImageButton
+                android:id="@+id/image_delete_text"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:background="@android:color/transparent"
+                android:onClick="@{viewModel::ResetTextOnClick}"
+                android:tint="@android:color/darker_gray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_cancel_black_24dp"
+                tools:ignore="ContentDescription"
+                />
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:hint="@string/input_book_to_search"
+                android:maxLines="1"
+                android:text="@={viewModel.mKeyWord}"
+                android:textColor="@color/color_dark_gray_mos"
+                android:textColorHint="@color/color_white_light"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/image_delete_text"
+                app:layout_constraintRight_toLeftOf="@+id/image_ic_search"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+            <ImageButton
+                android:id="@+id/image_ic_search"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:background="@android:color/transparent"
+                android:onClick="@{() -> viewModel.onClickSearch()}"
+                android:tint="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_search_grey"
+                tools:ignore="ContentDescription"
+                />
+
+        </android.support.constraint.ConstraintLayout>
         <RadioGroup
             android:id="@+id/radioGroupSearch"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/dp_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_3"
+            android:layout_marginLeft="@dimen/dp_3"
+            android:layout_marginRight="@dimen/dp_3"
+            android:layout_marginStart="@dimen/dp_3"
+            android:layout_marginTop="@dimen/dp_8"
+            android:gravity="center"
             android:orientation="horizontal"
+            android:weightSum="3"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-
+            app:layout_constraintTop_toBottomOf="@+id/layout_search"
             >
             <RadioButton
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/border_white"
                 android:checked="@{viewModel.mIsTitle}"
                 android:onClick="@{() -> viewModel.onRadioSearchTitle()}"
                 android:text="@string/title"
                 android:theme="@style/RadioButtonStyle"
                 />
             <RadioButton
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_2"
+                android:layout_marginLeft="@dimen/dp_2"
+                android:layout_marginRight="@dimen/dp_2"
+                android:layout_marginStart="@dimen/dp_2"
+                android:layout_weight="1"
+                android:background="@drawable/border_white"
                 android:checked="@{viewModel.mIsAuthor}"
                 android:onClick="@{() -> viewModel.onRadioSearchAuthor()}"
                 android:text="@string/author"
                 android:theme="@style/RadioButtonStyle"
                 />
             <RadioButton
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_2"
+                android:layout_weight="1"
+                android:background="@drawable/border_white"
                 android:checked="@{viewModel.mIsDescription}"
                 android:onClick="@{() -> viewModel.onRadioSearchDescription()}"
                 android:text="@string/description"
                 android:theme="@style/RadioButtonStyle"
                 />
         </RadioGroup>
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayoutSearchBook"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/TextInputLabel"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroupSearch"
-            bind:errorText="@{viewModel.mKeyWordErrorMsg}"
-            >
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/input_book_to_search"
-                android:maxLines="1"
-                android:text="@={viewModel.mKeyWord}"
-                android:textColorHint="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutSearchBook"
-                app:layout_constraintLeft_toLeftOf="@+id/textInputLayoutSearchBook"
-                app:layout_constraintRight_toRightOf="@+id/textInputLayoutSearchBook"
-                app:layout_constraintTop_toTopOf="@+id/textInputLayoutSearchBook"
-                />
-        </android.support.design.widget.TextInputLayout>
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:onClick="@{() -> viewModel.onClickSearch()}"
-            android:src="@drawable/ic_search_grey"
-            app:layout_constraintBottom_toBottomOf="@id/textInputLayoutSearchBook"
-            app:layout_constraintRight_toRightOf="@+id/textInputLayoutSearchBook"
-            app:layout_constraintTop_toTopOf="@id/textInputLayoutSearchBook"
-            tools:ignore="ContentDescription"
-            />
         <android.support.v7.widget.RecyclerView
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="@color/color_white"
+            android:paddingTop="@dimen/dp_10"
             app:layoutManager="LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textInputLayoutSearchBook"
+            app:layout_constraintTop_toBottomOf="@id/radioGroupSearch"
             bind:recyclerAdapter="@{viewModel.mInternalBookAdapter}"
             />
     </android.support.constraint.ConstraintLayout>

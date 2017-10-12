@@ -115,6 +115,10 @@ open class InternalBookFragment : BaseFragment(), InternalBookContract.ViewModel
     mPresenter.searchBook(mKeyWord.get(), mTypeSearch)
   }
 
+  fun ResetTextOnClick(view: View) {
+    mKeyWord.set(Constant.EXTRA_EMTY)
+  }
+
   fun onRadioSearchTitle() {
     mIsTitle.set(true)
     mIsAuthor.set(false)

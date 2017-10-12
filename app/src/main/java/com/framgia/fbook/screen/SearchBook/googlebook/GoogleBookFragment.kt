@@ -15,6 +15,7 @@ import com.framgia.fbook.screen.SearchBook.SearchBookActivity
 import com.framgia.fbook.screen.SearchBook.TypeSearch
 import com.framgia.fbook.screen.SearchBook.adaptersearchbook.SearchBookAdapter
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
+import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.common.StringUtils
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
@@ -84,11 +85,15 @@ open class GoogleBookFragment : BaseFragment(), GoogleBookContract.ViewModel, on
     bookList?.let { mGoogleBookAdapter.updateDataGoogleBook(it, TypeSearch.GOOGLE_BOOK) }
   }
 
-  override fun onItemClickListener(any: Any?) {
-   //TODO edit later
+  fun ResetTextOnClick(view: View) {
+    mBookName.set(Constant.EXTRA_EMTY)
   }
 
-  fun onClickSearchBookGoogle() {
+  override fun onItemClickListener(any: Any?) {
+    //TODO edit later
+  }
+
+  fun onClickSearchBookGoogle(view: View) {
     if (StringUtils.isBlank(mBookName.get())) {
       mErrorMsg.set(context.getString(R.string.is_empty))
       return
