@@ -65,6 +65,9 @@ class Book() : BaseModel(), Parcelable {
   @Expose
   @SerializedName("reviews_detail")
   var reviewDetails: List<ReviewDetail>? = ArrayList()
+  @SerializedName("category")
+  @Expose
+  var category: Category? = null
 
   constructor(parcel: Parcel) : this() {
     id = parcel.readValue(Int::class.java.classLoader) as? Int

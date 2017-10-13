@@ -48,13 +48,12 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
   val titleError: ObservableField<String> = ObservableField()
   val authorError: ObservableField<String> = ObservableField()
   val descriptionError: ObservableField<String> = ObservableField()
-  val publishDate: ObservableField<String> = ObservableField()
-  val currentOffice: ObservableField<String> = ObservableField()
-  val currentCategory: ObservableField<String> = ObservableField()
-  private var currentOfficePosition: Int = 0
-  private var currentCategoryPosition: Int = 0
+  val mPublishDate: ObservableField<String> = ObservableField()
+  val mCurrentOffice: ObservableField<String> = ObservableField()
+  val mCurrentCategory: ObservableField<String> = ObservableField()
+  private var mCurrentOfficePosition: Int = 0
+  private var mCurrentCategoryPosition: Int = 0
   private lateinit var mLayoutView: View
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     DaggerShareBookComponent.builder()
@@ -126,14 +125,14 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
   override fun onGetOfficeSuccess(listOffice: List<Office>?) {
     listOffice?.let {
       mListOffice.addAll(it)
-      updateCurrentOffice(currentOfficePosition)
+      updateCurrentOffice(mCurrentOfficePosition)
     }
   }
 
   override fun onGetCategorySuccess(listCategory: List<Category>?) {
     listCategory?.let {
       mListCategory.addAll(it)
-      updateCurrentCategory(currentCategoryPosition)
+      updateCurrentCategory(mCurrentCategoryPosition)
     }
   }
 
@@ -211,10 +210,10 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
     val workSpace: MutableList<String?> = mutableListOf()
     mListOffice.mapTo(workSpace) { it.name }
     mDialogManager.dialogListSingleChoice(getString(R.string.select_office), workSpace,
-        currentOfficePosition,
+        mCurrentOfficePosition,
         MaterialDialog.ListCallbackSingleChoice { _, _, position, _ ->
-          currentOfficePosition = position
-          updateCurrentOffice(currentOfficePosition)
+          mCurrentOfficePosition = position
+          updateCurrentOffice(mCurrentOfficePosition)
           true
         })
   }
@@ -223,10 +222,10 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
     val listCategory: MutableList<String?> = mutableListOf()
     mListCategory.mapTo(listCategory) { it.name }
     mDialogManager.dialogListSingleChoice(getString(R.string.select_category), listCategory,
-        currentCategoryPosition,
+        mCurrentCategoryPosition,
         MaterialDialog.ListCallbackSingleChoice { _, _, position, _ ->
-          currentCategoryPosition = position
-          updateCurrentCategory(currentCategoryPosition)
+          mCurrentCategoryPosition = position
+          updateCurrentCategory(mCurrentCategoryPosition)
           true
         })
   }
@@ -257,7 +256,7 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
     if (mListOffice.isEmpty()) {
       return
     }
-    currentOffice.set(mListOffice[position].name)
+    mCurrentOffice.set(mListOffice[position].name)
     mBookRequest.get().officeId = mListOffice[position].id
   }
 
@@ -265,12 +264,12 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
     if (mListCategory.isEmpty()) {
       return
     }
-    currentCategory.set(mListCategory[position].name)
+    mCurrentCategory.set(mListCategory[position].name)
     mBookRequest.get().categoryId = mListCategory[position].id
   }
 
   private fun updatePublishDate(date: String) {
-    publishDate.set(date)
+    mPublishDate.set(date)
     mBookRequest.get().publishDate = date
   }
 
@@ -290,6 +289,10 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
       mBookRequest.get().description = book.description
       mBookRequest.get().author = book.author
       book.publishDate?.let { updatePublishDate(it) }
+      mCurrentOffice.set(book.office?.name)
+      mCurrentCategory.set(book.category?.name)
+      mCurrentOfficePosition = searchCurrentPositionOffice(book.office?.name, mListOffice)
+      mCurrentCategoryPosition = searchCurrentPositionCategory(book.category?.name, mListCategory)
       mBookRequest.notifyChange()
     }
   }
@@ -302,5 +305,22 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
       mBookRequest.get().author = book.volumeInfo?.listAuthor.toString()
       mBookRequest.notifyChange()
     }
+  }
+  private fun searchCurrentPositionOffice(office: String?, listOffice: List<Office>?): Int {
+    listOffice?.let {
+      (0..listOffice.size - 1)
+          .filter { listOffice[it].name == office }
+          .forEach { return it }
+    }
+    return 0
+  }
+
+  private fun searchCurrentPositionCategory(category: String?, listCategory: List<Category>?): Int {
+    listCategory?.let {
+      (0..listCategory.size - 1)
+          .filter { listCategory[it].name == category }
+          .forEach { return it }
+    }
+    return 0
   }
 }
