@@ -15,8 +15,8 @@ import com.framgia.fbook.databinding.FragmentNotificationfollowBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.main.MainActivity
+import com.framgia.fbook.screen.notification.ItemNotificationClickListener
 import com.framgia.fbook.screen.notification.NotificationAdapter
-import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.structure_android.widget.dialog.DialogManager
@@ -25,7 +25,7 @@ import javax.inject.Inject
 /**
  * NotificationFollow Screen.
  */
-class NotificationFollowFragment : BaseFragment(), NotificationFollowContract.ViewModel, NotificationFollowListener, onItemRecyclerViewClickListener {
+class NotificationFollowFragment : BaseFragment(), NotificationFollowContract.ViewModel, NotificationFollowListener, ItemNotificationClickListener {
 
   @Inject
   internal lateinit var mPresenter: NotificationFollowContract.Presenter
@@ -35,7 +35,7 @@ class NotificationFollowFragment : BaseFragment(), NotificationFollowContract.Vi
   internal lateinit var mNavigator: Navigator
   @Inject
   internal lateinit var mDialogManager: DialogManager
-
+  private var mPosition = 0
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -51,7 +51,7 @@ class NotificationFollowFragment : BaseFragment(), NotificationFollowContract.Vi
         R.layout.fragment_notificationfollow, container,
         false)
     binding.viewModel = this
-    mNotificationAdapter.setonItemRecyclerViewClickListener(this)
+    mNotificationAdapter.setItemNotificationClickListener(this)
     return binding.root
   }
 
@@ -78,27 +78,26 @@ class NotificationFollowFragment : BaseFragment(), NotificationFollowContract.Vi
   }
 
   override fun onUpdateNotificationSuccess() {
-    //TODO edit later
+    mNotificationAdapter.updateItem(mPosition)
   }
 
   override fun getNotificationFollow(notification: Notification?) {
     mNotificationAdapter.updateData(notification?.listNotification, TYPE_FOLLOW)
   }
 
-  override fun onItemClickListener(any: Any?) {
-    any?.let {
-      if (any is ItemNotification) {
-        if (any.viewed == 0) {
-          mPresenter.updateNotification(any.id)
-        }
-        val bundle = Bundle()
-        any.book?.id?.let {
+  override fun onItemNotificationClick(itemNotification: ItemNotification?, position: Int) {
+    itemNotification?.let {
+      if (itemNotification.viewed == 0) {
+        mPosition = position
+        mPresenter.updateNotification(itemNotification.id)
+      }
+      val bundle = Bundle()
+      itemNotification.book?.id?.let {
           bundle.putInt(Constant.BOOK_DETAIL_EXTRA, it)
         }
         mNavigator.startActivity(BookDetailActivity::class.java, bundle)
       }
     }
-  }
 
   companion object {
     private val TYPE_FOLLOW = 1

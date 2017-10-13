@@ -15,7 +15,7 @@
     </data>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constrain_layout"
+        android:id="@+id/constrainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusableInTouchMode="true"
@@ -230,7 +230,7 @@
                                         android:onClick="@{() -> viewModel.onPickCategory()}"
                                         android:paddingEnd="@dimen/dp_20"
                                         android:paddingRight="@dimen/dp_20"
-                                        android:text="@{viewModel.currentCategory}"
+                                        android:text="@{viewModel.mCurrentCategory}"
                                         bind:ignore="RtlSymmetry"
                                         />
                                 </android.support.design.widget.TextInputLayout>
@@ -263,7 +263,7 @@
                                         android:onClick="@{() -> viewModel.onPickOffice()}"
                                         android:paddingEnd="@dimen/dp_20"
                                         android:paddingRight="@dimen/dp_20"
-                                        android:text="@{viewModel.currentOffice}"
+                                        android:text="@{viewModel.mCurrentOffice}"
                                         bind:ignore="RtlSymmetry"
                                         />
                                 </android.support.design.widget.TextInputLayout>
@@ -288,7 +288,7 @@
                                 android:focusable="false"
                                 android:hint="@string/publish_date"
                                 android:onClick="@{() -> viewModel.onPickPublishDate()}"
-                                android:text="@={viewModel.publishDate}"
+                                android:text="@={viewModel.mPublishDate}"
                                 />
                         </android.support.design.widget.TextInputLayout>
                         <android.support.design.widget.TextInputLayout

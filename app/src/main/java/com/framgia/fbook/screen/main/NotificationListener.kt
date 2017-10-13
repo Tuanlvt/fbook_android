@@ -10,6 +10,8 @@ import com.framgia.fbook.data.model.Notification
 interface NotificationListener {
   fun getNotificationFollow(notification: Notification?)
 
+  fun onUpdateNotificationSuccess()
+
   interface UserListener {
     fun getEnable(enable: Boolean)
   }

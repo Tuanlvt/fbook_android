@@ -4,7 +4,6 @@ import android.content.Context
 import android.databinding.BaseObservable
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.ItemNotification
-import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 
 /**
  * Created by Hyperion on 05/10/2017.
@@ -13,8 +12,8 @@ import com.framgia.fbook.screen.onItemRecyclerViewClickListener
  */
 class ItemNotificationViewModel(private val mContext: Context,
     val itemNotification: ItemNotification,
-    private val mOnItemRecyclerViewClickListener: onItemRecyclerViewClickListener,
-    val type: Int) : BaseObservable() {
+    private val mItemNotificationClickListener: ItemNotificationClickListener,
+    val type: Int, private val mPosition: Int) : BaseObservable() {
 
   companion object {
     private val BLANK = " "
@@ -32,7 +31,7 @@ class ItemNotificationViewModel(private val mContext: Context,
   }
 
   fun onItemClicked() {
-    mOnItemRecyclerViewClickListener.onItemClickListener(itemNotification)
+    mItemNotificationClickListener.onItemNotificationClick(itemNotification, mPosition)
   }
 
   fun getName(): String {

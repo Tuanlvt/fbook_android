@@ -26,6 +26,7 @@ import com.framia.fbook.screen.main.MainContract
 import com.fstyle.library.MaterialDialog
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import com.roughike.bottombar.BottomBar
+import com.roughike.bottombar.BottomBarTab
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListener, NotificationListener.UserListener {
@@ -58,6 +59,8 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
   private var mCurrentOfficePosition: Int = 0
   private var mOfficeId: Int? = null
   private lateinit var mBottomBar: BottomBar
+  private lateinit var mNotificationTab: BottomBarTab
+  private var mCountNotification = 0
 
   val mCurrentTab: ObservableField<Int> = ObservableField()
   val mPageLimit: ObservableField<Int> = ObservableField(PAGE_LIMIT)
@@ -111,8 +114,9 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
 
   override fun onGetCountNotificationSuccess(count: Int?) {
     count?.let {
-      val notificationTab = mBottomBar.getTabWithId(R.id.tab_notification)
-      notificationTab.setBadgeCount(count)
+      mCountNotification = it
+      mNotificationTab = mBottomBar.getTabWithId(R.id.tab_notification)
+      mNotificationTab.setBadgeCount(mCountNotification)
     }
   }
 
@@ -129,6 +133,15 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
       mListOffices.addAll(it)
       setCurrentOffice(it)
     }
+  }
+
+  override fun onUpdateNotificationSuccess() {
+    if (mCountNotification == 0) {
+      mNotificationTab.setBadgeCount(mCountNotification)
+      return
+    }
+    --mCountNotification
+    mNotificationTab.setBadgeCount(mCountNotification)
   }
 
   override fun onError(baseException: BaseException) {

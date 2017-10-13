@@ -18,9 +18,9 @@ import com.framgia.fbook.screen.approverequest.approvedetail.ApproveDetailActivi
 import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.main.NotificationListener
+import com.framgia.fbook.screen.notification.ItemNotificationClickListener
 import com.framgia.fbook.screen.notification.ItemNotificationViewModel
 import com.framgia.fbook.screen.notification.NotificationAdapter
-import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.structure_android.widget.dialog.DialogManager
@@ -29,7 +29,7 @@ import javax.inject.Inject
 /**
  * Notification Screen.
  */
-class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onItemRecyclerViewClickListener, NotificationUserListener {
+class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, ItemNotificationClickListener, NotificationUserListener {
 
   @Inject
   internal lateinit var mPresenter: NotificationContract.Presenter
@@ -44,6 +44,7 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
   private lateinit var mNotificationListener: NotificationListener
   private var mIsLoadDataFirstTime = true
   val mIsVisibleLayoutNotData: ObservableField<Boolean> = ObservableField()
+  private var mPosition = 0
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -58,7 +59,7 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
         R.layout.fragment_notification, container,
         false)
     binding.viewModel = this
-    mNotificationAdapter.setonItemRecyclerViewClickListener(this)
+    mNotificationAdapter.setItemNotificationClickListener(this)
     return binding.root
   }
 
@@ -93,25 +94,24 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
     mDialogManager.dialogError(error.getMessageError())
   }
 
-  override fun onItemClickListener(any: Any?) {
-    any?.let {
-      if (any is ItemNotification) {
-        if (any.viewed == 0) {
-          mPresenter.updateNotification(any.id)
+  override fun onItemNotificationClick(itemNotification: ItemNotification?, position: Int) {
+    itemNotification?.let {
+      if (itemNotification.viewed == 0) {
+        mPosition = position
+        mPresenter.updateNotification(itemNotification.id)
+      }
+      val bundle = Bundle()
+      itemNotification.book?.id?.let {
+        bundle.putInt(Constant.BOOK_DETAIL_EXTRA, it)
+      }
+      when (itemNotification.type) {
+        ItemNotificationViewModel.WAITING, ItemNotificationViewModel.APPROVE_RETURNING,
+        ItemNotificationViewModel.RETURNING, ItemNotificationViewModel.UNAPPROVE_WAITING
+        -> {
+          mNavigator.startActivity(ApproveDetailActivity::class.java, bundle)
         }
-        val bundle = Bundle()
-        any.book?.id?.let {
-          bundle.putInt(Constant.BOOK_DETAIL_EXTRA, it)
-        }
-        when (any.type) {
-          ItemNotificationViewModel.WAITING, ItemNotificationViewModel.APPROVE_RETURNING,
-          ItemNotificationViewModel.RETURNING, ItemNotificationViewModel.UNAPPROVE_WAITING
-          -> {
-            mNavigator.startActivity(ApproveDetailActivity::class.java, bundle)
-          }
-          ItemNotificationViewModel.APPROVE_WAITING, ItemNotificationViewModel.REVIEW -> {
-            mNavigator.startActivity(BookDetailActivity::class.java, bundle)
-          }
+        ItemNotificationViewModel.APPROVE_WAITING, ItemNotificationViewModel.REVIEW -> {
+          mNavigator.startActivity(BookDetailActivity::class.java, bundle)
         }
       }
     }
@@ -124,7 +124,8 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
   }
 
   override fun onUpdateNotificationSuccess() {
-    //TODO edit later
+    mNotificationAdapter.updateItem(mPosition)
+    mNotificationListener.onUpdateNotificationSuccess()
   }
 
   override fun onGetNotificationSuccess(notificationResponse: NotificationResponse?) {
