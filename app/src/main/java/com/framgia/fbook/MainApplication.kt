@@ -1,7 +1,7 @@
 package com.framgia.fbook
 
-import android.app.Application
 import android.support.multidex.MultiDex
+import android.support.multidex.MultiDexApplication
 import android.util.Log
 import com.crashlytics.android.Crashlytics
 import com.framgia.fbook.data.source.remote.api.NetworkModule
@@ -17,7 +17,7 @@ import io.fabric.sdk.android.Fabric
  * Created by le.quang.dao on 10/03/2017.
  */
 
-class MainApplication : Application() {
+class MainApplication : MultiDexApplication() {
 
   lateinit var appComponent: AppComponent
 

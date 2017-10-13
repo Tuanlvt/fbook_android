@@ -3,9 +3,14 @@ package com.fstyle.structure_android.widget.dialog
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.Color
 import android.support.annotation.ArrayRes
 import android.support.annotation.DrawableRes
+import android.support.design.widget.Snackbar
+import android.view.View
 import android.widget.DatePicker
+import android.widget.TextView
+import android.widget.Toast
 import com.framgia.fbook.R
 import com.fstyle.library.MaterialDialog
 import java.util.*
@@ -15,6 +20,7 @@ import java.util.*
  */
 
 open class DialogManagerImpl(private val mContext: Context) : DialogManager {
+
   private var mProgressDialog: MaterialDialog? = null
   private var mDatePickerDialog: DatePickerDialog? = null
 
@@ -160,4 +166,27 @@ open class DialogManagerImpl(private val mContext: Context) : DialogManager {
       mDatePickerDialog!!.show()
     }
   }
+
+  override fun showSnackBarNoActionBar(view: View, title: Int) {
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+      Snackbar.make(view, title, Snackbar.LENGTH_SHORT).show()
+      return
+    }
+    Toast.makeText(mContext, title, Toast.LENGTH_SHORT).show()
+  }
+
+  override fun showSnackBar(view: View, title: Int, action: View.OnClickListener) {
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+      val snackBar: Snackbar = Snackbar.make(view, title, Snackbar.LENGTH_LONG).setAction(
+          R.string.undo, action).setActionTextColor(Color.RED)
+      val viewSb: View = snackBar.view
+      val text: TextView = viewSb.findViewById(android.support.design.R.id.snackbar_text)
+      text.setTextColor(Color.WHITE)
+      snackBar.show()
+      return
+    }
+    Toast.makeText(mContext, title, Toast.LENGTH_SHORT).show()
+
+  }
+
 }

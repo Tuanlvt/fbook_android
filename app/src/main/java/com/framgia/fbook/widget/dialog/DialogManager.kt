@@ -3,6 +3,7 @@ package com.fstyle.structure_android.widget.dialog
 import android.app.DatePickerDialog
 import android.support.annotation.ArrayRes
 import android.support.annotation.DrawableRes
+import android.view.View
 import com.fstyle.library.MaterialDialog
 import java.util.*
 
@@ -88,5 +89,9 @@ interface DialogManager {
       calendar: Calendar): DialogManager
 
   fun showDatePickerDialog()
+
+  fun showSnackBarNoActionBar(view: View, title: Int)
+
+  fun showSnackBar(view: View, title: Int, action: View.OnClickListener)
 
 }

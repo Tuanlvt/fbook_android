@@ -5,8 +5,8 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
+import android.view.View
 import android.widget.DatePicker
-import android.widget.Toast
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
@@ -53,6 +53,7 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
   val currentCategory: ObservableField<String> = ObservableField()
   private var currentOfficePosition: Int = 0
   private var currentCategoryPosition: Int = 0
+  private lateinit var mLayoutView: View
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -65,6 +66,7 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
     val binding = DataBindingUtil.setContentView<ActivitySharebookBinding>(this,
         R.layout.activity_sharebook)
     binding.viewModel = this
+    mLayoutView = binding.constrainLayout
 
     mDialogManager.dialogDatePicker(this, Calendar.getInstance())
     EasyImage.configuration(this).setAllowMultiplePickInGallery(true)
@@ -136,30 +138,41 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
   }
 
   override fun onAddBookSuccess(book: Book?) {
-    Toast.makeText(applicationContext, R.string.add_successful, Toast.LENGTH_SHORT).show()
+    mDialogManager.showSnackBarNoActionBar(mLayoutView,
+        R.string.add_successful)
     finish()
   }
 
   override fun onSearchBookFromInternalSuccess(listBook: List<Book>?) {
     val listBookString: MutableList<String?> = mutableListOf()
     listBook?.mapTo(listBookString) { it.title }
-    mDialogManager.dialogListSingleChoice(getString(R.string.import_data_from_internal_book),
-        listBookString, 0,
-        MaterialDialog.ListCallbackSingleChoice { _, _, position, _ ->
-          updateFromInternalBook(listBook?.get(position))
-          true
-        })
+    if (listBook?.size != 0) {
+      mDialogManager.dialogListSingleChoice(getString(R.string.import_data_from_internal_book),
+          listBookString, 0,
+          MaterialDialog.ListCallbackSingleChoice { _, _, position, _ ->
+            updateFromInternalBook(listBook?.get(position))
+            true
+          })
+    } else {
+      mDialogManager.showSnackBarNoActionBar(mLayoutView,
+          R.string.book_not_found)
+    }
   }
 
   override fun onSearchBookFromGoogleBookSuccess(listGoogleBook: List<GoogleBook>?) {
     val listBookString: MutableList<String?> = mutableListOf()
     listGoogleBook?.mapTo(listBookString) { it.volumeInfo?.title }
-    mDialogManager.dialogListSingleChoice(getString(R.string.import_data_from_google_book),
-        listBookString, 0,
-        MaterialDialog.ListCallbackSingleChoice { _, _, position, _ ->
-          updateFromGoogleBook(listGoogleBook?.get(position))
-          true
-        })
+    if (listGoogleBook?.size != 0) {
+      mDialogManager.dialogListSingleChoice(getString(R.string.import_data_from_google_book),
+          listBookString, 0,
+          MaterialDialog.ListCallbackSingleChoice { _, _, position, _ ->
+            updateFromGoogleBook(listGoogleBook?.get(position))
+            true
+          })
+    } else {
+      mDialogManager.showSnackBarNoActionBar(mLayoutView,
+          R.string.book_not_found)
+    }
   }
 
 
@@ -224,8 +237,8 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
 
   fun onClickImportFromInternalBook() {
     if (StringUtils.isBlank(mBookRequest.get().title)) {
-      Toast.makeText(applicationContext, getString(R.string.please_enter_title),
-          Toast.LENGTH_SHORT).show()
+      mDialogManager.showSnackBarNoActionBar(mLayoutView,
+          R.string.please_enter_title)
       return
     }
     mPresenter.searchBookFromInternal(mBookRequest.get().title, getString(R.string.title))
@@ -233,8 +246,8 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
 
   fun onClickImportFromGoogleBook() {
     if (StringUtils.isBlank(mBookRequest.get().title)) {
-      Toast.makeText(applicationContext, getString(R.string.please_enter_title),
-          Toast.LENGTH_SHORT).show()
+      mDialogManager.showSnackBarNoActionBar(mLayoutView,
+          R.string.please_enter_title)
       return
     }
     mPresenter.searchBookFromGoogleBook(mBookRequest.get().title)
