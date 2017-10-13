@@ -12,4 +12,8 @@ class ItemMyBookViewModel(val book: Book,
   fun onItemClicked(view: View) {
     mItemClickListener?.onItemMyBookClick(book)
   }
+
+  fun onClickViewAllRequest(view: View) {
+    mItemClickListener?.onClickViewAllRequest()
+  }
 }

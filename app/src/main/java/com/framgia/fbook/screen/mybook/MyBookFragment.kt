@@ -15,6 +15,7 @@ import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentMybookBinding
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.approverequest.ApproveRequestActivity
 import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.main.MainActivity
@@ -130,6 +131,10 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
       bundle.putInt(Constant.BOOK_DETAIL_EXTRA, it)
     }
     mNavigator.startActivity(BookDetailActivity::class.java, bundle)
+  }
+
+  override fun onClickViewAllRequest() {
+    mNavigator.startActivity(ApproveRequestActivity::class.java)
   }
 
   private fun checkSizeListBook(size: Int?) {

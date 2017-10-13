@@ -22,13 +22,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             >
-            <com.framgia.fbook.widget.view.ImageViewLabel
+            <ImageView
                 android:id="@+id/imageItemBook"
                 android:layout_width="@dimen/dp_150"
                 android:layout_height="@dimen/dp_170"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                app:setDistanceLabel="@{1}"
                 bind:imageUrl="@{viewModel.book.Image.mobileImage.smallPath}"
                 />
             <TextView
@@ -39,9 +38,9 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:padding="@dimen/dp_5"
-                android:text="@{viewModel.book.publishDate}"
+                android:text="@{viewModel.book.office.name}"
                 android:textColor="@color/color_white"
-                android:textSize="@dimen/sp_13"
+                android:textSize="@dimen/sp_12"
                 app:layout_constraintBottom_toBottomOf="@id/imageItemBook"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -79,11 +78,11 @@
                 android:textSize="@dimen/sp_12"
                 />
             <ImageView
-                android:layout_marginTop="@dimen/dp_1"
                 android:layout_width="@dimen/dp_16"
                 android:layout_height="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_1"
                 app:srcCompat="@drawable/ic_view_eye_black_24dp"
                 />
             <TextView

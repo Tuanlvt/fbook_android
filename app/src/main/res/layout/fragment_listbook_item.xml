@@ -14,7 +14,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_230"
-        android:layout_margin="@dimen/dp_5"
+        android:layout_margin="@dimen/dp_2"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -26,14 +26,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 >
-                <com.framgia.fbook.widget.view.ImageViewLabel
+                <ImageView
                     android:id="@+id/imageItemBook"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_170"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    app:setDistanceLabel="@{2}"
-                    app:updateText="@{viewModel.book.office.name}"
                     bind:imageUrl="@{viewModel.book.Image.mobileImage.smallPath}"
                     />
                 <TextView
@@ -44,9 +42,9 @@
                     android:gravity="center"
                     android:maxLines="1"
                     android:padding="@dimen/dp_5"
-                    android:text="@{viewModel.book.publishDate}"
+                    android:text="@{viewModel.book.office.name}"
                     android:textColor="@color/color_white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_12"
                     app:layout_constraintBottom_toBottomOf="@id/imageItemBook"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
