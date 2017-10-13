@@ -59,7 +59,6 @@ class MainPageAdapter(
       mBinding.root) {
     fun binData(book: Book) {
       mBinding.viewModel = ItemMainPageViewModel(book, mItemClickListener)
-      mBinding.imageItemBook.updateText(book.office?.name)
       mBinding.executePendingBindings()
     }
   }

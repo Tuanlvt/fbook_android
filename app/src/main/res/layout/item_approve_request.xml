@@ -33,7 +33,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 >
-                <com.framgia.fbook.widget.view.ImageViewLabel
+                <ImageView
                     android:id="@+id/image_cover"
                     android:layout_width="@dimen/dp_130"
                     android:layout_height="@dimen/dp_170"
@@ -44,10 +44,25 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0"
-                    app:setDistanceLabel="@{2}"
-                    app:updateText="@{viewModel.mBook.office.name}"
                     bind:imageUrl="@{viewModel.mBook.Image.mobileImage.smallPath}"
                     tools:ignore="ContentDescription"
+                    />
+                <TextView
+                    android:layout_width="@dimen/dp_130"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_black_transparent"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="@dimen/dp_5"
+                    android:text="@{viewModel.mBook.office.name}"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
                     />
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="0dp"

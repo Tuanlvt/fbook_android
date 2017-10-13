@@ -36,7 +36,8 @@
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="@dimen/dp_30"
                     android:onClick="@{viewModel::onClickChooseWorkSpace}"
-                    android:src="@drawable/ic_domain"
+                    android:tint="@color/color_white"
+                    app:srcCompat="@drawable/ic_place"
                     tools:ignore="ContentDescription,RtlHardcoded"
                     />
                 <TextView
@@ -47,7 +48,7 @@
                     android:onClick="@{viewModel::onClickChooseWorkSpace}"
                     android:text="@{viewModel.mCurrentOffice}"
                     android:textColor="@color/color_white"
-                    android:textSize="@dimen/sp_12"
+                    android:textSize="@dimen/sp_15"
                     />
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="?attr/actionBarSize"
