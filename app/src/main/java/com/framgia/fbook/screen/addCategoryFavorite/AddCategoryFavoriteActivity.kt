@@ -4,7 +4,6 @@ import android.app.Activity
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Category
@@ -85,8 +84,6 @@ open class AddCategoryFavoriteActivity : BaseActivity(), AddCategoryFavoriteCont
   }
 
   override fun onUpdateCategoryFavoriteSuccess() {
-    Toast.makeText(applicationContext, getString(R.string.update_success),
-        Toast.LENGTH_SHORT).show()
     val user = mUserRepository.getUserLocal()
     user?.tag = tags
     mUserRepository.saveUser(user)
@@ -101,7 +98,11 @@ open class AddCategoryFavoriteActivity : BaseActivity(), AddCategoryFavoriteCont
     mAdapter.mListCategory
         .filter { it.favorite == true }
         .forEach { tags += it.id.toString() + Constant.EXTRA_COMMA }
-    tags = tags.substring(0, tags.length - 1)
+    tags = if (tags != Constant.EXTRA_EMTY) {
+      tags.substring(0, tags.length - 1)
+    } else {
+      Constant.EXTRA_EMTY
+    }
     tags.let {
       addItemTag.tags = tags
       addItemTag.let { addCategory.item = addItemTag }

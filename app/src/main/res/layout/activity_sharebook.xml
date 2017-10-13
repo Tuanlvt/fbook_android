@@ -15,7 +15,6 @@
     </data>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constrainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusableInTouchMode="true"
@@ -145,11 +144,10 @@
                                     app:layout_constraintLeft_toRightOf="@+id/text_text_search_with"
                                     />
                                 <TextView
-                                    android:layout_width="0dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:layout_margin="@dimen/dp_2"
-                                    android:layout_weight="0.2"
+                                    android:layout_margin="@dimen/dp_1"
                                     android:gravity="center"
                                     android:text="@string/or"
                                     android:textColor="@color/color_dark_gray"
@@ -159,8 +157,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="@dimen/dp_10"
-                                    android:layout_marginStart="@dimen/dp_10"
+                                    android:layout_marginLeft="@dimen/dp_5"
+                                    android:layout_marginStart="@dimen/dp_5"
                                     android:layout_weight="1"
                                     android:background="@drawable/button_click_red"
                                     android:gravity="center"
