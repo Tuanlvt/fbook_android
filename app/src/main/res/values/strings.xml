@@ -140,4 +140,8 @@
     <string name="add_book">Add Book:</string>
     <string name="remove_book">Remove Book:</string>
     <string name="this_frature_will_be_update_soon">This feature will be updated soon!</string>
+    <string name="book_not_found">Book not found !</string>
+    <string name="undo">UNDO</string>
+    <string name="search_with">Search with</string>
+    <string name="or">or</string>
 </resources>

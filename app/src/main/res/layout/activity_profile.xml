@@ -172,10 +172,10 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/button_click"
+                                android:background="@drawable/button_click_red"
                                 android:onClick="@{() ->viewModel.onClickOther()}"
                                 android:orientation="horizontal"
-                                android:padding="@dimen/dp_5"
+                                android:padding="@dimen/dp_8"
                                 app:layout_constraintBottom_toTopOf="@+id/text_name_user"
                                 app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
