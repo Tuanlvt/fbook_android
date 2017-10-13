@@ -96,6 +96,9 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
   override fun onItemClickListener(any: Any?) {
     any?.let {
       if (any is ItemNotification) {
+        if (any.viewed == 0) {
+          mPresenter.updateNotification(any.id)
+        }
         val bundle = Bundle()
         any.book?.id?.let {
           bundle.putInt(Constant.BOOK_DETAIL_EXTRA, it)
@@ -118,6 +121,10 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, onI
     if (enable && mIsLoadDataFirstTime) {
       mPresenter.getNotification()
     }
+  }
+
+  override fun onUpdateNotificationSuccess() {
+    //TODO edit later
   }
 
   override fun onGetNotificationSuccess(notificationResponse: NotificationResponse?) {

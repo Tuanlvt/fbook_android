@@ -17,6 +17,8 @@ interface NotificationContract {
 
     fun onGetNotificationSuccess(notificationResponse: NotificationResponse?)
 
+    fun onUpdateNotificationSuccess()
+
     fun onShowProgressDialog()
 
     fun onDismissProgressDialog()
@@ -27,5 +29,7 @@ interface NotificationContract {
    */
   interface Presenter : BasePresenter<ViewModel> {
     fun getNotification()
+
+    fun updateNotification(id: Int?)
   }
 }

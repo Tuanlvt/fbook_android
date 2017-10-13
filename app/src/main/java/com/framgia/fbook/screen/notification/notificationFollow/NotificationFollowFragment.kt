@@ -3,12 +3,14 @@ package com.framgia.fbook.screen.notification.notificationFollow
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.ItemNotification
 import com.framgia.fbook.data.model.Notification
+import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentNotificationfollowBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.bookdetail.BookDetailActivity
@@ -17,6 +19,7 @@ import com.framgia.fbook.screen.notification.NotificationAdapter
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
+import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
 
 /**
@@ -30,6 +33,9 @@ class NotificationFollowFragment : BaseFragment(), NotificationFollowContract.Vi
   internal lateinit var mNotificationAdapter: NotificationAdapter
   @Inject
   internal lateinit var mNavigator: Navigator
+  @Inject
+  internal lateinit var mDialogManager: DialogManager
+
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -67,6 +73,14 @@ class NotificationFollowFragment : BaseFragment(), NotificationFollowContract.Vi
     }
   }
 
+  override fun onError(error: BaseException) {
+    Log.e(TAG, error.getMessageError())
+  }
+
+  override fun onUpdateNotificationSuccess() {
+    //TODO edit later
+  }
+
   override fun getNotificationFollow(notification: Notification?) {
     mNotificationAdapter.updateData(notification?.listNotification, TYPE_FOLLOW)
   }
@@ -74,6 +88,9 @@ class NotificationFollowFragment : BaseFragment(), NotificationFollowContract.Vi
   override fun onItemClickListener(any: Any?) {
     any?.let {
       if (any is ItemNotification) {
+        if (any.viewed == 0) {
+          mPresenter.updateNotification(any.id)
+        }
         val bundle = Bundle()
         any.book?.id?.let {
           bundle.putInt(Constant.BOOK_DETAIL_EXTRA, it)
@@ -85,6 +102,8 @@ class NotificationFollowFragment : BaseFragment(), NotificationFollowContract.Vi
 
   companion object {
     private val TYPE_FOLLOW = 1
+    private val TAG = NotificationFollowFragment::class.java.simpleName
+
     fun newInstance(): NotificationFollowFragment {
       return NotificationFollowFragment()
     }

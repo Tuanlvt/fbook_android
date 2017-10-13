@@ -23,6 +23,18 @@ class NotificationPresenter(
     mCompositeDisposable.clear()
   }
 
+  override fun updateNotification(id: Int?) {
+    val disposable = mUserRepository.updateNotification(id)
+        .subscribeOn(mSchedulerProvider.io())
+        .observeOn(mSchedulerProvider.ui())
+        .subscribe({
+          mViewModel.onUpdateNotificationSuccess()
+        }, {
+          error ->
+          mViewModel.onError(error as BaseException)
+        })
+    mCompositeDisposable.add(disposable)
+  }
   override fun getNotification() {
     val disposable = mUserRepository.getNotification()
         .subscribeOn(mSchedulerProvider.io())
