@@ -29,6 +29,10 @@ ext {
                   bottombar         : 'com.roughike:bottom-bar:2.3.1',
                   imageCircle       : 'de.hdodenhof:circleimageview:2.1.0',
                   easyimage         : 'com.github.jkwiecien:EasyImage:2.0.3',
-                  fcm               : 'com.google.firebase:firebase-messaging:9.4.0',
+                  fcmMessaging      : 'com.google.firebase:firebase-messaging:9.8.0',
+                  fcmCore           : 'com.google.firebase:firebase-core:9.8.0',
+                  pusher            : 'com.pusher:pusher-websocket-android:0.5.0',
+                  pusherJava        : 'com.pusher:pusher-java-client:1.5.0',
+                  multidex          : 'com.android.support:multidex:1.0.1',
                   animationbutton   : 'com.sackcentury:shinebutton:0.1.9']
 }

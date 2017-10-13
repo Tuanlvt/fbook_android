@@ -35,6 +35,7 @@ android {
     versionCode rootProject.ext.versionCode
     versionName rootProject.ext.versionName
     vectorDrawables.useSupportLibrary = true
+    multiDexEnabled true
   }
 
   dataBinding {
@@ -56,6 +57,16 @@ android {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
+  }
+  applicationVariants.all { variant ->
+    def APP_KEY = "6a8c057c782e29509c31"
+    def CLUSTER_KEY = "ap1"
+    def CHANNEL_KEY = "channel_notification"
+    def EVENT_KEY = "App\\\\Events\\\\NotificationHandler"
+    variant.buildConfigField "String", "APP_KEY", "\"${APP_KEY}\""
+    variant.buildConfigField "String", "CLUSTER_KEY", "\"${CLUSTER_KEY}\""
+    variant.buildConfigField "String", "CHANNEL_KEY", "\"${CHANNEL_KEY}\""
+    variant.buildConfigField "String", "EVENT_KEY", "\"${EVENT_KEY}\""
   }
 }
 dependencies {
@@ -82,7 +93,11 @@ dependencies {
   compile dependencies.bottombar
   compile dependencies.imageCircle
   compile dependencies.animationbutton
-  compile dependencies.fcm
+  compile dependencies.fcmMessaging
+  compile dependencies.fcmCore
+  compile dependencies.pusher
+  compile dependencies.pusherJava
+  compile dependencies.multidex
 
   compile dependencies.easyimage
   kapt dependencies.dagger2Compile
@@ -92,8 +107,8 @@ dependencies {
   testCompile dependencies.junit
   testCompile dependencies.mockito
 
-//  androidTestCompile 'info.cukes:cucumber-android:1.2.5@jar'
-//  androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.5'
+  //  androidTestCompile 'info.cukes:cucumber-android:1.2.5@jar'
+  //  androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.5'
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
