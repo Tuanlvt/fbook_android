@@ -23,16 +23,14 @@ class ItemListRequestViewModel(private val mContext: Context, val user: User,
   }
 
   fun getTextApprove(): String {
-    if (mIsReturned) {
-      return ""
-    } else if (!mIsWaiting) {
-      setVisibleApprove(true)
+    if (!mIsWaiting) {
+      setVisibleApproveOrReturning(true)
       return mContext.getString(R.string.approve)
     } else {
       if (mIsApproved) {
-        setVisibleApprove(true)
+        setVisibleApproveOrReturning(true)
         return mContext.getString(R.string.unapprove)
-      } else if (!getVisibleApprove()) {
+      } else if (!getVisibleButtonApproveOrUnApprove()) {
         return mContext.getString(R.string.approve)
       }
     }
@@ -40,16 +38,20 @@ class ItemListRequestViewModel(private val mContext: Context, val user: User,
   }
 
   fun getStatusUser(): Boolean {
-    return !mIsApproved
+    return mIsApproved
+  }
+
+  fun getIsVisibleLayoutWait(): Boolean {
+    return !mIsReturned
   }
 
   @Bindable
-  fun getVisibleApprove(): Boolean {
+  fun getVisibleButtonApproveOrUnApprove(): Boolean {
     return mVisibleApprove
   }
 
-  fun setVisibleApprove(approve: Boolean) {
+  fun setVisibleApproveOrReturning(approve: Boolean) {
     mVisibleApprove = approve
-    notifyPropertyChanged(BR.visibleApprove)
+    notifyPropertyChanged(BR.visibleButtonApproveOrUnApprove)
   }
 }

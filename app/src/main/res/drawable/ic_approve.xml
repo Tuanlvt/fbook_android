@@ -7,7 +7,7 @@
     android:width="@dimen/dp_24">
 
     <path
-        android:fillColor="@color/color_white_light"
+        android:fillColor="@color/colorPrimary"
         android:pathData="M275.291,431.649 C275.291,344.834,345.922,274.203,432.737,274.203
 C452.517,274.203,471.44,277.906,488.897,284.595 L488.897,1.088 L66.618,1.088
 L66.618,1.116 C49.653,1.382,32.652,4.782,20.078,16.703
@@ -40,7 +40,7 @@ L392.508,57.986 L392.508,180.386 L163.008,180.386 L163.008,57.986
 L163.008,57.986 Z"
         tools:ignore="VectorPath"/>
     <path
-        android:fillColor="#acaeb0"
+        android:fillColor="@color/colorPrimary"
         android:pathData="M488.897,301.048 C471.669,293.627,452.688,289.502,432.737,289.502
 C354.233,289.502,290.591,353.145,290.591,431.648
 C290.591,478.748,313.514,520.474,348.792,546.34

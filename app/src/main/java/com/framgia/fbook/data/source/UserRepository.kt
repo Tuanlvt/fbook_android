@@ -9,6 +9,7 @@ import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.data.source.remote.api.request.FollowOrUnFollowUserRequest
 import com.framgia.fbook.data.source.remote.api.request.UserApproveBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
+import com.framgia.fbook.data.source.remote.api.response.CountNotification
 import com.framgia.fbook.data.source.remote.api.response.NotificationResponse
 import com.framgia.fbook.data.source.remote.api.response.TokenResponse
 import io.reactivex.Single
@@ -74,5 +75,9 @@ open class UserRepositoryImpl(private val mRemoteDataSource: UserRemoteDataSourc
 
   override fun getNotification(): Single<BaseResponse<NotificationResponse>> {
     return mRemoteDataSource.getNotification()
+  }
+
+  override fun getCountNotification(): Single<BaseResponse<CountNotification>> {
+    return mRemoteDataSource.getCountNotification()
   }
 }
