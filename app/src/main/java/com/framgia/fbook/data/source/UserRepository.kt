@@ -80,4 +80,8 @@ open class UserRepositoryImpl(private val mRemoteDataSource: UserRemoteDataSourc
   override fun getCountNotification(): Single<BaseResponse<CountNotification>> {
     return mRemoteDataSource.getCountNotification()
   }
+
+  override fun updateNotification(id: Int?): Single<Any> {
+    return mRemoteDataSource.updateNotification(id)
+  }
 }

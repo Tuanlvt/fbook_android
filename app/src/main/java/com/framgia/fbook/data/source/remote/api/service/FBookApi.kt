@@ -117,4 +117,7 @@ interface FBookApi {
 
   @GET("/api/v0/notifications/count/user")
   fun getCountNotificationUser(): Single<BaseResponse<CountNotification>>
+
+  @GET("/api/v0/notification/update/{notification_id}")
+  fun updateItemNotification(@Path("notification_id") id: Int?): Single<Any>
 }

@@ -67,4 +67,8 @@ constructor(nameApi: FBookApi) : BaseRemoteDataSource(nameApi), UserDataSource.R
   override fun getCountNotification(): Single<BaseResponse<CountNotification>> {
     return fbookApi.getCountNotificationUser()
   }
+
+  override fun updateNotification(id: Int?): Single<Any> {
+    return fbookApi.updateItemNotification(id)
+  }
 }

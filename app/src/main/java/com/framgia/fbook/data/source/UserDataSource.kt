@@ -54,5 +54,7 @@ interface UserDataSource {
     fun getNotification(): Single<BaseResponse<NotificationResponse>>
 
     fun getCountNotification(): Single<BaseResponse<CountNotification>>
+
+    fun updateNotification(id: Int?): Single<Any>
   }
 }
