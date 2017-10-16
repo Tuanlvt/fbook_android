@@ -5,7 +5,6 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
-import android.view.View
 import android.widget.DatePicker
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
@@ -53,7 +52,7 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
   val mCurrentCategory: ObservableField<String> = ObservableField()
   private var mCurrentOfficePosition: Int = 0
   private var mCurrentCategoryPosition: Int = 0
-  private lateinit var mLayoutView: View
+  private lateinit var mBinding: ActivitySharebookBinding
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     DaggerShareBookComponent.builder()
@@ -62,10 +61,9 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
         .build()
         .inject(this)
 
-    val binding = DataBindingUtil.setContentView<ActivitySharebookBinding>(this,
+    mBinding = DataBindingUtil.setContentView<ActivitySharebookBinding>(this,
         R.layout.activity_sharebook)
-    binding.viewModel = this
-    mLayoutView = binding.constrainLayout
+    mBinding.viewModel = this
 
     mDialogManager.dialogDatePicker(this, Calendar.getInstance())
     EasyImage.configuration(this).setAllowMultiplePickInGallery(true)
@@ -137,8 +135,7 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
   }
 
   override fun onAddBookSuccess(book: Book?) {
-    mDialogManager.showSnackBarNoActionBar(mLayoutView,
-        R.string.add_successful)
+    showSnackBar(R.string.add_successful)
     finish()
   }
 
@@ -153,8 +150,7 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
             true
           })
     } else {
-      mDialogManager.showSnackBarNoActionBar(mLayoutView,
-          R.string.book_not_found)
+      showSnackBar(R.string.book_not_found)
     }
   }
 
@@ -169,8 +165,7 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
             true
           })
     } else {
-      mDialogManager.showSnackBarNoActionBar(mLayoutView,
-          R.string.book_not_found)
+      showSnackBar(R.string.book_not_found)
     }
   }
 
@@ -236,8 +231,7 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
 
   fun onClickImportFromInternalBook() {
     if (StringUtils.isBlank(mBookRequest.get().title)) {
-      mDialogManager.showSnackBarNoActionBar(mLayoutView,
-          R.string.please_enter_title)
+      showSnackBar(R.string.please_enter_title)
       return
     }
     mPresenter.searchBookFromInternal(mBookRequest.get().title, getString(R.string.title))
@@ -245,8 +239,7 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
 
   fun onClickImportFromGoogleBook() {
     if (StringUtils.isBlank(mBookRequest.get().title)) {
-      mDialogManager.showSnackBarNoActionBar(mLayoutView,
-          R.string.please_enter_title)
+      showSnackBar(R.string.please_enter_title)
       return
     }
     mPresenter.searchBookFromGoogleBook(mBookRequest.get().title)
@@ -306,9 +299,14 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
       mBookRequest.notifyChange()
     }
   }
+
+  private fun showSnackBar(title: Int) {
+    mDialogManager.showSnackBarNoActionBar(mBinding.appbarLayout, title)
+  }
+
   private fun searchCurrentPositionOffice(office: String?, listOffice: List<Office>?): Int {
     listOffice?.let {
-      (0..listOffice.size - 1)
+      (0 until listOffice.size)
           .filter { listOffice[it].name == office }
           .forEach { return it }
     }
@@ -317,7 +315,7 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
 
   private fun searchCurrentPositionCategory(category: String?, listCategory: List<Category>?): Int {
     listCategory?.let {
-      (0..listCategory.size - 1)
+      (0 until listCategory.size)
           .filter { listCategory[it].name == category }
           .forEach { return it }
     }

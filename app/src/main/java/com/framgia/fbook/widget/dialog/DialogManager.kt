@@ -94,4 +94,5 @@ interface DialogManager {
 
   fun showSnackBar(view: View, title: Int, action: View.OnClickListener)
 
+  fun showSnackBarTitleString(view: View, title: String)
 }

@@ -37,6 +37,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   @Inject
   internal lateinit var mDialogManager: DialogManager
   private lateinit var mMenuProfileComponent: MenuProfileComponent
+  private lateinit var mLayoutView: View
   private var mIsLoadDataFirstTime: Boolean = true
   val mUser: ObservableField<User> = ObservableField()
   val mIsVisibleLayoutNotLoggedIn: ObservableField<Boolean> = ObservableField()
@@ -52,6 +53,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
     val binding = DataBindingUtil.inflate<FragmentMenuProfileBinding>(inflater,
         R.layout.fragment_menu_profile, container, false)
     binding.viewModel = this
+    mLayoutView = binding.frameLayoutImage
     return binding.root
   }
 
@@ -116,7 +118,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   }
 
   fun onClickSetting() {
-    //Todo navigation Activity Setting
+    mDialogManager.showSnackBarNoActionBar(mLayoutView, R.string.this_feature_will_be_update_soon)
   }
 
   fun onClickSignOut() {

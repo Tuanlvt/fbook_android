@@ -21,6 +21,7 @@ import com.framgia.fbook.screen.profile.GetUserListener
 import com.framgia.fbook.screen.profile.ProfileActivity
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
+import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
 
 /**
@@ -36,6 +37,9 @@ open class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.V
   internal lateinit var mAdapter: CategoryAdapter
   @Inject
   internal lateinit var mUserRepository: UserRepository
+  @Inject
+  internal lateinit var mDialogManager: DialogManager
+  private lateinit var mBinding: FragmentCategoryFavoriteBinding
   val mUser: ObservableField<User> = ObservableField()
   val mIsViSiBleButtonUpdateCategoryFavorite: ObservableField<Boolean> = ObservableField(false)
 
@@ -48,12 +52,12 @@ open class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.V
         .build()
         .inject(this)
 
-    val binding = DataBindingUtil.inflate<FragmentCategoryFavoriteBinding>(inflater,
+    mBinding = DataBindingUtil.inflate<FragmentCategoryFavoriteBinding>(inflater,
         R.layout.fragment_category_favorite, container,
         false)
-    binding.viewModel = this
+    mBinding.viewModel = this
     fillData()
-    return binding.root
+    return mBinding.root
   }
 
   override fun onAttach(context: Context?) {
@@ -87,6 +91,7 @@ open class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.V
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_CATEGORY_FAVORITE_USER) {
       mPresenter.getUser()
+      mDialogManager.showSnackBarNoActionBar(mBinding.buttonEditCategory, R.string.update_success)
     }
   }
 

@@ -189,4 +189,12 @@ open class DialogManagerImpl(private val mContext: Context) : DialogManager {
 
   }
 
+  override fun showSnackBarTitleString(view: View, title: String) {
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+      Snackbar.make(view, title, Snackbar.LENGTH_SHORT).show()
+      return
+    }
+    Toast.makeText(mContext, title, Toast.LENGTH_SHORT).show()
+  }
+
 }

@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.source.remote.api.error.BaseException
@@ -33,6 +32,7 @@ open class LoginActivity : BaseActivity(), LoginContract.ViewModel {
   internal lateinit var mNavigator: Navigator
   @Inject
   internal lateinit var mDialogManager: DialogManager
+  private lateinit var mBinding: ActivityLoginBinding
   @Validation(
       Rule(types = intArrayOf(ValidType.EMAIL_FORMAT), message = R.string.invalid_email_format),
       Rule(types = intArrayOf(ValidType.NON_EMPTY), message = R.string.is_empty)
@@ -54,9 +54,9 @@ open class LoginActivity : BaseActivity(), LoginContract.ViewModel {
         .build()
         .inject(this)
 
-    val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this,
+    mBinding = DataBindingUtil.setContentView<ActivityLoginBinding>(this,
         R.layout.activity_login)
-    binding.viewModel = this
+    mBinding.viewModel = this
     mPresenter.checkUserLogin()
   }
 
@@ -79,7 +79,7 @@ open class LoginActivity : BaseActivity(), LoginContract.ViewModel {
   }
 
   override fun onError(exception: BaseException) {
-    mDialogManager.dialogError(exception.getMessageError())
+    mDialogManager.showSnackBarTitleString(mBinding.imageLogo, exception.getMessageError())
   }
 
   override fun onUserLoggedIn() {
@@ -102,7 +102,7 @@ open class LoginActivity : BaseActivity(), LoginContract.ViewModel {
   }
 
   fun ForgotPasswordClick(view: View) {
-    Toast.makeText(applicationContext, getString(R.string.this_frature_will_be_update_soon),
-        Toast.LENGTH_SHORT).show()
+    mDialogManager.showSnackBarNoActionBar(mBinding.imageLogo,
+        R.string.this_feature_will_be_update_soon)
   }
 }
