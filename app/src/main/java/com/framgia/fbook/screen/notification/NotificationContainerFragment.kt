@@ -39,7 +39,9 @@ class NotificationContainerFragment : BaseFragment() {
   private val mDialogManager: DialogManager by lazy { DialogManagerImpl(context) }
   private val mNavigator: Navigator by lazy { Navigator(this) }
   private lateinit var mNotificationListener: NotificationListener.UserListener
+  private lateinit var mNotificationLoginListener: NotificationListener.LoginListener
   val mIsVisibleLayoutNotLoggedIn: ObservableField<Boolean> = ObservableField()
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
 
@@ -55,6 +57,7 @@ class NotificationContainerFragment : BaseFragment() {
     super.onAttach(context)
     if (context is MainActivity) {
       mNotificationListener = context
+      mNotificationLoginListener = context
     }
   }
 
@@ -95,6 +98,7 @@ class NotificationContainerFragment : BaseFragment() {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_NOTIFICATION) {
       mIsVisibleLayoutNotLoggedIn.set(false)
+      mNotificationLoginListener.IsLoggedIn(true)
       mNotificationListener.getEnable(true)
     }
   }

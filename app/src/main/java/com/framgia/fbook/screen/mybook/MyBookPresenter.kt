@@ -13,7 +13,7 @@ import io.reactivex.disposables.Disposable
 open class MyBookPresenter constructor(
     private val mBookRepository: BookRepository) : MyBookContract.Presenter {
 
-  private var mViewModel: MyBookContract.ViewModel? = null
+  private lateinit var mViewModel: MyBookContract.ViewModel
   private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
   private lateinit var mBaseSchedulerProvider: BaseSchedulerProvider
 
@@ -28,14 +28,18 @@ open class MyBookPresenter constructor(
     val disposable: Disposable = mBookRepository.getMyBook(userId)
         .subscribeOn(mBaseSchedulerProvider.io())
         .observeOn(mBaseSchedulerProvider.ui())
-        .doOnSubscribe { mViewModel?.onShowProgressDialog() }
-        .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
+        .doOnSubscribe({
+          if (!mViewModel.isNotRefresh()) {
+            mViewModel.onShowProgressDialog()
+          }
+        })
+        .doAfterTerminate { mViewModel.onDismissProgressDialog() }
         .subscribe(
             { listBook ->
-              mViewModel?.onGetMyBookSuccess(listBook.items?.data)
+              mViewModel.onGetMyBookSuccess(listBook.items?.data)
             },
             { error ->
-              mViewModel?.onError(error as BaseException)
+              mViewModel.onError(error as BaseException)
             })
     mCompositeDisposable.add(disposable)
   }

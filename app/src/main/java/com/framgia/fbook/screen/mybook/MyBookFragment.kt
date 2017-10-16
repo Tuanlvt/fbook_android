@@ -1,6 +1,7 @@
 package com.framgia.fbook.screen.mybook
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
@@ -19,6 +20,7 @@ import com.framgia.fbook.screen.approverequest.ApproveRequestActivity
 import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.main.MainActivity
+import com.framgia.fbook.screen.main.NotificationListener
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.library.MaterialDialog
@@ -41,8 +43,12 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
   @Inject
   internal lateinit var mNavigator: Navigator
   private var mIsLoadDataFirstTime: Boolean = true
+  private lateinit var mNotificationLoginListener: NotificationListener.LoginListener
+
   val mIsVisiableLayoutNodata: ObservableField<Boolean> = ObservableField()
   val mIsVisibleLayoutNotLoggedIn: ObservableField<Boolean> = ObservableField()
+  val mIsRefresh: ObservableField<Boolean> = ObservableField(false)
+  val mIsEnable: ObservableField<Boolean> = ObservableField(false)
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -72,10 +78,19 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
     super.onStop()
   }
 
+  override fun onAttach(context: Context?) {
+    super.onAttach(context)
+    if (context is MainActivity) {
+      mNotificationLoginListener = context
+    }
+  }
+
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_MY_BOOK_REQUEST) {
       mIsVisibleLayoutNotLoggedIn.set(false)
+      mIsEnable.set(true)
+      mNotificationLoginListener.IsLoggedIn(true)
       mPresenter.getMyBook(mUserRepository.getUserLocal()?.id)
     }
   }
@@ -91,7 +106,7 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
 
         mDialogManager.dialogBasic(getString(R.string.inform),
             getString(R.string.you_must_be_login_into_perform_this_function),
-            MaterialDialog.SingleButtonCallback { materialDialog, dialogAction ->
+            MaterialDialog.SingleButtonCallback { _, _ ->
               mNavigator.startActivityForResultFromFragment(LoginActivity::class.java,
                   Constant.RequestCode.TAB_MY_BOOK_REQUEST)
             })
@@ -99,6 +114,7 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
         mIsVisibleLayoutNotLoggedIn.set(true)
         return
       }
+      mIsEnable.set(true)
       mIsVisibleLayoutNotLoggedIn.set(false)
       user.let { mPresenter.getMyBook(userId = user.id) }
     }
@@ -107,10 +123,12 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
   override fun onError(e: BaseException) {
     mIsLoadDataFirstTime = false
     Log.e(TAG, e.getMessageError())
+    mIsRefresh.set(false)
   }
 
   override fun onGetMyBookSuccess(listBook: List<Book>?) {
     mIsLoadDataFirstTime = false
+    mIsRefresh.set(false)
     listBook?.let {
       mMyBookAdapter.updateData(it)
       checkSizeListBook(listBook.size)
@@ -123,6 +141,10 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
 
   override fun onDismissProgressDialog() {
     mDialogManager.dismissProgressDialog()
+  }
+
+  override fun isNotRefresh(): Boolean {
+    return mIsRefresh.get()
   }
 
   override fun onItemMyBookClick(book: Book) {
@@ -146,6 +168,11 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
   }
 
   fun onClickReloadData(view: View) {
+    mPresenter.getMyBook(mUserRepository.getUserLocal()?.id)
+  }
+
+  fun onRefresh() {
+    mIsRefresh.set(true)
     mPresenter.getMyBook(mUserRepository.getUserLocal()?.id)
   }
 
