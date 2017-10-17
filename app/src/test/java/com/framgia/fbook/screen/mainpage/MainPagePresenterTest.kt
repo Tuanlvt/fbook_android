@@ -44,6 +44,8 @@ class MainPagePresenterTest {
   private val PAGE = 1
   private val baseException = BaseException(Type.HTTP, ErrorResponse())
   private val listResponse: BaseResponse<BaseBookRespone<List<Book>>> = BaseResponse()
+  private val officeID = 1
+
   @Before
   fun setUp() {
     mPresenter.setViewModel(mViewModel)
@@ -52,17 +54,17 @@ class MainPagePresenterTest {
 
   @Test
   fun getSectionListBook_shouldReturnListBook_whenGetSectionListBook() {
-    Mockito.`when`(mBookRepository.getSectionListBook(LATE, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(LATE, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    Mockito.`when`(mBookRepository.getSectionListBook(RATING, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(RATING, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    Mockito.`when`(mBookRepository.getSectionListBook(VIEW, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(VIEW, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    Mockito.`when`(mBookRepository.getSectionListBook(WAITING, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(WAITING, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    Mockito.`when`(mBookRepository.getSectionListBook(READ, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(READ, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    mPresenter.getSectionListBook()
+    mPresenter.getSectionListBook(officeID)
     Mockito.verify(mViewModel).onGetSectionListBookSuccess(TypeBook.LATE_BOOK,
         listResponse.item?.data)
     Mockito.verify(mViewModel).onGetSectionListBookSuccess(TypeBook.RATING_BOOK,
@@ -78,9 +80,9 @@ class MainPagePresenterTest {
 
   @Test
   fun getSectionListBook_shouldReturnError_whenGetSectionListLateBook() {
-    Mockito.`when`(mBookRepository.getSectionListBook(LATE, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(LATE, PAGE, officeID))
         .thenReturn(Single.error(baseException))
-    mPresenter.getSectionListBook()
+    mPresenter.getSectionListBook(officeID)
     Mockito.verify(mViewModel, Mockito.never()).onGetSectionListBookSuccess(TypeBook.LATE_BOOK,
         listResponse.item?.data)
     Mockito.verify(mViewModel).onError(baseException)
@@ -88,11 +90,11 @@ class MainPagePresenterTest {
 
   @Test
   fun getSectionListBook_shouldReturnError_whenGetSectionListRatingBook() {
-    Mockito.`when`(mBookRepository.getSectionListBook(LATE, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(LATE, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    Mockito.`when`(mBookRepository.getSectionListBook(RATING, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(RATING, PAGE, officeID))
         .thenReturn(Single.error(baseException))
-    mPresenter.getSectionListBook()
+    mPresenter.getSectionListBook(officeID)
     Mockito.verify(mViewModel, Mockito.never()).onGetSectionListBookSuccess(TypeBook.READ_BOOK,
         listResponse.item?.data)
     Mockito.verify(mViewModel).onGetSectionListBookSuccess(TypeBook.LATE_BOOK,
@@ -102,13 +104,13 @@ class MainPagePresenterTest {
 
   @Test
   fun getSectionListBook_shouldReturnError_whenGetSectionListViewBook() {
-    Mockito.`when`(mBookRepository.getSectionListBook(LATE, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(LATE, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    Mockito.`when`(mBookRepository.getSectionListBook(RATING, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(RATING, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    Mockito.`when`(mBookRepository.getSectionListBook(VIEW, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(VIEW, PAGE, officeID))
         .thenReturn(Single.error(baseException))
-    mPresenter.getSectionListBook()
+    mPresenter.getSectionListBook(officeID)
     Mockito.verify(mViewModel, Mockito.never()).onGetSectionListBookSuccess(TypeBook.READ_BOOK,
         listResponse.item?.data)
     Mockito.verify(mViewModel).onGetSectionListBookSuccess(TypeBook.LATE_BOOK,
@@ -120,15 +122,15 @@ class MainPagePresenterTest {
 
   @Test
   fun getSectionListBook_shouldReturnError_whenGetSectionWaitingViewBook() {
-    Mockito.`when`(mBookRepository.getSectionListBook(LATE, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(LATE, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    Mockito.`when`(mBookRepository.getSectionListBook(RATING, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(RATING, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    Mockito.`when`(mBookRepository.getSectionListBook(VIEW, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(VIEW, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    Mockito.`when`(mBookRepository.getSectionListBook(WAITING, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(WAITING, PAGE, officeID))
         .thenReturn(Single.error(baseException))
-    mPresenter.getSectionListBook()
+    mPresenter.getSectionListBook(officeID)
     Mockito.verify(mViewModel, Mockito.never()).onGetSectionListBookSuccess(TypeBook.READ_BOOK,
         listResponse.item?.data)
     Mockito.verify(mViewModel).onGetSectionListBookSuccess(TypeBook.LATE_BOOK,
@@ -142,17 +144,17 @@ class MainPagePresenterTest {
 
   @Test
   fun getSectionListBook_shouldReturnError_whenGetSectionReadViewBook() {
-    Mockito.`when`(mBookRepository.getSectionListBook(LATE, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(LATE, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    Mockito.`when`(mBookRepository.getSectionListBook(RATING, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(RATING, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    Mockito.`when`(mBookRepository.getSectionListBook(VIEW, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(VIEW, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    Mockito.`when`(mBookRepository.getSectionListBook(WAITING, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(WAITING, PAGE, officeID))
         .thenReturn(Single.just(listResponse))
-    Mockito.`when`(mBookRepository.getSectionListBook(READ, PAGE))
+    Mockito.`when`(mBookRepository.getSectionListBook(READ, PAGE, officeID))
         .thenReturn(Single.error(baseException))
-    mPresenter.getSectionListBook()
+    mPresenter.getSectionListBook(officeID)
     Mockito.verify(mViewModel, Mockito.never()).onGetSectionListBookSuccess(TypeBook.READ_BOOK,
         listResponse.item?.data)
     Mockito.verify(mViewModel).onGetSectionListBookSuccess(TypeBook.LATE_BOOK,
