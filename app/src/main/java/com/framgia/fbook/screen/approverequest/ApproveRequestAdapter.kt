@@ -21,7 +21,7 @@ class ApproveRequestAdapter constructor(
 
   fun updateData(listBook: List<Book>) {
     mBooks.clear()
-    val listSort = listBook.sortedWith(compareByDescending { it.usersWaitings?.size })
+    val listSort = listBook.sortedWith(compareByDescending({ it.usersWaitings?.size }))
     mBooks.addAll(listSort)
     notifyDataSetChanged()
   }
@@ -31,16 +31,16 @@ class ApproveRequestAdapter constructor(
     mItemApproveRequestClickListener = itemApproveRequestClickListener
   }
 
-  fun updateNumberOfWaiting(position: Int, isApprove: Boolean) {
-
+  fun updateNumberOfWaitingIncrease(position: Int) {
     val currentNumberOfWaiting = mBooks[position].numberOfWaiting
+    mBooks[position].numberOfWaiting = currentNumberOfWaiting?.plus(1)
+    notifyDataSetChanged()
+  }
 
-    if (isApprove) {
-      mBooks[position].numberOfWaiting = currentNumberOfWaiting?.plus(1)
-    } else {
-      mBooks[position].numberOfWaiting = currentNumberOfWaiting?.minus(1)
-    }
-    notifyItemChanged(position)
+  fun updateNumberOfWaitingDecrease(position: Int) {
+    val currentNumberOfWaiting = mBooks[position].numberOfWaiting
+    mBooks[position].numberOfWaiting = currentNumberOfWaiting?.minus(1)
+    notifyDataSetChanged()
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {

@@ -68,9 +68,13 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    if (requestCode == Constant.RequestCode.APRROVE_BOOK_REQUEST) {
-      val isApprove: Boolean = resultCode == Constant.ResultCode.UNAPPROVE
-      mApproveRequestAdapter.updateNumberOfWaiting(mPosition, isApprove)
+    if (resultCode == Constant.ResultCode.UNAPPROVE
+        && requestCode == Constant.RequestCode.APRROVE_BOOK_REQUEST) {
+      mApproveRequestAdapter.updateNumberOfWaitingIncrease(mPosition)
+    }
+    if (resultCode == Constant.ResultCode.APRROVE
+        && requestCode == Constant.RequestCode.APRROVE_BOOK_REQUEST) {
+      mApproveRequestAdapter.updateNumberOfWaitingDecrease(mPosition)
     }
   }
 
