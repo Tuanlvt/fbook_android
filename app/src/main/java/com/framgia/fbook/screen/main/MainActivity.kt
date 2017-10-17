@@ -116,6 +116,9 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
     count?.let {
       mCountNotification = it
       mNotificationTab = mBottomBar.getTabWithId(R.id.tab_notification)
+      if (mCountNotification >= Constant.MESSAGE_MAXIMUM) {
+        return mNotificationTab.setBadgeCount(Constant.SHOW_MESSAGE_MAXIMUM_INT)
+      }
       mNotificationTab.setBadgeCount(mCountNotification)
     }
   }
@@ -141,6 +144,9 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
       return
     }
     --mCountNotification
+    if (mCountNotification >= Constant.MESSAGE_MAXIMUM) {
+      return mNotificationTab.setBadgeCount(Constant.SHOW_MESSAGE_MAXIMUM_INT)
+    }
     mNotificationTab.setBadgeCount(mCountNotification)
   }
 

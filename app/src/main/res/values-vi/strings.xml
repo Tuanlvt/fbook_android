@@ -119,4 +119,5 @@
     <string name="undo">HOÀN TÁC</string>
     <string name="search_with">Tìm kiếm với</string>
     <string name="or">hoặc</string>
+    <string name="return_book_success">Đã trả lại sách thành công !</string>
 </resources>

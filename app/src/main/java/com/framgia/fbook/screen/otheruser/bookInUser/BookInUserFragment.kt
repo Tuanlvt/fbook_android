@@ -53,6 +53,7 @@ open class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, It
   internal lateinit var mDialogManager: DialogManager
   @Inject
   internal lateinit var mAdapter: BookInUserAdapter
+  private lateinit var mBinding: FragmentBookInUserBinding
   var mBook: List<Book> = ArrayList()
   val mIsVisibleLayoutNoData: ObservableField<Boolean> = ObservableField(false)
 
@@ -68,11 +69,11 @@ open class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, It
         .build()
         .inject(this)
 
-    val binding = DataBindingUtil.inflate<FragmentBookInUserBinding>(inflater,
+    mBinding = DataBindingUtil.inflate<FragmentBookInUserBinding>(inflater,
         R.layout.fragment_book_in_user, container, false)
-    binding.viewModel = this
+    mBinding.viewModel = this
     fillData()
-    return binding.root
+    return mBinding.root
   }
 
   override fun onStart() {
@@ -98,6 +99,7 @@ open class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, It
 
   override fun onReturnBookSuccess() {
     mPresenter.getBookInUserProfile(mUserId, mTypeRequest)
+    mDialogManager.showSnackBarNoActionBar(mBinding.root, R.string.return_book_success)
   }
 
   override fun onItemBookInUserClick(book: Book?) {
@@ -111,6 +113,7 @@ open class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, It
   override fun onError(exception: BaseException) {
     Log.d(TAG, exception.getMessageError())
     mDialogManager.dismissProgressDialog()
+    mDialogManager.showSnackBarTitleString(mBinding.root, exception.getMessageError())
   }
 
   override fun onReturnBookClick(book: Book?) {

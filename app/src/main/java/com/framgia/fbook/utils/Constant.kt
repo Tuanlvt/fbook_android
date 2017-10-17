@@ -25,6 +25,10 @@ object Constant {
   val BOOK_DETAIL_EXTRA = "book_detail"
   val USER_BOOK_DETAIL_EXTRA = "user_book_detail"
   val BOOK_DETAIL_IN_USER_EXTRA = "book_detail_in_user_extra"
+  val SHOW_MESSAGE_MAXIMUM = "99+"
+  val SHOW_MESSAGE_MAXIMUM_INT = 99
+  val MESSAGE_MAXIMUM = 100
+
 
   object Tab {
     val TAB_HOME = 0

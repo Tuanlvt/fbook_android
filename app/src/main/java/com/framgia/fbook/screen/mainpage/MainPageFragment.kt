@@ -2,6 +2,7 @@ package com.framgia.fbook.screen.mainpage
 
 import android.content.Context
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -49,8 +50,9 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel,
   lateinit var mMainPageAdapterReadBook: MainPageAdapter
   @Inject
   lateinit var mNavigator: Navigator
-
   private var mOfficeId: Int? = null
+  private lateinit var mBinding: FragmentMainPageBinding
+  val mVisibleLayoutBook: ObservableField<Boolean> = ObservableField(false)
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -60,11 +62,11 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel,
         .build()
         .inject(this)
 
-    val binding = DataBindingUtil.inflate<FragmentMainPageBinding>(inflater,
+    mBinding = DataBindingUtil.inflate<FragmentMainPageBinding>(inflater,
         R.layout.fragment_main_page, container, false)
-    binding.viewModel = this
+    mBinding.viewModel = this
     initData()
-    return binding.root
+    return mBinding.root
   }
 
   override fun onStart() {
@@ -93,7 +95,7 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel,
   }
 
   override fun onError(error: BaseException) {
-    mDialogManager.dialogError(error.getMessageError())
+    mDialogManager.showSnackBarTitleString(mBinding.contentMainPage, error.getMessageError())
   }
 
   override fun onGetOfficeSuccess(listOffice: List<Office>?) {
@@ -118,6 +120,7 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel,
         mMainPageAdapterReadBook.notifyDataSetChanged()
       }
     }
+    mVisibleLayoutBook.set(true)
   }
 
   override fun onGetListBook(officeId: Int?) {
