@@ -43,9 +43,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_24"
-                    android:layout_marginStart="@dimen/dp_24"
+                    android:gravity="center"
                     android:onClick="@{viewModel::onClickChooseWorkSpace}"
+                    android:padding="@dimen/dp_10"
                     android:text="@{viewModel.mCurrentOffice}"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/sp_15"

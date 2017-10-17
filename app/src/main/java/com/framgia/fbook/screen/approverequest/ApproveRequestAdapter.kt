@@ -30,6 +30,18 @@ class ApproveRequestAdapter constructor(
     mItemApproveRequestClickListener = itemApproveRequestClickListener
   }
 
+  fun updateNumberOfWaiting(position: Int, isApprove: Boolean) {
+
+    val currentNumberOfWaiting = mBooks[position].numberOfWaiting
+
+    if (isApprove) {
+      mBooks[position].numberOfWaiting = currentNumberOfWaiting?.plus(1)
+    } else {
+      mBooks[position].numberOfWaiting = currentNumberOfWaiting?.minus(1)
+    }
+    notifyItemChanged(position)
+  }
+
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
     val binding = DataBindingUtil.inflate<ItemApproveRequestBinding>(
         LayoutInflater.from(parent.context),
@@ -38,7 +50,7 @@ class ApproveRequestAdapter constructor(
   }
 
   override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-    holder.bind(mBooks[position])
+    holder.bind(mBooks[position], position)
   }
 
   override fun getItemCount(): Int {
@@ -50,8 +62,8 @@ class ApproveRequestAdapter constructor(
       private val mItemClickListener: ItemApproveRequestClickListener?) : RecyclerView.ViewHolder(
       mBinding.root) {
 
-    fun bind(book: Book) {
-      mBinding.viewModel = ItemApproveRequestViewModel(context, book, mItemClickListener)
+    fun bind(book: Book, position: Int) {
+      mBinding.viewModel = ItemApproveRequestViewModel(context, book, mItemClickListener, position)
       mBinding.executePendingBindings()
     }
   }

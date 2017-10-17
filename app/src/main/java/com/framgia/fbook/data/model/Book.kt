@@ -68,6 +68,7 @@ class Book() : BaseModel(), Parcelable {
   @SerializedName("category")
   @Expose
   var category: Category? = null
+  var numberOfWaiting: Int? = 0
 
   constructor(parcel: Parcel) : this() {
     id = parcel.readValue(Int::class.java.classLoader) as? Int
@@ -86,6 +87,7 @@ class Book() : BaseModel(), Parcelable {
     usersReturneds = parcel.createTypedArrayList(User)
     reviewDetails = parcel.createTypedArrayList(ReviewDetail)
     office = parcel.readParcelable(Office::class.java.classLoader)
+    numberOfWaiting = parcel.readValue(Int::class.java.classLoader) as? Int
   }
 
   class ReviewDetail() : BaseModel(), Parcelable {
@@ -153,6 +155,7 @@ class Book() : BaseModel(), Parcelable {
     parcel.writeTypedList(usersReturneds)
     parcel.writeTypedList(reviewDetails)
     parcel.writeParcelable(office, flags)
+    parcel.writeValue(numberOfWaiting)
   }
 
   override fun describeContents(): Int {

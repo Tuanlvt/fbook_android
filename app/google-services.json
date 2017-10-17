@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "756071136520",
+    "firebase_url": "https://fbook-2017.firebaseio.com",
+    "project_id": "fbook-2017",
+    "storage_bucket": "fbook-2017.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:756071136520:android:522e11a1b1c95d01",
+        "android_client_info": {
+          "package_name": "com.framgia.fbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "756071136520-94c2ccrmcrvjl23gvti6gs7t5odan7s7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBePzXwwQMJvgRwg9d9cv27XXXo_f6s9aE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

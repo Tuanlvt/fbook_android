@@ -40,7 +40,9 @@
             android:id="@+id/textName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_10"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_5"
             android:ellipsize="end"
@@ -53,7 +55,6 @@
             app:layout_constraintTop_toTopOf="parent"
             />
         <TextView
-            android:visibility="@{viewModel.VisibleType ? View.VISIBLE : View.GONE}"
             android:id="@+id/textType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,6 +65,7 @@
             android:paddingRight="@dimen/dp_5"
             android:text="@{viewModel.itemNotification.type}"
             android:textColor="@color/color_white"
+            android:visibility="@{viewModel.VisibleType ? View.VISIBLE : View.GONE}"
             app:layout_constraintLeft_toLeftOf="@id/textName"
             app:layout_constraintTop_toBottomOf="@id/textName"
             />
@@ -97,14 +99,16 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{viewModel.Type}"
             android:visibility="@{viewModel.VisibleType ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/textTime"
             app:layout_constraintLeft_toLeftOf="@id/textType"
-            app:layout_constraintTop_toTopOf="@id/textTime"
             app:layout_constraintRight_toLeftOf="@+id/textTime"
+            app:layout_constraintTop_toTopOf="@id/textTime"
             />
         <View
             android:layout_width="match_parent"
