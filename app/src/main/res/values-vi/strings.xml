@@ -120,4 +120,15 @@
     <string name="search_with">Tìm kiếm với</string>
     <string name="or">hoặc</string>
     <string name="return_book_success">Đã trả lại sách thành công !</string>
+    <string name="invalid_email_format">Định dạng email không hợp lệ !</string>
+    <string name="create_book">Tạo sách</string>
+    <string name="internal_book">Sách nội bộ</string>
+    <string name="google_book">Sách Google</string>
+    <string name="title">Tiêu để</string>
+    <string name="author">Tác giả</string>
+    <string name="description">Miêu tả</string>
+    <string name="publish_date">Ngày xuất bản</string>
+    <string name="category">Thể loại</string>
+    <string name="office">Văn phòng</string>
+    <string name="is_empty">Vui lòng nhập dữ liệu!</string>
 </resources>
