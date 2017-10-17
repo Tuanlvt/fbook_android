@@ -21,6 +21,8 @@ interface MyBookContract {
     fun onShowProgressDialog()
 
     fun onDismissProgressDialog()
+
+    fun isNotRefresh(): Boolean
   }
 
   /**

@@ -15,4 +15,8 @@ interface NotificationListener {
   interface UserListener {
     fun getEnable(enable: Boolean)
   }
+
+  interface LoginListener {
+    fun IsLoggedIn(check: Boolean)
+  }
 }

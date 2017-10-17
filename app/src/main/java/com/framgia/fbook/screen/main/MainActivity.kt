@@ -29,7 +29,7 @@ import com.roughike.bottombar.BottomBar
 import com.roughike.bottombar.BottomBarTab
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListener, NotificationListener.UserListener {
+class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListener, NotificationListener.UserListener, NotificationListener.LoginListener {
 
   private val TAG: String = MainActivity::class.java.name
   private val DELAY_TIME_TWO_TAP_BACK_BUTTON = 2000
@@ -151,9 +151,11 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
   private fun initData() {
     onSelectItemMenu()
     presenter.getOffices()
-    presenter.getCountNotification()
     mHandler = Handler()
     mRunnable = Runnable { mIsDoubleTapBack = false }
+    mUserRepository.getUserLocal()?.let {
+      presenter.getCountNotification()
+    }
   }
 
   private fun checkDataUser() {
@@ -172,6 +174,13 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
 
   fun setNotificationUserListener(notificationUserListener: NotificationUserListener) {
     mNotificationUserListener = notificationUserListener
+  }
+
+  override fun IsLoggedIn(check: Boolean) {
+    if (!check) {
+      return
+    }
+    presenter.getCountNotification()
   }
 
   private fun setCurrentTab(tab: Int) {

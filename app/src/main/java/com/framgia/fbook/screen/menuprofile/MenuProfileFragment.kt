@@ -1,6 +1,7 @@
 package com.framgia.fbook.screen.menuprofile
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
@@ -16,6 +17,7 @@ import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.approverequest.ApproveRequestActivity
 import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.main.MainActivity
+import com.framgia.fbook.screen.main.NotificationListener
 import com.framgia.fbook.screen.profile.ProfileActivity
 import com.framgia.fbook.screen.sharebook.ShareBookActivity
 import com.framgia.fbook.utils.Constant
@@ -37,6 +39,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   @Inject
   internal lateinit var mDialogManager: DialogManager
   private lateinit var mMenuProfileComponent: MenuProfileComponent
+  private lateinit var mNotificationLoginListener: NotificationListener.LoginListener
   private lateinit var mLayoutView: View
   private var mIsLoadDataFirstTime: Boolean = true
   val mUser: ObservableField<User> = ObservableField()
@@ -67,6 +70,13 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
     super.onStop()
   }
 
+  override fun onAttach(context: Context?) {
+    super.onAttach(context)
+    if (context is MainActivity) {
+      mNotificationLoginListener = context
+    }
+  }
+
   companion object {
     private val PAGE_LIMIT = 1
     val TAG: String = "MenuProfileFragment"
@@ -79,6 +89,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_PROFILE_REQUEST) {
       mIsVisibleLayoutNotLoggedIn.set(true)
+      mNotificationLoginListener.IsLoggedIn(true)
       mUser.set(mUserRepository.getUserLocal())
     }
   }
@@ -93,7 +104,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
       if (user == null) {
         mDialogManager.dialogBasic(getString(R.string.inform),
             getString(R.string.you_must_be_login_into_perform_this_function),
-            MaterialDialog.SingleButtonCallback { materialDialog, dialogAction ->
+            MaterialDialog.SingleButtonCallback { _, _ ->
               mNavigator.startActivityForResultFromFragment(LoginActivity::class.java,
                   Constant.RequestCode.TAB_PROFILE_REQUEST)
             })
@@ -124,7 +135,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   fun onClickSignOut() {
     mDialogManager.dialogBasic(getString(R.string.inform),
         getString(R.string.are_u_want_to_sign_out),
-        MaterialDialog.SingleButtonCallback { materialDialog, dialogAction ->
+        MaterialDialog.SingleButtonCallback { _, _ ->
           mUserRepository.clearData()
           mNavigator.startActivityAtRoot(MainActivity::class.java)
         })

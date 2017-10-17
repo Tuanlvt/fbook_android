@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout
 import android.support.design.widget.TextInputLayout
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
@@ -146,5 +147,13 @@ object BindingUtils {
   fun setSize(textView: TextView, size: Int?) {
     textView.text = size.toString()
     textView.setBackgroundResource(R.drawable.background_hexagon)
+  }
+
+  @JvmStatic
+  @BindingAdapter("colorRes", "onRefresh")
+  fun setRefreshLayout(swipeRefreshLayout: SwipeRefreshLayout, colorId: Int,
+      refresh: SwipeRefreshLayout.OnRefreshListener) {
+    swipeRefreshLayout.setColorSchemeColors(colorId)
+    swipeRefreshLayout.setOnRefreshListener(refresh)
   }
 }
