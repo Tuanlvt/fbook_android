@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.approverequest
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
@@ -31,6 +32,7 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
   @Inject
   internal lateinit var mNavigator: Navigator
   val mIsVisibleLayoutNoData: ObservableField<Boolean> = ObservableField()
+  private var mPosition: Int = 0
 
   companion object {
     private val TAG = ApproveRequestActivity::class.java.simpleName
@@ -64,8 +66,19 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
     super.onStop()
   }
 
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == Constant.RequestCode.APRROVE_BOOK_REQUEST) {
+      val isApprove: Boolean = resultCode == Constant.ResultCode.UNAPPROVE
+      mApproveRequestAdapter.updateNumberOfWaiting(mPosition, isApprove)
+    }
+  }
+
   override fun onGetApproveRequestSuccess(listBook: List<Book>?) {
-    listBook?.let { mApproveRequestAdapter.updateData(it) }
+    listBook?.let {
+      listBook.forEach { it.numberOfWaiting = it.usersWaitings?.size }
+      mApproveRequestAdapter.updateData(it)
+    }
     setVisibleLayoutNoData(listBook?.size)
   }
 
@@ -84,11 +97,13 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
     Log.e(MyBookFragment.TAG, e.getMessageError())
   }
 
-  override fun onCLickViewRequest(bookId: Int?) {
+  override fun onCLickViewRequest(bookId: Int?, position: Int) {
+    mPosition = position
     bookId?.let {
       val bundle = Bundle()
       bundle.putInt(Constant.BOOK_DETAIL_EXTRA, bookId)
-      mNavigator.startActivity(ApproveDetailActivity::class.java, bundle)
+      mNavigator.startActivityForResult(ApproveDetailActivity::class.java, bundle,
+          Constant.RequestCode.APRROVE_BOOK_REQUEST)
     }
   }
 

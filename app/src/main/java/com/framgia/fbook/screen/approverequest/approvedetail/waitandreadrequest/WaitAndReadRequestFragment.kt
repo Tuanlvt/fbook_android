@@ -34,6 +34,7 @@ class WaitAndReadRequestFragment : BaseFragment(), WaitAndReadRequestContract.Vi
   internal lateinit var mDialogManager: DialogManager
   @Inject
   internal lateinit var mNavigator: Navigator
+  private var mIsApprove: Boolean = false
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -82,10 +83,15 @@ class WaitAndReadRequestFragment : BaseFragment(), WaitAndReadRequestContract.Vi
   }
 
   override fun onApproveOrUnApproveBookSuccess() {
-    mNavigator.finishActivity()
+    if (mIsApprove) {
+      mNavigator.finishActivityWithResult(Constant.ResultCode.UNAPPROVE)
+      return
+    }
+    mNavigator.finishActivityWithResult(Constant.ResultCode.APRROVE)
   }
 
   override fun onItemRequestClick(pivot: User.Pivot?, isApprove: Boolean) {
+    mIsApprove = isApprove
     mDialogManager.dialogBasic(context.getString(R.string.warning),
         context.getString(R.string.are_you_sure_approve_this_request),
         MaterialDialog.SingleButtonCallback { _, _ ->
