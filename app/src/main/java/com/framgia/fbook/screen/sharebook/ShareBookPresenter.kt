@@ -21,11 +21,10 @@ import io.reactivex.functions.BiFunction
  * Listens to user actions from the UI ({@link ShareBookActivity}), retrieves the data and updates
  * the UI as required.
  */
-class ShareBookPresenter(private val mValidator: Validator,
+open class ShareBookPresenter(private val mValidator: Validator,
     private val mUserRepository: UserRepository,
     private val mCategoryRepository: CategoryRepository,
-    private val mBookRepository: BookRepository,
-    private val mBaseSchedulerProvider: BaseSchedulerProvider) : ShareBookContract.Presenter {
+    private val mBookRepository: BookRepository) : ShareBookContract.Presenter {
   companion object {
     private val TAG = ShareBookPresenter::class.java.name
   }
@@ -33,6 +32,7 @@ class ShareBookPresenter(private val mValidator: Validator,
   private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
 
   private var mViewModel: ShareBookContract.ViewModel? = null
+  private lateinit var mBaseSchedulerProvider: BaseSchedulerProvider
 
   override fun onStart() {}
 
@@ -132,5 +132,9 @@ class ShareBookPresenter(private val mValidator: Validator,
     if (!StringUtils.isBlank(message)) {
       mViewModel?.onInputDescriptionError(message)
     }
+  }
+
+  fun setSchedulerProvider(baseSchedulerProvider: BaseSchedulerProvider) {
+    mBaseSchedulerProvider = baseSchedulerProvider
   }
 }

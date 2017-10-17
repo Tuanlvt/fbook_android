@@ -31,7 +31,7 @@ import javax.inject.Inject
 /**
  * ShareBook Screen.
  */
-class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImageSelectedListener, DatePickerDialog.OnDateSetListener {
+open class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImageSelectedListener, DatePickerDialog.OnDateSetListener {
   @Inject
   internal lateinit var mPresenter: ShareBookContract.Presenter
   @Inject
