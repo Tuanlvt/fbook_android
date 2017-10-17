@@ -21,7 +21,8 @@ class ApproveRequestAdapter constructor(
 
   fun updateData(listBook: List<Book>) {
     mBooks.clear()
-    mBooks.addAll(listBook)
+    val listSort = listBook.sortedWith(compareByDescending { it.usersWaitings?.size })
+    mBooks.addAll(listSort)
     notifyDataSetChanged()
   }
 
