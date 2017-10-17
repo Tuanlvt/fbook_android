@@ -31,9 +31,9 @@ class ShareBookModule(private val activity: Activity) {
       bookRepository: BookRepository,
       baseSchedulerProvider: BaseSchedulerProvider): ShareBookContract.Presenter {
     val presenter = ShareBookPresenter(validator, userRepository, categoryRepository,
-        bookRepository,
-        baseSchedulerProvider)
+        bookRepository)
     presenter.setViewModel(activity as ShareBookContract.ViewModel)
+    presenter.setSchedulerProvider(baseSchedulerProvider)
     return presenter
   }
 
