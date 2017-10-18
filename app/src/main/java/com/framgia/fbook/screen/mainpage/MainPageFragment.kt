@@ -53,6 +53,7 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel,
   private var mOfficeId: Int? = null
   private lateinit var mBinding: FragmentMainPageBinding
   val mVisibleLayoutBook: ObservableField<Boolean> = ObservableField(false)
+  val mIsRefresh: ObservableField<Boolean> = ObservableField(false)
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -96,6 +97,7 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel,
 
   override fun onError(error: BaseException) {
     mDialogManager.showSnackBarTitleString(mBinding.contentMainPage, error.getMessageError())
+    mIsRefresh.set(false)
   }
 
   override fun onGetOfficeSuccess(listOffice: List<Office>?) {
@@ -121,6 +123,7 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel,
       }
     }
     mVisibleLayoutBook.set(true)
+    mIsRefresh.set(false)
   }
 
   override fun onGetListBook(officeId: Int?) {
@@ -146,6 +149,10 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel,
       }
     }
     mNavigator.startActivity(BookDetailActivity::class.java, bundle)
+  }
+
+  override fun isNotRefresh(): Boolean {
+    return mIsRefresh.get()
   }
 
   fun onClickMoreLateBook() {
@@ -176,6 +183,11 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel,
     mNavigator.goNextChildFragment(R.id.layout_content_main,
         ListBookFragment.newInstance(Constant.READ, mOfficeId), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
+  }
+
+  fun onRefresh() {
+    mIsRefresh.set(true)
+    mPresenter.getSectionListBook(mOfficeId)
   }
 
   companion object {

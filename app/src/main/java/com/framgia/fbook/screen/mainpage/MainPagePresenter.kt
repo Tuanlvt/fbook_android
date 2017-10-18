@@ -41,7 +41,11 @@ open class MainPagePresenter(private val mUserRepository: UserRepository,
     val disposable: Disposable = mBookRepository.getSectionListBook(Constant.LATE, Constant.PAGE,
         officeId)
         .subscribeOn(mSchedulerProvider.io())
-        .doOnSubscribe { mViewModel.onShowProgressDialog() }
+        .doOnSubscribe {
+          if (!mViewModel.isNotRefresh()) {
+            mViewModel.onShowProgressDialog()
+          }
+        }
         .doAfterTerminate { mViewModel.onDismissProgressDialog() }
         .flatMap { listBookLateResponse ->
           mViewModel.onGetSectionListBookSuccess(TypeBook.LATE_BOOK,

@@ -24,6 +24,8 @@ interface MainPageContract {
 
     fun onDismissProgressDialog()
 
+    fun isNotRefresh(): Boolean
+
   }
 
   /**
