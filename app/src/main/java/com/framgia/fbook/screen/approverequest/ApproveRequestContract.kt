@@ -23,6 +23,8 @@ interface ApproveRequestContract {
     fun onShowProgressDialog()
 
     fun onDismissProgressDialog()
+
+    fun isNotRefresh(): Boolean
   }
 
   /**

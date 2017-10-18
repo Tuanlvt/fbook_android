@@ -14,21 +14,28 @@
             />
         <import type="android.view.View"/>
     </data>
-
-    <android.support.constraint.ConstraintLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".screen.notification.NotificationActivity"
+        android:layout_height="wrap_content"
+        app:refreshing="@{viewModel.mIsRefresh}"
+        bind:colorRes="@{@color/colorPrimary}"
+        bind:onRefresh="@{viewModel::onRefresh}"
         >
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layoutManager="LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            bind:recyclerAdapter="@{viewModel.mNotificationAdapter}"
-            />
-    </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".screen.notification.NotificationActivity"
+            >
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                bind:recyclerAdapter="@{viewModel.mNotificationAdapter}"
+                />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>

@@ -22,6 +22,8 @@ interface NotificationContract {
     fun onShowProgressDialog()
 
     fun onDismissProgressDialog()
+
+    fun onIsNotRefresh(): Boolean
   }
 
   /**

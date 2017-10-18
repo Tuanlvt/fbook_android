@@ -29,22 +29,25 @@ class NotificationPresenter(
         .observeOn(mSchedulerProvider.ui())
         .subscribe({
           mViewModel.onUpdateNotificationSuccess()
-        }, {
-          error ->
+        }, { error ->
           mViewModel.onError(error as BaseException)
         })
     mCompositeDisposable.add(disposable)
   }
+
   override fun getNotification() {
     val disposable = mUserRepository.getNotification()
         .subscribeOn(mSchedulerProvider.io())
-        .doOnSubscribe { mViewModel.onShowProgressDialog() }
+        .doOnSubscribe {
+          if (!mViewModel.onIsNotRefresh()) {
+            mViewModel.onShowProgressDialog()
+          }
+        }
         .doAfterSuccess { mViewModel.onDismissProgressDialog() }
         .observeOn(mSchedulerProvider.ui())
         .subscribe({ notificationResponse ->
           mViewModel.onGetNotificationSuccess(notificationResponse.items)
-        }, {
-          error ->
+        }, { error ->
           mViewModel.onError(error as BaseException)
         })
     mCompositeDisposable.add(disposable)

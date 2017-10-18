@@ -44,6 +44,7 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, Ite
   private lateinit var mNotificationListener: NotificationListener
   private var mIsLoadDataFirstTime = true
   val mIsVisibleLayoutNotData: ObservableField<Boolean> = ObservableField()
+  val mIsRefresh: ObservableField<Boolean> = ObservableField(false)
   private var mPosition = 0
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -92,6 +93,7 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, Ite
   override fun onError(error: BaseException) {
     mIsLoadDataFirstTime = false
     mDialogManager.dialogError(error.getMessageError())
+    mIsRefresh.set(false)
   }
 
   override fun onItemNotificationClick(itemNotification: ItemNotification?, position: Int) {
@@ -126,10 +128,12 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, Ite
   override fun onUpdateNotificationSuccess() {
     mNotificationAdapter.updateItem(mPosition)
     mNotificationListener.onUpdateNotificationSuccess()
+    mIsRefresh.set(false)
   }
 
   override fun onGetNotificationSuccess(notificationResponse: NotificationResponse?) {
     mIsLoadDataFirstTime = false
+    mIsRefresh.set(false)
     notificationResponse?.let {
       notificationResponse.notificationUser?.let {
         mNotificationAdapter.updateData(it.listNotification, TYPE_USER)
@@ -139,6 +143,16 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, Ite
       }
     }
   }
+
+  override fun onIsNotRefresh(): Boolean {
+    return mIsRefresh.get()
+  }
+
+  fun onRefresh() {
+    mIsRefresh.set(true)
+    mPresenter.getNotification()
+  }
+
 
   companion object {
 
