@@ -2,6 +2,7 @@ package com.framgia.fbook.screen.approverequest
 
 import android.content.Context
 import android.databinding.BaseObservable
+import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.utils.Constant
 
@@ -21,12 +22,13 @@ class ItemApproveRequestViewModel(val context: Context, val mBook: Book,
   }
 
   fun getNumberOfWaiting(): String {
-    var numberUserWaiting: Int = 0
+    var numberUserWaiting = 0
     mBook.numberOfWaiting.let { numberUserWaiting = it as Int }
     if (numberUserWaiting >= Constant.MESSAGE_MAXIMUM) {
-      return Constant.SHOW_MESSAGE_MAXIMUM
+      return String.format(
+          context.getString(R.string.number_requests, Constant.SHOW_MESSAGE_MAXIMUM))
     }
-    return numberUserWaiting.toString()
+    return String.format(context.getString(R.string.number_requests), numberUserWaiting.toString())
   }
 
   fun onGetVisibleBookMark(): Boolean {
