@@ -14,7 +14,7 @@ import io.reactivex.disposables.Disposable
  */
 class ApproveRequestPresenter(private val mUserRepository: UserRepository,
     private val mBookRepository: BookRepository) : ApproveRequestContract.Presenter {
-  private var mViewModel: ApproveRequestContract.ViewModel? = null
+  private lateinit var mViewModel: ApproveRequestContract.ViewModel
   private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
   private lateinit var mBaseSchedulerProvider: BaseSchedulerProvider
   override fun onStart() {}
@@ -47,7 +47,11 @@ class ApproveRequestPresenter(private val mUserRepository: UserRepository,
     val disposable: Disposable = mBookRepository.getApproveRequest()
         .subscribeOn(mBaseSchedulerProvider.io())
         .observeOn(mBaseSchedulerProvider.ui())
-        .doOnSubscribe { mViewModel?.onShowProgressDialog() }
+        .doOnSubscribe {
+          if (!mViewModel.isNotRefresh()) {
+            mViewModel?.onShowProgressDialog()
+          }
+        }
         .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
         .subscribe(
             { listBook ->

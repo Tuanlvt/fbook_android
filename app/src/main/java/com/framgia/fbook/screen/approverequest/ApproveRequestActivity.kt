@@ -23,6 +23,7 @@ import javax.inject.Inject
  * ApproveRequest Screen.
  */
 class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel, ItemApproveRequestClickListener {
+
   @Inject
   internal lateinit var mPresenter: ApproveRequestContract.Presenter
   @Inject
@@ -33,6 +34,7 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
   internal lateinit var mNavigator: Navigator
   val mIsVisibleLayoutNoData: ObservableField<Boolean> = ObservableField()
   private var mPosition: Int = 0
+  val mIsRefresh: ObservableField<Boolean> = ObservableField(false)
 
   companion object {
     private val TAG = ApproveRequestActivity::class.java.simpleName
@@ -84,6 +86,7 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
       mApproveRequestAdapter.updateData(it)
     }
     setVisibleLayoutNoData(listBook?.size)
+    mIsRefresh.set(false)
   }
 
   override fun onShowProgressDialog() {
@@ -99,6 +102,7 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
 
   override fun onError(e: BaseException) {
     Log.e(MyBookFragment.TAG, e.getMessageError())
+    mIsRefresh.set(false)
   }
 
   override fun onCLickViewRequest(bookId: Int?, position: Int) {
@@ -119,12 +123,21 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
     mNavigator.startActivity(BookDetailActivity::class.java, bundle)
   }
 
+  override fun isNotRefresh(): Boolean {
+    return mIsRefresh.get()
+  }
+
   private fun setVisibleLayoutNoData(size: Int?) {
     if (size == 0) {
       mIsVisibleLayoutNoData.set(true)
       return
     }
     mIsVisibleLayoutNoData.set(false)
+  }
+
+  fun onRefresh() {
+    mIsRefresh.set(true)
+    mPresenter.getApproveRequest()
   }
 
   fun onClickReloadData() {
