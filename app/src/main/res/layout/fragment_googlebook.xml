@@ -49,6 +49,7 @@
                 android:gravity="center_vertical"
                 android:hint="@string/input_book_to_search"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:text="@={viewModel.mBookName}"
                 android:textColor="@color/color_dark_gray_mos"
                 android:textColorHint="@color/color_white_light"
