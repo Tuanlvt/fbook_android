@@ -19,6 +19,7 @@ import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.SearchBook.SearchBookActivity
 import com.framgia.fbook.screen.notification.notificationFollow.NotificationFollowListener
 import com.framgia.fbook.screen.notification.notificationUser.NotificationUserListener
+import com.framgia.fbook.screen.notification.notificationUser.ReadAllNotification
 import com.framgia.fbook.screen.profile.ProfileActivity
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
@@ -29,7 +30,7 @@ import com.roughike.bottombar.BottomBar
 import com.roughike.bottombar.BottomBarTab
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListener, NotificationListener.UserListener, NotificationListener.LoginListener {
+class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListener, NotificationListener.UserListener, NotificationListener.LoginListener, ReadAllNotificationListener.AddReadAllNotification {
 
   private val TAG: String = MainActivity::class.java.name
   private val DELAY_TIME_TWO_TAP_BACK_BUTTON = 2000
@@ -53,6 +54,7 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
   private lateinit var mListBookMainPageListener: ListBookMainPageListener
   private lateinit var mListBookSeeMoreListener: ListBookSeeMoreListener
   private lateinit var mNotificationUserListener: NotificationUserListener
+  private lateinit var mReadAllNotificationOfUser: ReadAllNotification
 
   private var mIsDoubleTapBack = false
   private var mListOffices = mutableListOf<Office>()
@@ -138,6 +140,10 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
     }
   }
 
+  override fun onReadAllNotification() {
+    mReadAllNotificationOfUser.readAllNotificationOfUser()
+  }
+
   override fun onUpdateNotificationSuccess() {
     if (mCountNotification == 0) {
       mNotificationTab.setBadgeCount(mCountNotification)
@@ -180,6 +186,10 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
 
   fun setNotificationUserListener(notificationUserListener: NotificationUserListener) {
     mNotificationUserListener = notificationUserListener
+  }
+
+  fun setReadAllNotificaitonOfUser(readAllNotification: ReadAllNotification) {
+    mReadAllNotificationOfUser = readAllNotification
   }
 
   override fun IsLoggedIn(check: Boolean) {

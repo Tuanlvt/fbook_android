@@ -19,6 +19,7 @@ import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.main.NotificationListener
+import com.framgia.fbook.screen.main.ReadAllNotificationListener
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.common.StringUtils
 import com.framgia.fbook.utils.navigator.Navigator
@@ -39,9 +40,8 @@ class NotificationContainerFragment : BaseFragment() {
   private val mDialogManager: DialogManager by lazy { DialogManagerImpl(context) }
   private val mNavigator: Navigator by lazy { Navigator(this) }
   private lateinit var mNotificationListener: NotificationListener.UserListener
-  private lateinit var mNotificationLoginListener: NotificationListener.LoginListener
+  private lateinit var mReadAllNotification: ReadAllNotificationListener.AddReadAllNotification
   val mIsVisibleLayoutNotLoggedIn: ObservableField<Boolean> = ObservableField()
-
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
 
@@ -52,12 +52,11 @@ class NotificationContainerFragment : BaseFragment() {
     return binding.root
   }
 
-
   override fun onAttach(context: Context?) {
     super.onAttach(context)
     if (context is MainActivity) {
       mNotificationListener = context
-      mNotificationLoginListener = context
+      mReadAllNotification = context
     }
   }
 
@@ -98,12 +97,17 @@ class NotificationContainerFragment : BaseFragment() {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_NOTIFICATION) {
       mIsVisibleLayoutNotLoggedIn.set(false)
-      mNotificationLoginListener.IsLoggedIn(true)
       mNotificationListener.getEnable(true)
     }
   }
+
   fun getNotificationContainerAdapter(): NotificationContainerAdapter {
     return mNotificationContainerAdapter
+  }
+
+  fun readAllClick(view: View) {
+    //Todo will edit when sever update this function
+    mReadAllNotification.onReadAllNotification()
   }
 
   companion object {

@@ -71,4 +71,8 @@ constructor(nameApi: FBookApi) : BaseRemoteDataSource(nameApi), UserDataSource.R
   override fun updateNotification(id: Int?): Single<Any> {
     return fbookApi.updateItemNotification(id)
   }
+
+  override fun readAllNotificationOfUser(): Single<Any> {
+    return fbookApi.readAllNotificationOfUser()
+  }
 }

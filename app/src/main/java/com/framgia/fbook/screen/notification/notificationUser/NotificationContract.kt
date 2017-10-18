@@ -19,6 +19,8 @@ interface NotificationContract {
 
     fun onUpdateNotificationSuccess()
 
+    fun onReadAllNotificationSuccess()
+
     fun onShowProgressDialog()
 
     fun onDismissProgressDialog()
@@ -33,5 +35,7 @@ interface NotificationContract {
     fun getNotification()
 
     fun updateNotification(id: Int?)
+
+    fun readAllNotificationOfUser()
   }
 }

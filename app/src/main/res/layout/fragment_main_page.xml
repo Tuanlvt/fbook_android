@@ -25,6 +25,7 @@
             android:id="@+id/contentMainPage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="@{viewModel.mVisibleLayoutBook ? View.VISIBLE : View.GONE}"
             >
             <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -36,7 +37,6 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.mVisibleLayoutBook ? View.VISIBLE : View.GONE}"
                     tools:context="com.framgia.fbook.screen.mainpage.MainPageFragment"
                     >
                     <android.support.v7.widget.CardView

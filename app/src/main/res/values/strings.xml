@@ -146,5 +146,6 @@
     <string name="or">or</string>
     <string name="return_book_success">Returned the book successfully!</string>
     <string name="approve_request_success">The request is approved successfully !</string>
+    <string name="mark_all_as_read">Mark All as Read</string>
     <string name="notthing_to_update">Nothing to update !</string>
 </resources>
