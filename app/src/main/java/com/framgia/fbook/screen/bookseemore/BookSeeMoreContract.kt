@@ -1,4 +1,4 @@
-package com.framgia.fbook.screen.listbookseemore
+package com.framgia.fbook.screen.bookseemore;
 
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Category
@@ -11,7 +11,7 @@ import com.framgia.fbook.screen.BaseViewModel
 /**
  * This specifies the contract between the view and the presenter.
  */
-interface ListBookContract {
+interface BookSeeMoreContract {
   /**
    * View.
    */
@@ -34,7 +34,7 @@ interface ListBookContract {
   /**
    * Presenter.
    */
-  interface Presenter : BasePresenter<ViewModel> {
+  interface Presenter : BasePresenter<BookSeeMoreContract.ViewModel> {
     fun getListBook(typeBook: String?, page: Int?, officeId: Int?)
 
     fun getListCategory()

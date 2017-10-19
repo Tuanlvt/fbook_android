@@ -1,4 +1,4 @@
-package com.framgia.fbook.screen.listbookseemore
+package com.framgia.fbook.screen.bookseemore;
 
 import com.framgia.fbook.data.model.Sort
 import com.framgia.fbook.data.source.BookRepository
@@ -10,13 +10,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 /**
- * Listens to user actions from the UI ([ListBookFragment]), retrieves the data and updates
+ * Listens to user actions from the UI ({@link BookSeeMoreActivity}), retrieves the data and updates
  * the UI as required.
  */
-open class ListBookPresenter(private val mCategoryRepository: CategoryRepository,
-    private val mBookRepository: BookRepository) : ListBookContract.Presenter {
+class BookSeeMorePresenter(private val mCategoryRepository: CategoryRepository,
+    private val mBookRepository: BookRepository) : BookSeeMoreContract.Presenter {
 
-  private var mViewModel: ListBookContract.ViewModel? = null
+  private var mViewModel: BookSeeMoreContract.ViewModel? = null
   private lateinit var mSchedulerProvider: BaseSchedulerProvider
   private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
 
@@ -170,7 +170,7 @@ open class ListBookPresenter(private val mCategoryRepository: CategoryRepository
     }
   }
 
-  override fun setViewModel(viewModel: ListBookContract.ViewModel) {
+  override fun setViewModel(viewModel: BookSeeMoreContract.ViewModel) {
     mViewModel = viewModel
   }
 
@@ -179,6 +179,6 @@ open class ListBookPresenter(private val mCategoryRepository: CategoryRepository
   }
 
   companion object {
-    private val TAG = ListBookPresenter::class.java.name
+    private val TAG = BookSeeMorePresenter::class.java.name
   }
 }

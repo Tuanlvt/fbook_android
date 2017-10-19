@@ -15,12 +15,11 @@ import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentMainPageBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.bookdetail.BookDetailActivity
-import com.framgia.fbook.screen.listbookseemore.ListBookFragment
+import com.framgia.fbook.screen.bookseemore.BookSeeMoreActivity
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.mainpage.adapter.MainPageAdapter
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.framgia.fbook.utils.Constant
-import com.framgia.fbook.utils.navigator.NavigateAnim
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
@@ -155,34 +154,32 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel,
     return mIsRefresh.get()
   }
 
+  fun sendBundleActivity(type: String) {
+    val bundle = Bundle()
+    mOfficeId?.let { bundle.putInt(Constant.KEY_OFFICE, it) }
+    bundle.putString(Constant.KEY_TYPE, type)
+    mNavigator.startActivity(
+        BookSeeMoreActivity::class.java, bundle)
+  }
+
   fun onClickMoreLateBook() {
-    mNavigator.goNextChildFragment(R.id.layout_content_main,
-        ListBookFragment.newInstance(Constant.LATE, mOfficeId), true,
-        NavigateAnim.NONE, ListBookFragment.TAG)
+    sendBundleActivity(Constant.LATE)
   }
 
   fun onClickMoreViewBook() {
-    mNavigator.goNextChildFragment(R.id.layout_content_main,
-        ListBookFragment.newInstance(Constant.VIEW, mOfficeId), true,
-        NavigateAnim.NONE, ListBookFragment.TAG)
+    sendBundleActivity(Constant.VIEW)
   }
 
   fun onClickMoreRatingBook() {
-    mNavigator.goNextChildFragment(R.id.layout_content_main,
-        ListBookFragment.newInstance(Constant.RATING, mOfficeId), true,
-        NavigateAnim.NONE, ListBookFragment.TAG)
+    sendBundleActivity(Constant.RATING)
   }
 
   fun onClickMoreWaitingBook() {
-    mNavigator.goNextChildFragment(R.id.layout_content_main,
-        ListBookFragment.newInstance(Constant.WAITING, mOfficeId), true,
-        NavigateAnim.NONE, ListBookFragment.TAG)
+    sendBundleActivity(Constant.WAITING)
   }
 
   fun onClickMoreReadBook() {
-    mNavigator.goNextChildFragment(R.id.layout_content_main,
-        ListBookFragment.newInstance(Constant.READ, mOfficeId), true,
-        NavigateAnim.NONE, ListBookFragment.TAG)
+    sendBundleActivity(Constant.READ)
   }
 
   fun onRefresh() {

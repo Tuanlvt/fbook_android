@@ -1,4 +1,4 @@
-package com.framgia.fbook.screen.listbookseemore.adapter
+package com.framgia.fbook.screen.bookseemore.adapter
 
 import android.content.Context
 import android.databinding.DataBindingUtil
@@ -7,16 +7,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
-import com.framgia.fbook.databinding.FragmentListbookItemBinding
+import com.framgia.fbook.databinding.BookSeeMoreItemBinding
 import com.framgia.fbook.screen.BaseRecyclerViewAdapter
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 
 /**
- * Created by Hyperion on 9/13/2017.
- * Contact me thuanpx1710@gmail.com.
- * Thank you !
+ * Created by levutantuan on 10/20/17.
  */
-class ListBookAdapter(context: Context) : BaseRecyclerViewAdapter<ListBookAdapter.ItemViewHolder>(
+class BookSeeMoreAdapter(
+    context: Context) : BaseRecyclerViewAdapter<BookSeeMoreAdapter.ItemViewHolder>(
     context) {
   private lateinit var mItemClickListener: onItemRecyclerViewClickListener
   private val mListBook = mutableListOf<Book>()
@@ -41,20 +40,20 @@ class ListBookAdapter(context: Context) : BaseRecyclerViewAdapter<ListBookAdapte
   }
 
   override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ItemViewHolder {
-    val binding = DataBindingUtil.inflate<FragmentListbookItemBinding>(
-        LayoutInflater.from(parent?.context), R.layout.fragment_listbook_item, parent,
+    val binding = DataBindingUtil.inflate<BookSeeMoreItemBinding>(
+        LayoutInflater.from(parent?.context), R.layout.book_see_more_item, parent,
         false)
     return ItemViewHolder(binding, mItemClickListener)
   }
 
   override fun getItemCount(): Int = mListBook.size
 
-  inner class ItemViewHolder(private val mBinding: FragmentListbookItemBinding,
+  inner class ItemViewHolder(private val mBinding: BookSeeMoreItemBinding,
       private val mItemClickListener: onItemRecyclerViewClickListener?) : RecyclerView.ViewHolder(
       mBinding.root) {
 
     fun binData(book: Book) {
-      mBinding.viewModel = ItemListBookViewModel(book, mItemClickListener)
+      mBinding.viewModel = ItemBookSeeMoreLViewModel(book, mItemClickListener)
       mBinding.executePendingBindings()
     }
   }

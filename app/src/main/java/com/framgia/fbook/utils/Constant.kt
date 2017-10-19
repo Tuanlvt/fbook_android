@@ -28,6 +28,8 @@ object Constant {
   val SHOW_MESSAGE_MAXIMUM = "99+"
   val SHOW_MESSAGE_MAXIMUM_INT = 99
   val MESSAGE_MAXIMUM = 100
+  val KEY_OFFICE = "KEY_OFFICE"
+  val KEY_TYPE = "KEY_TYPE"
 
 
   object Tab {
