@@ -1,14 +1,14 @@
-package com.framgia.fbook.screen.listbookseemore
+package com.framgia.fbook.screen.bookseemore;
 
-import android.support.v4.app.Fragment
+import android.app.Activity
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.BookRepositoryImpl
 import com.framgia.fbook.data.source.CategoryRepository
 import com.framgia.fbook.data.source.CategoryRepositoryImpl
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.data.source.remote.CategoryRemoteDataSource
-import com.framgia.fbook.screen.listbookseemore.adapter.ListBookAdapter
-import com.framgia.fbook.utils.dagger.FragmentScope
+import com.framgia.fbook.screen.bookseemore.adapter.BookSeeMoreAdapter
+import com.framgia.fbook.utils.dagger.ActivityScope
 import com.framgia.fbook.utils.navigator.Navigator
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.fstyle.structure_android.widget.dialog.DialogManager
@@ -18,49 +18,49 @@ import dagger.Provides
 
 /**
  * This is a Dagger module. We use this to pass in the View dependency to
- * the [ListBookPresenter].
+ * the {@link BookSeeMorePresenter}.
  */
 @Module
-class ListBookModule(private val mFragment: Fragment) {
+class BookSeeMoreModule(private val mActivity: Activity) {
 
-  @FragmentScope
+  @ActivityScope
   @Provides
   fun providePresenter(categoryRepository: CategoryRepository, bookRepository: BookRepository,
-      schedulerProvider: BaseSchedulerProvider): ListBookContract.Presenter {
-    val presenter = ListBookPresenter(categoryRepository, bookRepository)
-    presenter.setViewModel(mFragment as ListBookContract.ViewModel)
+      schedulerProvider: BaseSchedulerProvider): BookSeeMoreContract.Presenter {
+    val presenter = BookSeeMorePresenter(categoryRepository, bookRepository)
+    presenter.setViewModel(mActivity as BookSeeMoreContract.ViewModel)
     presenter.setSchedulerProvider(schedulerProvider)
     return presenter
   }
 
-  @FragmentScope
+  @ActivityScope
   @Provides
   fun provideDialogManager(): DialogManager {
-    return DialogManagerImpl(mFragment.context)
+    return DialogManagerImpl(mActivity)
   }
 
-  @FragmentScope
+  @ActivityScope
   @Provides
   fun provideBookRepository(bookRemoteDataSource: BookRemoteDataSource): BookRepository {
     return BookRepositoryImpl(bookRemoteDataSource)
   }
 
-  @FragmentScope
+  @ActivityScope
   @Provides
-  fun provideListBookAdapter(): ListBookAdapter {
-    return ListBookAdapter(mFragment.context)
+  fun provideListBookAdapter(): BookSeeMoreAdapter {
+    return BookSeeMoreAdapter(mActivity)
   }
 
-  @FragmentScope
+  @ActivityScope
   @Provides
   fun provideCategoryRepository(
       categoryRemoteDataSource: CategoryRemoteDataSource): CategoryRepository {
     return CategoryRepositoryImpl(categoryRemoteDataSource)
   }
 
-  @FragmentScope
+  @ActivityScope
   @Provides
   fun provideNavigator(): Navigator {
-    return Navigator(mFragment)
+    return Navigator(mActivity)
   }
 }

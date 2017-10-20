@@ -1,24 +1,22 @@
-package com.framgia.fbook.screen.listbookseemore
+package com.framgia.fbook.screen.bookseemore;
 
-import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Category
 import com.framgia.fbook.data.model.Sort
 import com.framgia.fbook.data.model.SortBook
 import com.framgia.fbook.data.source.remote.api.error.BaseException
-import com.framgia.fbook.databinding.FragmentListbookBinding
-import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.databinding.ActivityBookSeeMoreBinding
+import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.EndlessRecyclerOnScrollListener
 import com.framgia.fbook.screen.bookdetail.BookDetailActivity
-import com.framgia.fbook.screen.listbookseemore.adapter.ListBookAdapter
+import com.framgia.fbook.screen.bookseemore.adapter.BookSeeMoreAdapter
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.framgia.fbook.utils.Constant
@@ -28,16 +26,16 @@ import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
 
 /**
- * ListBook Screen.
+ * BookSeeMore Screen.
  */
-open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel,
-    onItemRecyclerViewClickListener, MainActivity.ListBookSeeMoreListener {
+class BookSeeMoreActivity : BaseActivity(), BookSeeMoreContract.ViewModel, onItemRecyclerViewClickListener, MainActivity.ListBookSeeMoreListener {
+
   @Inject
-  internal lateinit var mPresenter: ListBookContract.Presenter
+  internal lateinit var mPresenter: BookSeeMoreContract.Presenter
   @Inject
   internal lateinit var mDialogManager: DialogManager
   @Inject
-  internal lateinit var mListBookAdapter: ListBookAdapter
+  internal lateinit var mAdapter: BookSeeMoreAdapter
   @Inject
   internal lateinit var mNavigator: Navigator
 
@@ -56,20 +54,18 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel,
   val mCurrentSortBy: ObservableField<String> = ObservableField()
   val mIsOrderByAsc: ObservableField<Boolean> = ObservableField()
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-      savedInstanceState: Bundle?): View? {
-
-    DaggerListBookComponent.builder()
-        .mainComponent((activity as MainActivity).getMainComponent())
-        .listBookModule(ListBookModule(this))
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    DaggerBookSeeMoreComponent.builder()
+        .appComponent((application as MainApplication).appComponent)
+        .bookSeeMoreModule(BookSeeMoreModule(this))
         .build()
         .inject(this)
 
-    val binding = DataBindingUtil.inflate<FragmentListbookBinding>(inflater,
-        R.layout.fragment_listbook, container, false)
+    val binding = DataBindingUtil.setContentView<ActivityBookSeeMoreBinding>(this,
+        R.layout.activity_book_see_more)
     binding.viewModel = this
     initData(binding)
-    return binding.root
   }
 
   override fun onStart() {
@@ -80,13 +76,6 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel,
   override fun onStop() {
     mPresenter.onStop()
     super.onStop()
-  }
-
-  override fun onAttach(context: Context?) {
-    super.onAttach(context)
-    if (context is MainActivity) {
-      context.setListBookSeeMoreListener(this)
-    }
   }
 
   override fun onDismissProgressBarDialog() {
@@ -118,10 +107,10 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel,
 
   override fun onGetListBookSuccess(listBook: List<Book>?) {
     if (!mIsLoadMore) {
-      mListBookAdapter.clearData()
+      mAdapter.clearData()
     }
     listBook?.let {
-      mListBookAdapter.updateData(listBook)
+      mAdapter.updateData(listBook)
     }
     mShowProgress.set(false)
   }
@@ -142,16 +131,18 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel,
     mNavigator.startActivity(BookDetailActivity::class.java, bundle)
   }
 
-  private fun initData(binding: FragmentListbookBinding) {
-    mOfficeId = arguments.getInt(OFFICE_ID_EXTRA)
-    mTypeBook = arguments.getString(TYPE_BOOK_EXTRA)
+  private fun initData(binding: ActivityBookSeeMoreBinding) {
+
+
+    mOfficeId = intent.getIntExtra(Constant.KEY_OFFICE, 0)
+    mTypeBook = intent.getStringExtra(Constant.KEY_TYPE)
     mPresenter.getListCategory()
     mPresenter.getListSortBook()
     mPresenter.getListBook(mTypeBook, Constant.PAGE, mOfficeId)
-    mListBookAdapter.setItemInternalBookListener(this)
+    mAdapter.setItemInternalBookListener(this)
     mIsOrderByAsc.set(false)
 
-    val gridLayoutManager = GridLayoutManager(context, 3)
+    val gridLayoutManager = GridLayoutManager(applicationContext, 3)
     binding.recyclerListBook.layoutManager = gridLayoutManager
     binding.recyclerListBook.addOnScrollListener(
         object : EndlessRecyclerOnScrollListener(gridLayoutManager) {
@@ -184,7 +175,8 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel,
     }
     val listCategory: MutableList<String?> = mutableListOf()
     mListCategory.indices.mapTo(listCategory) { mListCategory[it].name }
-    mDialogManager.dialogListSingleChoice(context.getString(R.string.category), listCategory,
+    mDialogManager.dialogListSingleChoice(applicationContext.getString(R.string.category),
+        listCategory,
         mCurrentCategoryPosition,
         MaterialDialog.ListCallbackSingleChoice({ _, _, position, charSequence ->
           run {
@@ -206,7 +198,8 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel,
     }
     val listSortBook: MutableList<String?> = mutableListOf()
     mListSortBook.indices.mapTo(listSortBook) { mListSortBook[it].text }
-    mDialogManager.dialogListSingleChoice(context.getString(R.string.sort_by), listSortBook,
+    mDialogManager.dialogListSingleChoice(applicationContext.getString(R.string.sort_by),
+        listSortBook,
         mCurrentSortBookPosition, MaterialDialog.ListCallbackSingleChoice(
         { _, _, position, _ ->
           run {
@@ -229,23 +222,20 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel,
     ))
   }
 
+  fun onArrowClick(view: View) {
+    mNavigator.finishActivity()
+  }
+
   companion object {
-    val TAG = ListBookFragment::class.java.simpleName
-    private val TYPE_BOOK_EXTRA = "TYPE_BOOK_EXTRA"
-    private val OFFICE_ID_EXTRA = "OFFFICE_ID_EXTRA"
+    val TAG = BookSeeMoreActivity::class.java.simpleName
     private val DESC = "desc"
     private val ASC = "asc"
     private val BOOK_NORMAL = 0
     private val BOOK_CATEGORY = 1
     private val BOOK_SORT = 2
 
-    fun newInstance(typeBook: String?, officeId: Int?): ListBookFragment {
-      val listBookFragment = ListBookFragment()
-      val bundle = Bundle()
-      bundle.putString(TYPE_BOOK_EXTRA, typeBook)
-      officeId?.let { bundle.putInt(OFFICE_ID_EXTRA, it) }
-      listBookFragment.arguments = bundle
-      return listBookFragment
+    fun newInstance(): BookSeeMoreActivity {
+      return BookSeeMoreActivity()
     }
   }
 }

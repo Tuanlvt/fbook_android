@@ -1,15 +1,13 @@
-package com.framgia.fbook.screen.listbookseemore.adapter
+package com.framgia.fbook.screen.bookseemore.adapter
 
 import android.databinding.BaseObservable
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 
 /**
- * Created by Hyperion on 9/13/2017.
- * Contact me thuanpx1710@gmail.com.
- * Thank you !
+ * Created by levutantuan on 10/20/17.
  */
-class ItemListBookViewModel(val book: Book,
+class ItemBookSeeMoreLViewModel(val book: Book,
     private val mItemClickListener: onItemRecyclerViewClickListener?) : BaseObservable() {
 
   fun onItemClicked() {

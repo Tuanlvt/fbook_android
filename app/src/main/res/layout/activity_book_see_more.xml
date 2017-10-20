@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.framgia.fbook.screen.listbookseemore.ListBookFragment"
+            type="com.framgia.fbook.screen.bookseemore.BookSeeMoreActivity"
             />
         <import type="android.view.View"/>
     </data>
@@ -29,11 +29,11 @@
                 android:layout_height="wrap_content"
                 android:background="@color/color_white"
                 app:contentScrim="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed"
                 >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
                     android:orientation="vertical"
                     >
                     <LinearLayout
@@ -41,11 +41,22 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@android:color/transparent"
+                            android:onClick="@{viewModel::onArrowClick}"
+                            android:padding="@dimen/dp_10"
+                            android:tint="@color/color_white"
+                            app:srcCompat="@drawable/ic_back"
+                            tools:ignore="ContentDescription"
+                            />
                         <FrameLayout
                             android:layout_width="@dimen/dp_140"
                             android:layout_height="@dimen/dp_35"
                             android:layout_margin="@dimen/dp_10"
-                            android:background="@drawable/border_button_stroke_blue"
+                            android:background="@drawable/border_white"
                             android:onClick="@{() -> viewModel.onClickSortBy()}"
                             android:padding="@dimen/dp_7"
                             >
@@ -77,7 +88,7 @@
                             android:layout_height="@dimen/dp_35"
                             android:layout_gravity="center_vertical"
                             android:layout_margin="@dimen/dp_10"
-                            android:background="@drawable/border_button_stroke_blue"
+                            android:background="@drawable/border_white"
                             android:gravity="center"
                             android:orientation="horizontal"
                             android:padding="@dimen/dp_7"
@@ -118,7 +129,7 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
                         android:layout_marginStart="@dimen/dp_10"
-                        android:background="@drawable/border_button_stroke_blue"
+                        android:background="@drawable/border_white"
                         android:onClick="@{() -> viewModel.onClickChooseCategory()}"
                         android:padding="@dimen/dp_7"
                         >
@@ -159,7 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                bind:recyclerAdapter="@{viewModel.mListBookAdapter}"
+                bind:recyclerAdapter="@{viewModel.mAdapter}"
                 />
             <ProgressBar
                 android:id="@+id/progress"
