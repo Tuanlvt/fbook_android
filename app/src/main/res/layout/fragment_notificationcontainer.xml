@@ -33,6 +33,41 @@
             app:tabTextColor="@color/colorAccent"
             bind:setViewPager="@{viewpager}"
             />
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/layout_text_read_all"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:background="@drawable/button_click_white"
+            android:onClick="@{viewModel::readAllClick}"
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
+                android:background="@android:color/transparent"
+                android:text="@string/mark_all_as_read"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/image_check"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+            <ImageView
+                android:id="@+id/image_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_check"
+                tools:ignore="ContentDescription"
+                />
+        </android.support.constraint.ConstraintLayout>
+
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="0dp"
@@ -41,10 +76,11 @@
             android:padding="@dimen/dp_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            bind:viewPageAdapter="@{viewModel.NotificationContainerAdapter}"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_layout"
+            app:layout_constraintTop_toBottomOf="@+id/layout_text_read_all"
+            bind:viewPageAdapter="@{viewModel.NotificationContainerAdapter}"
             />
+
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -84,4 +84,8 @@ open class UserRepositoryImpl(private val mRemoteDataSource: UserRemoteDataSourc
   override fun updateNotification(id: Int?): Single<Any> {
     return mRemoteDataSource.updateNotification(id)
   }
+
+  override fun readAllNotificationOfUser(): Single<Any> {
+    return mRemoteDataSource.readAllNotificationOfUser()
+  }
 }

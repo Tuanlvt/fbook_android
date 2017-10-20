@@ -132,5 +132,6 @@
     <string name="office">Văn phòng</string>
     <string name="is_empty">Vui lòng nhập dữ liệu!</string>
     <string name="approve_request_success">Yêu cầu được phê duyệt thành công !</string>
+    <string name="mark_all_as_read">Đánh dấu tất cả là đã đọc</string>
     <string name="notthing_to_update">Không có gì để cập nhật !</string>
 </resources>

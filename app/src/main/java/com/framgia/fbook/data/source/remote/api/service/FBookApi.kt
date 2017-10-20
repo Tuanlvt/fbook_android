@@ -120,4 +120,7 @@ interface FBookApi {
 
   @GET("/api/v0/notification/update/{notification_id}")
   fun updateItemNotification(@Path("notification_id") id: Int?): Single<Any>
+
+  @POST("/api/v0/notifications/update/all")
+  fun readAllNotificationOfUser(): Single<Any>
 }

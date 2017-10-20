@@ -27,6 +27,7 @@ class NotificationAdapter(
   }
 
   fun updateData(listNotification: List<ItemNotification>?, type: Int) {
+    mListNotification.clear()
     mListNotification.addAll(listNotification!!)
     mType = type
     notifyDataSetChanged()

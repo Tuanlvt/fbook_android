@@ -29,7 +29,7 @@ import javax.inject.Inject
 /**
  * Notification Screen.
  */
-class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, ItemNotificationClickListener, NotificationUserListener {
+class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, ItemNotificationClickListener, NotificationUserListener, ReadAllNotification {
 
   @Inject
   internal lateinit var mPresenter: NotificationContract.Presenter
@@ -42,6 +42,7 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, Ite
   @Inject
   internal lateinit var mUserRepository: UserRepository
   private lateinit var mNotificationListener: NotificationListener
+  private lateinit var mBinding: FragmentNotificationBinding
   private var mIsLoadDataFirstTime = true
   val mIsVisibleLayoutNotData: ObservableField<Boolean> = ObservableField()
   val mIsRefresh: ObservableField<Boolean> = ObservableField(false)
@@ -56,12 +57,12 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, Ite
         .build()
         .inject(this)
 
-    val binding = DataBindingUtil.inflate<FragmentNotificationBinding>(inflater,
+    mBinding = DataBindingUtil.inflate<FragmentNotificationBinding>(inflater,
         R.layout.fragment_notification, container,
         false)
-    binding.viewModel = this
+    mBinding.viewModel = this
     mNotificationAdapter.setItemNotificationClickListener(this)
-    return binding.root
+    return mBinding.root
   }
 
   override fun onStart() {
@@ -79,6 +80,7 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, Ite
     if (context is MainActivity) {
       mNotificationListener = context
       context.setNotificationUserListener(this)
+      context.setReadAllNotificaitonOfUser(this)
     }
   }
 
@@ -142,6 +144,16 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, Ite
         mNotificationListener.getNotificationFollow(it)
       }
     }
+  }
+
+  override fun onReadAllNotificationSuccess() {
+    mNotificationAdapter.notifyDataSetChanged()
+    mPresenter.getNotification()
+    mNotificationListener.onUpdateNotificationSuccess()
+  }
+
+  override fun readAllNotificationOfUser() {
+    mPresenter.readAllNotificationOfUser()
   }
 
   override fun onIsNotRefresh(): Boolean {

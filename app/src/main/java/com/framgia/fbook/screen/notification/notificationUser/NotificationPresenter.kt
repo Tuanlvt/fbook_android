@@ -53,6 +53,16 @@ class NotificationPresenter(
     mCompositeDisposable.add(disposable)
   }
 
+  override fun readAllNotificationOfUser() {
+    val mDisable = mUserRepository.readAllNotificationOfUser()
+        .subscribeOn(mSchedulerProvider.io())
+        .observeOn(mSchedulerProvider.ui())
+        .subscribe({
+          mViewModel.onReadAllNotificationSuccess()
+        }, { error -> mViewModel.onError(error as BaseException) })
+    mCompositeDisposable.addAll(mDisable)
+  }
+
   override fun setViewModel(viewModel: NotificationContract.ViewModel) {
     mViewModel = viewModel
   }
