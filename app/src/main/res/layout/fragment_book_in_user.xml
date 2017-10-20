@@ -14,30 +14,37 @@
         <import type="android.view.View"/>
 
     </data>
-
-    <android.support.constraint.ConstraintLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        app:refreshing="@{viewModel.mIsRefresh}"
+        bind:colorRes="@{@color/colorPrimary}"
+        bind:onRefresh="@{viewModel::onRefresh}"
         >
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            app:layoutManager="LinearLayoutManager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            bind:recyclerAdapter="@{viewModel.mAdapter}"
-            />
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_white_light"
-            android:onClick="@{viewModel::onClickReloadData}"
-            android:visibility="@{viewModel.mIsVisibleLayoutNoData ? View.VISIBLE : View.GONE}"
             >
-            <include
-                layout="@layout/layout_no_data"
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                bind:recyclerAdapter="@{viewModel.mAdapter}"
                 />
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_white_light"
+                android:onClick="@{viewModel::onClickReloadData}"
+                android:visibility="@{viewModel.mIsVisibleLayoutNoData ? View.VISIBLE : View.GONE}"
+                >
+                <include
+                    layout="@layout/layout_no_data"
+                    />
+            </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
-    </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>

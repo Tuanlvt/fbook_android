@@ -14,7 +14,7 @@ import io.reactivex.disposables.Disposable
 open class BookInUserPresenter(
     private val bookRepository: BookRepository) : BookInUserContract.Presenter {
 
-  private var mViewModel: BookInUserContract.ViewModel? = null
+  private lateinit var mViewModel: BookInUserContract.ViewModel
   private lateinit var mBaseSchedulerProvider: BaseSchedulerProvider
   private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
 
@@ -33,11 +33,16 @@ open class BookInUserPresenter(
     val disposable: Disposable = bookRepository.getFeatureOtherOfUser(userId, type)
         .subscribeOn(mBaseSchedulerProvider.io())
         .observeOn(mBaseSchedulerProvider.ui())
+        .doOnSubscribe({
+          if (!mViewModel.isNotRefresh()) {
+            mViewModel.onShowProgresDialog()
+          }
+        }).doAfterTerminate { (mViewModel.onDismissProgressDialog()) }
         .subscribe({ book ->
-          book.items?.data?.let { mViewModel?.onGetBookInUserProfileSuccess(it) }
+          book.items?.data?.let { mViewModel.onGetBookInUserProfileSuccess(it) }
         }, { error
           ->
-          mViewModel?.onError(error as BaseException)
+          mViewModel.onError(error as BaseException)
         })
     mCompositeDisposable.add(disposable)
   }
@@ -47,10 +52,9 @@ open class BookInUserPresenter(
         .subscribeOn(mBaseSchedulerProvider.io())
         .observeOn(mBaseSchedulerProvider.ui())
         .subscribe({
-          mViewModel?.onReturnBookSuccess()
-        }, {
-          error ->
-          mViewModel?.onError(error as BaseException)
+          mViewModel.onReturnBookSuccess()
+        }, { error ->
+          mViewModel.onError(error as BaseException)
         })
     mCompositeDisposable.add(disposable)
   }

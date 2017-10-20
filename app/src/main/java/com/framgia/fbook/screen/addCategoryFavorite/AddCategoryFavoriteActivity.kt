@@ -36,6 +36,7 @@ open class AddCategoryFavoriteActivity : BaseActivity(), AddCategoryFavoriteCont
   @Inject
   internal lateinit var mDialogManager: DialogManager
   private var tags: String = String()
+  private lateinit var mBinding: ActivityAddCategoryFavoriteBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -45,9 +46,9 @@ open class AddCategoryFavoriteActivity : BaseActivity(), AddCategoryFavoriteCont
         .build()
         .inject(this)
 
-    val binding = DataBindingUtil.setContentView<ActivityAddCategoryFavoriteBinding>(this,
+    mBinding = DataBindingUtil.setContentView<ActivityAddCategoryFavoriteBinding>(this,
         R.layout.activity_add_category_favorite)
-    binding.viewModel = this
+    mBinding.viewModel = this
     mPresenter.getCategory()
     mAdapter.setItemListener(this)
   }
@@ -106,6 +107,9 @@ open class AddCategoryFavoriteActivity : BaseActivity(), AddCategoryFavoriteCont
     tags.let {
       addItemTag.tags = tags
       addItemTag.let { addCategory.item = addItemTag }
+    }
+    if (tags == mUserRepository.getUserLocal()?.tag) {
+      return mDialogManager.showSnackBarNoActionBar(mBinding.root, R.string.notthing_to_update)
     }
     mPresenter.updateCategory(addCategory)
   }

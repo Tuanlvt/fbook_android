@@ -18,7 +18,13 @@ interface BookInUserContract {
 
     fun onReturnBookSuccess()
 
+    fun onShowProgresDialog()
+
+    fun onDismissProgressDialog()
+
     fun onError(exception: BaseException)
+
+    fun isNotRefresh(): Boolean
   }
 
   /**
