@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.source.remote.api.error.BaseException
@@ -66,6 +67,12 @@ open class InternalBookFragment : BaseFragment(), InternalBookContract.ViewModel
     mTypeSearch = context.getString(R.string.title)
     mIsTitle.set(true)
     mInternalBookAdapter.setItemInternalBookListener(this)
+    binding.editTextSearch.setOnEditorActionListener { v, actionId, event ->
+      if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+        onKeySearch()
+      }
+      true
+    }
     return binding.root
   }
 
@@ -105,6 +112,14 @@ open class InternalBookFragment : BaseFragment(), InternalBookContract.ViewModel
 
   override fun onSearchBookSuccess(listBook: List<Book>?) {
     listBook?.let { mInternalBookAdapter.updateData(it, TypeSearch.INTERNAL_BOOK) }
+  }
+
+  private fun onKeySearch() {
+    if (StringUtils.isBlank(mKeyWord.get())) {
+      mKeyWordErrorMsg.set(context.getString(R.string.is_empty))
+      return
+    }
+    mPresenter.searchBook(mKeyWord.get(), mTypeSearch)
   }
 
   fun onClickSearch() {

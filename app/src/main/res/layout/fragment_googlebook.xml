@@ -41,6 +41,7 @@
                 tools:ignore="ContentDescription"
                 />
             <EditText
+                android:id="@+id/editTextSearch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
@@ -48,6 +49,8 @@
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical"
                 android:hint="@string/input_book_to_search"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:text="@={viewModel.mBookName}"
