@@ -61,7 +61,6 @@
     <string name="sign_out">Đăng xuất</string>
     <string name="add_a_comment">Thêm bình luận…</string>
     <string name="ranking">Xếp hạng:</string>
-    <string name="other">Khác</string>
     <string name="approve">Đồng ý</string>
     <string name="owner_this_book">[Chủ cuốn sách này]</string>
     <string name="approve_waiting_reading_requests">Phê duyệt yêu cầu chờ-đọc</string>
@@ -134,4 +133,5 @@
     <string name="approve_request_success">Yêu cầu được phê duyệt thành công !</string>
     <string name="mark_all_as_read">Đánh dấu tất cả là đã đọc</string>
     <string name="notthing_to_update">Không có gì để cập nhật !</string>
+    <string name="see_more_information">Xem thêm thông tin</string>
 </resources>

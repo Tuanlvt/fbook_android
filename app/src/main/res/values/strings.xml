@@ -74,7 +74,6 @@
     <string name="sign_out">Sign Out</string>
     <string name="add_a_comment">Add a comment…</string>
     <string name="ranking">Ranking:</string>
-    <string name="other">Other</string>
     <string name="approve">Approve</string>
     <string name="owner_this_book">[Owner this book]</string>
     <string name="approve_waiting_reading_requests">Approve waiting-reading requests</string>
@@ -148,4 +147,5 @@
     <string name="approve_request_success">The request is approved successfully !</string>
     <string name="mark_all_as_read">Mark All as Read</string>
     <string name="notthing_to_update">Nothing to update !</string>
+    <string name="see_more_information">See more information</string>
 </resources>

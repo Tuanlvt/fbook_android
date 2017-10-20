@@ -39,7 +39,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   @Inject
   internal lateinit var mDialogManager: DialogManager
   private lateinit var mMenuProfileComponent: MenuProfileComponent
-  private lateinit var mNotificationLoginListener: NotificationListener.LoginListener
+  private lateinit var mUpdateNotificationListener: NotificationListener.UpdateNotificationListener
   private lateinit var mLayoutView: View
   private var mIsLoadDataFirstTime: Boolean = true
   val mUser: ObservableField<User> = ObservableField()
@@ -73,7 +73,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   override fun onAttach(context: Context?) {
     super.onAttach(context)
     if (context is MainActivity) {
-      mNotificationLoginListener = context
+      mUpdateNotificationListener = context
     }
   }
 
@@ -89,7 +89,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_PROFILE_REQUEST) {
       mIsVisibleLayoutNotLoggedIn.set(true)
-      mNotificationLoginListener.IsLoggedIn(true)
+      mUpdateNotificationListener.updateNotification()
       mUser.set(mUserRepository.getUserLocal())
     }
   }
