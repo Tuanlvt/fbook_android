@@ -27,6 +27,7 @@ import javax.inject.Inject
  * BookInUser Screen.
  */
 open class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, ItemBookInUserClickListener, OnReturnBookListener {
+
   companion object {
     val TAG: String? = BookInUserFragment::class.java.name
     private val BOOK_IN_USER_PROFILE: String = "BOOK_IN_USER_PROFILE"
@@ -56,7 +57,7 @@ open class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, It
   private lateinit var mBinding: FragmentBookInUserBinding
   var mBook: List<Book> = ArrayList()
   val mIsVisibleLayoutNoData: ObservableField<Boolean> = ObservableField(false)
-
+  val mIsRefresh: ObservableField<Boolean> = ObservableField(false)
   var mUserId: Int? = 0
   var mTypeRequest: String? = ""
 
@@ -94,7 +95,7 @@ open class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, It
     } else {
       mIsVisibleLayoutNoData.set(true)
     }
-    mDialogManager.dismissProgressDialog()
+    mIsRefresh.set(false)
   }
 
   override fun onReturnBookSuccess() {
@@ -110,10 +111,18 @@ open class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, It
     mNavigator.startActivity(BookDetailActivity::class.java, bundle)
   }
 
+  override fun onShowProgresDialog() {
+    mDialogManager.showIndeterminateProgressDialog()
+  }
+
+  override fun onDismissProgressDialog() {
+    mDialogManager.dismissProgressDialog()
+  }
+
   override fun onError(exception: BaseException) {
     Log.d(TAG, exception.getMessageError())
-    mDialogManager.dismissProgressDialog()
     mDialogManager.showSnackBarTitleString(mBinding.root, exception.getMessageError())
+    mIsRefresh.set(false)
   }
 
   override fun onReturnBookClick(book: Book?) {
@@ -140,13 +149,16 @@ open class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, It
     }))
   }
 
+  override fun isNotRefresh(): Boolean {
+    return mIsRefresh.get()
+  }
+
   fun fillData() {
     mTypeRequest = arguments.getString(BOOK_IN_USER_PROFILE)
     mUserId = arguments.getInt(USER_ID)
     val positionTab: Int? = arguments.getInt(POSITION_TAB)
     mPresenter.getBookInUserProfile(mUserId, mTypeRequest)
     mIsVisibleLayoutNoData.set(true)
-    mDialogManager.showIndeterminateProgressDialog()
     mAdapter.setItemBookInUserClickListener(this)
     mAdapter.setReturnBookListener(this)
     mAdapter.getCheckCurrentUser(mUserId == mUserRepository.getUserLocal()?.id)
@@ -155,5 +167,10 @@ open class BookInUserFragment : BaseFragment(), BookInUserContract.ViewModel, It
 
   fun onClickReloadData(view: View) {
     fillData()
+  }
+
+  fun onRefresh() {
+    mIsRefresh.set(true)
+    mPresenter.getBookInUserProfile(mUserId, mTypeRequest)
   }
 }
