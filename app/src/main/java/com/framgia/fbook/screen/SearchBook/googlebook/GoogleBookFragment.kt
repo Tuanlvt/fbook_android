@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.GoogleBook
 import com.framgia.fbook.data.source.remote.api.error.BaseException
@@ -56,6 +57,12 @@ open class GoogleBookFragment : BaseFragment(), GoogleBookContract.ViewModel, on
         R.layout.fragment_googlebook, container, false)
     binding.viewModel = this
     mGoogleBookAdapter.setItemInternalBookListener(this)
+    binding.editTextSearch.setOnEditorActionListener { v, actionId, event ->
+      if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+        onKeySearch()
+      }
+      true
+    }
     return binding.root
   }
 
@@ -91,6 +98,14 @@ open class GoogleBookFragment : BaseFragment(), GoogleBookContract.ViewModel, on
 
   override fun onItemClickListener(any: Any?) {
     //TODO edit later
+  }
+
+  private fun onKeySearch() {
+    if (StringUtils.isBlank(mBookName.get())) {
+      mErrorMsg.set(context.getString(R.string.is_empty))
+      return
+    }
+    mPresenter.searchBook(mBookName.get())
   }
 
   fun onClickSearchBookGoogle(view: View) {
