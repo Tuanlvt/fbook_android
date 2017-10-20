@@ -14,136 +14,56 @@
             />
         <import type="android.view.View"/>
     </data>
-    <android.support.v4.widget.SwipeRefreshLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:refreshing="@{viewModel.mIsRefresh}"
-        bind:colorRes="@{@color/colorPrimary}"
-        bind:onRefresh="@{viewModel::onRefresh}"
+        android:layout_height="match_parent"
         >
-        <android.support.design.widget.CoordinatorLayout
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay"
             >
-            <android.support.design.widget.AppBarLayout
+
+            <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/AppTheme.AppBarOverlay"
+                android:background="@color/color_white"
+                app:contentScrim="?attr/colorPrimary"
                 >
-
-                <android.support.design.widget.CollapsingToolbarLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/color_white"
-                    app:contentScrim="?attr/colorPrimary"
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical"
                     >
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorPrimary"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
                         >
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <ImageView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            >
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:background="@android:color/transparent"
-                                android:onClick="@{viewModel::onArrowClick}"
-                                android:padding="@dimen/dp_10"
-                                android:tint="@color/color_white"
-                                app:srcCompat="@drawable/ic_back"
-                                tools:ignore="ContentDescription"
-                                />
-                            <FrameLayout
-                                android:layout_width="@dimen/dp_140"
-                                android:layout_height="@dimen/dp_35"
-                                android:layout_margin="@dimen/dp_10"
-                                android:background="@drawable/border_white"
-                                android:onClick="@{() -> viewModel.onClickSortBy()}"
-                                android:padding="@dimen/dp_7"
-                                >
-                                <ImageView
-                                    android:layout_width="@dimen/dp_20"
-                                    android:layout_height="@dimen/dp_20"
-                                    android:layout_gravity="end|center"
-                                    android:tint="@color/color_black"
-                                    app:srcCompat="@drawable/ic_arrow_drop_down"
-                                    tools:ignore="ContentDescription"
-                                    />
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:ellipsize="end"
-                                    android:gravity="center_vertical"
-                                    android:hint="@string/sort_by"
-                                    android:maxLines="1"
-                                    android:text="@{viewModel.mCurrentSortBy}"
-                                    android:textColor="@color/color_black"
-                                    android:textColorHint="@color/color_black"
-                                    android:textSize="@dimen/sp_15"
-                                    android:textStyle="italic"
-                                    />
-                            </FrameLayout>
-                            <LinearLayout
-                                android:layout_width="@dimen/dp_140"
-                                android:layout_height="@dimen/dp_35"
-                                android:layout_gravity="center_vertical"
-                                android:layout_margin="@dimen/dp_10"
-                                android:background="@drawable/border_white"
-                                android:gravity="center"
-                                android:orientation="horizontal"
-                                android:padding="@dimen/dp_7"
-                                >
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-
-                                    android:text="@string/desc"
-                                    android:textColor="@color/color_black"
-                                    android:textSize="@dimen/sp_15"
-                                    />
-                                <Switch
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="@dimen/dp_10"
-                                    android:layout_marginLeft="@dimen/dp_10"
-                                    android:layout_marginRight="@dimen/dp_10"
-                                    android:layout_marginStart="@dimen/dp_10"
-                                    android:checked="@{viewModel.mIsOrderByAsc}"
-                                    android:onClick="@{() -> viewModel.onClickOrderBy()}"
-                                    android:theme="@style/Theme.SwitchTheme"
-                                    />
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="@string/asc"
-                                    android:textColor="@color/color_black"
-                                    android:textSize="@dimen/sp_15"
-                                    />
-                            </LinearLayout>
-                        </LinearLayout>
+                            android:layout_gravity="center_vertical"
+                            android:background="@android:color/transparent"
+                            android:onClick="@{viewModel::onArrowClick}"
+                            android:padding="@dimen/dp_10"
+                            android:tint="@color/color_white"
+                            app:srcCompat="@drawable/ic_back"
+                            tools:ignore="ContentDescription"
+                            />
                         <FrameLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="@dimen/dp_140"
                             android:layout_height="@dimen/dp_35"
-                            android:layout_marginBottom="@dimen/dp_10"
-                            android:layout_marginEnd="@dimen/dp_10"
-                            android:layout_marginLeft="@dimen/dp_10"
-                            android:layout_marginRight="@dimen/dp_10"
-                            android:layout_marginStart="@dimen/dp_10"
+                            android:layout_margin="@dimen/dp_10"
                             android:background="@drawable/border_white"
-                            android:onClick="@{() -> viewModel.onClickChooseCategory()}"
+                            android:onClick="@{() -> viewModel.onClickSortBy()}"
                             android:padding="@dimen/dp_7"
                             >
                             <ImageView
                                 android:layout_width="@dimen/dp_20"
                                 android:layout_height="@dimen/dp_20"
-                                android:layout_gravity="end"
+                                android:layout_gravity="end|center"
                                 android:tint="@color/color_black"
                                 app:srcCompat="@drawable/ic_arrow_drop_down"
                                 tools:ignore="ContentDescription"
@@ -154,41 +74,113 @@
                                 android:layout_gravity="center"
                                 android:ellipsize="end"
                                 android:gravity="center_vertical"
-                                android:hint="@string/choose_category"
+                                android:hint="@string/sort_by"
                                 android:maxLines="1"
-                                android:text="@{viewModel.mCurrentCategory}"
+                                android:text="@{viewModel.mCurrentSortBy}"
                                 android:textColor="@color/color_black"
                                 android:textColorHint="@color/color_black"
                                 android:textSize="@dimen/sp_15"
                                 android:textStyle="italic"
                                 />
                         </FrameLayout>
+                        <LinearLayout
+                            android:layout_width="@dimen/dp_140"
+                            android:layout_height="@dimen/dp_35"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="@dimen/dp_10"
+                            android:background="@drawable/border_white"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp_7"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+
+                                android:text="@string/desc"
+                                android:textColor="@color/color_black"
+                                android:textSize="@dimen/sp_15"
+                                />
+                            <Switch
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/dp_10"
+                                android:layout_marginLeft="@dimen/dp_10"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:checked="@{viewModel.mIsOrderByAsc}"
+                                android:onClick="@{() -> viewModel.onClickOrderBy()}"
+                                android:theme="@style/Theme.SwitchTheme"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/asc"
+                                android:textColor="@color/color_black"
+                                android:textSize="@dimen/sp_15"
+                                />
+                        </LinearLayout>
                     </LinearLayout>
-                </android.support.design.widget.CollapsingToolbarLayout>
-            </android.support.design.widget.AppBarLayout>
-            <RelativeLayout
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_35"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:background="@drawable/border_white"
+                        android:onClick="@{() -> viewModel.onClickChooseCategory()}"
+                        android:padding="@dimen/dp_7"
+                        >
+                        <ImageView
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:layout_gravity="end"
+                            android:tint="@color/color_black"
+                            app:srcCompat="@drawable/ic_arrow_drop_down"
+                            tools:ignore="ContentDescription"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:hint="@string/choose_category"
+                            android:maxLines="1"
+                            android:text="@{viewModel.mCurrentCategory}"
+                            android:textColor="@color/color_black"
+                            android:textColorHint="@color/color_black"
+                            android:textSize="@dimen/sp_15"
+                            android:textStyle="italic"
+                            />
+                    </FrameLayout>
+                </LinearLayout>
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerListBook"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                >
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerListBook"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    bind:recyclerAdapter="@{viewModel.mAdapter}"
-                    />
-                <ProgressBar
-                    android:id="@+id/progress"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_40"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="@{viewModel.mShowProgress ? View.VISIBLE : View.GONE}"
-                    />
-            </RelativeLayout>
-        </android.support.design.widget.CoordinatorLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+                bind:recyclerAdapter="@{viewModel.mAdapter}"
+                />
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:visibility="@{viewModel.mShowProgress ? View.VISIBLE : View.GONE}"
+                />
+        </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
 </layout>
