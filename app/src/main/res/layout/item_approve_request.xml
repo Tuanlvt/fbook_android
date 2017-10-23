@@ -108,7 +108,7 @@
                         android:layout_marginLeft="@dimen/dp_8"
                         android:layout_marginStart="@dimen/dp_8"
                         android:ellipsize="end"
-                        android:maxLines="2"
+                        android:maxLines="1"
                         android:text="@{viewModel.mBook.author}"
                         app:layout_constraintLeft_toRightOf="@+id/text_title_author"
                         app:layout_constraintRight_toRightOf="parent"

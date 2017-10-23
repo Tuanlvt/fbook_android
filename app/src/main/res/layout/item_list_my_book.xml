@@ -99,7 +99,7 @@
                     android:layout_marginLeft="@dimen/dp_8"
                     android:layout_marginStart="@dimen/dp_8"
                     android:ellipsize="end"
-                    android:maxLines="2"
+                    android:maxLines="1"
                     android:text="@{viewModel.book.author}"
                     app:layout_constraintLeft_toRightOf="@+id/text_title_author"
                     app:layout_constraintRight_toRightOf="parent"
@@ -151,6 +151,19 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/text_tile_publish_date"
                     />
+                <RatingBar
+                    android:id="@+id/ratingBar2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:rating="@{viewModel.book.avgStar}"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_tile_publish_date"
+                    app:layout_constraintVertical_bias="0.95"
+                    style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                    />
                 <Button
                     android:id="@+id/button_view_all"
                     android:layout_width="wrap_content"
@@ -169,19 +182,7 @@
                     android:textSize="@dimen/sp_12"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    />
-                <RatingBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:rating="@{viewModel.book.avgStar}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.95"
-                    style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                    app:layout_constraintTop_toBottomOf="@id/ratingBar2"
                     />
             </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
