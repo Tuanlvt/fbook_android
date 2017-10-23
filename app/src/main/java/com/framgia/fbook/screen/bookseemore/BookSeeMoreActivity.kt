@@ -155,6 +155,7 @@ class BookSeeMoreActivity : BaseActivity(), BookSeeMoreContract.ViewModel, onIte
                 mPresenter.getListBook(mTypeBook, page, mOfficeId)
               }
               BOOK_CATEGORY -> {
+                mShowProgress.set(false)
                 //TODO edit later
               }
               BOOK_SORT -> {
