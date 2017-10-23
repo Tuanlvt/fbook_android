@@ -16,7 +16,7 @@ interface NotificationListener {
     fun getEnable(enable: Boolean)
   }
 
-  interface LoginListener {
-    fun IsLoggedIn(check: Boolean)
+  interface UpdateNotificationListener {
+    fun updateNotification()
   }
 }

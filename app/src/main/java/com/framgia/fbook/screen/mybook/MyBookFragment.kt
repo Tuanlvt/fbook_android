@@ -43,7 +43,7 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
   @Inject
   internal lateinit var mNavigator: Navigator
   private var mIsLoadDataFirstTime: Boolean = true
-  private lateinit var mNotificationLoginListener: NotificationListener.LoginListener
+  private lateinit var mUpdateNotificationListener: NotificationListener.UpdateNotificationListener
 
   val mIsVisiableLayoutNodata: ObservableField<Boolean> = ObservableField()
   val mIsVisibleLayoutNotLoggedIn: ObservableField<Boolean> = ObservableField()
@@ -81,7 +81,7 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
   override fun onAttach(context: Context?) {
     super.onAttach(context)
     if (context is MainActivity) {
-      mNotificationLoginListener = context
+      mUpdateNotificationListener = context
     }
   }
 
@@ -90,7 +90,7 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_MY_BOOK_REQUEST) {
       mIsVisibleLayoutNotLoggedIn.set(false)
       mIsEnable.set(true)
-      mNotificationLoginListener.IsLoggedIn(true)
+      mUpdateNotificationListener.updateNotification()
       mPresenter.getMyBook(mUserRepository.getUserLocal()?.id)
     }
   }

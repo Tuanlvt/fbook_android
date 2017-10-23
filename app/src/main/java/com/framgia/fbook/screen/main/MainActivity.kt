@@ -30,7 +30,7 @@ import com.roughike.bottombar.BottomBar
 import com.roughike.bottombar.BottomBarTab
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListener, NotificationListener.UserListener, NotificationListener.LoginListener, ReadAllNotificationListener.AddReadAllNotification {
+class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListener, NotificationListener.UserListener, NotificationListener.UpdateNotificationListener, ReadAllNotificationListener.AddReadAllNotification {
 
   private val TAG: String = MainActivity::class.java.name
   private val DELAY_TIME_TWO_TAP_BACK_BUTTON = 2000
@@ -192,10 +192,7 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
     mReadAllNotificationOfUser = readAllNotification
   }
 
-  override fun IsLoggedIn(check: Boolean) {
-    if (!check) {
-      return
-    }
+  override fun updateNotification() {
     presenter.getCountNotification()
   }
 

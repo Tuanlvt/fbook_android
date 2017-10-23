@@ -42,6 +42,7 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, Ite
   @Inject
   internal lateinit var mUserRepository: UserRepository
   private lateinit var mNotificationListener: NotificationListener
+  private lateinit var mUpdateNotificationListener: NotificationListener.UpdateNotificationListener
   private lateinit var mBinding: FragmentNotificationBinding
   private var mIsLoadDataFirstTime = true
   val mIsVisibleLayoutNotData: ObservableField<Boolean> = ObservableField()
@@ -79,6 +80,7 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, Ite
     super.onAttach(context)
     if (context is MainActivity) {
       mNotificationListener = context
+      mUpdateNotificationListener = context
       context.setNotificationUserListener(this)
       context.setReadAllNotificaitonOfUser(this)
     }
@@ -144,6 +146,7 @@ class NotificationFragment : BaseFragment(), NotificationContract.ViewModel, Ite
         mNotificationListener.getNotificationFollow(it)
       }
     }
+    mUpdateNotificationListener.updateNotification()
   }
 
   override fun onReadAllNotificationSuccess() {
