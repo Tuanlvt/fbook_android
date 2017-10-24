@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
+import com.framgia.fbook.data.model.BookInUser
 import com.framgia.fbook.data.model.Follow
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
@@ -34,6 +35,7 @@ open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
   internal lateinit var mUserRepository: UserRepository
   @Inject
   internal lateinit var mDialogManager: DialogManager
+
   private lateinit var profileComponent: ProfileComponent
   private lateinit var mGetUserListenerPersonal: GetUserListener.onGetUserPersonal
   private lateinit var mGetUserListenerCategory: GetUserListener.onGetUserCategory
@@ -41,6 +43,12 @@ open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
 
   val mUser: ObservableField<User> = ObservableField()
   val mFollow: ObservableField<Follow> = ObservableField()
+  val mNumberOfReview: ObservableField<Int> = ObservableField(0)
+  val mNumberOfWaiting: ObservableField<Int> = ObservableField(0)
+  val mNumberOfReading: ObservableField<Int> = ObservableField(0)
+  val mNumberOfReturned: ObservableField<Int> = ObservableField(0)
+  val mNumberOfSuggested: ObservableField<Int> = ObservableField(0)
+  val mNumberOfSharing: ObservableField<Int> = ObservableField(0)
   val mPageLimit: ObservableField<Int> = ObservableField(PAGE_LIMIT)
   val mIsVisibleButtonFollow: ObservableField<Boolean> = ObservableField()
   val mIsVisibleLayoutButtonFollow: ObservableField<Boolean> = ObservableField(true)
@@ -96,6 +104,16 @@ open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     mDialogManager.dismissProgressDialog()
   }
 
+  override fun onGetSizeBookInUserProfileSuccess(bookInUser: BookInUser?) {
+    val mBookInUser: ObservableField<BookInUser> = ObservableField()
+    bookInUser.let { mBookInUser.set(bookInUser) }
+    mNumberOfSharing.set(mBookInUser.get().sizeSharingBook)
+    mNumberOfReading.set(mBookInUser.get().sizeReadingBook)
+    mNumberOfWaiting.set(mBookInUser.get().sizeWaitingBook)
+    mNumberOfReturned.set(mBookInUser.get().sizeReturnedBook)
+    mNumberOfReview.set(mBookInUser.get().sizeReviewBook)
+  }
+
   override fun onGetFollowInfomationOfUserSuccess(follow: Follow?) {
     follow?.let { mFollow.set(follow) }
     mIsVisibleButtonFollow.set(mFollow.get().isFollow)
@@ -121,11 +139,12 @@ open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     }
   }
 
-  fun fillData() {
+  private fun fillData() {
     val idUser: Int? = intent.getIntExtra(Constant.BOOK_DETAIL_EXTRA, 0)
     if (idUser != mUserRepository.getUserLocal()?.id && idUser != Constant.EXTRA_ZERO) {
       mPresenter.getUserOtherProfile(idUser)
       mPresenter.getFollowInfomationOfUser(idUser)
+      mPresenter.getSizeBookInUserProfile(idUser)
       mDialogManager.showIndeterminateProgressDialog()
       mIsVisibleLayoutNoData.set(true)
       return
@@ -133,6 +152,7 @@ open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     mIsVisibleLayoutButtonFollow.set(false)
     mUser.set(mUserRepository.getUserLocal())
     mPresenter.getFollowInfomationOfUser(mUser.get().id)
+    mPresenter.getSizeBookInUserProfile(mUserRepository.getUserLocal()?.id)
     return
   }
 
@@ -142,6 +162,30 @@ open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
 
   fun onClickReloadData(view: View) {
     fillData()
+  }
+
+  fun onClickSharing() {
+    //TOdo Edit later
+  }
+
+  fun onClickReading() {
+    //TOdo Edit later
+  }
+
+  fun onClickWaiting() {
+    //TOdo Edit later
+  }
+
+  fun onClickReturned() {
+    //TOdo Edit later
+  }
+
+  fun onClickSuggested() {
+    //TOdo Edit later
+  }
+
+  fun onClickReview() {
+    //TOdo Edit later
   }
 
   fun onClickFollowOrUnFollowUser(view: View) {

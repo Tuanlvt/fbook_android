@@ -148,4 +148,9 @@
     <string name="mark_all_as_read">Mark All as Read</string>
     <string name="notthing_to_update">Nothing to update !</string>
     <string name="see_more_information">See more information</string>
+    <string name="my_action">My action</string>
+    <string name="action">Action</string>
+    <string name="sharing">Sharing</string>
+    <string name="suggested">Suggested</string>
+    <string name="returned_books">Returned Book</string>
 </resources>

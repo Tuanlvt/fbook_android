@@ -2,9 +2,12 @@ package com.framgia.fbook.screen.profile;
 
 import android.app.Activity
 import android.support.v4.app.FragmentActivity
+import com.framgia.fbook.data.source.BookRepository
+import com.framgia.fbook.data.source.BookRepositoryImpl
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.UserRepositoryImpl
 import com.framgia.fbook.data.source.local.UserLocalDataSource
+import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.utils.dagger.ActivityScope
 import com.framgia.fbook.utils.navigator.Navigator
@@ -23,9 +26,9 @@ class ProfileModule(private val mActivity: Activity) {
 
   @ActivityScope
   @Provides
-  fun providePresenter(userRepository: UserRepository,
+  fun providePresenter(userRepository: UserRepository, bookRepository: BookRepository,
       schedulerProvider: BaseSchedulerProvider): ProfileContract.Presenter {
-    val presenter = ProfilePresenter(userRepository)
+    val presenter = ProfilePresenter(userRepository, bookRepository)
     presenter.setSchedulerProvider(schedulerProvider)
     presenter.setViewModel(mActivity as ProfileContract.ViewModel)
     return presenter
@@ -49,6 +52,12 @@ class ProfileModule(private val mActivity: Activity) {
   fun providerUserRepository(userRemoteDataSource: UserRemoteDataSource,
       userLocalDataSource: UserLocalDataSource): UserRepository {
     return UserRepositoryImpl(userRemoteDataSource, userLocalDataSource)
+  }
+
+  @ActivityScope
+  @Provides
+  fun provideBookRepository(bookRemoteDataSource: BookRemoteDataSource): BookRepository {
+    return BookRepositoryImpl(bookRemoteDataSource)
   }
 
   @ActivityScope
