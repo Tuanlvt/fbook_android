@@ -89,6 +89,10 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
     super.onStop()
   }
 
+  override fun onBackPressed() {
+    mNavigator.finishActivity()
+  }
+
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.BOOK_DETAIL_REQUEST) {

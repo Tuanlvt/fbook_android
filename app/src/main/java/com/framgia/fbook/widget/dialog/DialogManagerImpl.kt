@@ -130,7 +130,6 @@ open class DialogManagerImpl(private val mContext: Context) : DialogManager {
     MaterialDialog.Builder(mContext).title(title)
         .items(strings)
         .itemsCallbackSingleChoice(selectedIndex, callback)
-        .positiveText(R.string.choose)
         .show()
   }
 

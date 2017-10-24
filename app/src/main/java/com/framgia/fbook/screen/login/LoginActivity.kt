@@ -70,6 +70,10 @@ open class LoginActivity : BaseActivity(), LoginContract.ViewModel {
     super.onStop()
   }
 
+  override fun onBackPressed() {
+    mNavigator.finishActivity()
+  }
+
   override fun onInvalidEmail(errorMsg: String?) {
     emailErrorMsg.set(errorMsg)
   }

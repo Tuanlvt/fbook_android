@@ -95,6 +95,10 @@ open class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, Item
     super.onStop()
   }
 
+  override fun onBackPressed() {
+    mNavigator.finishActivity()
+  }
+
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     EasyImage.handleActivityResult(requestCode, resultCode, data, this, object : DefaultCallback() {
