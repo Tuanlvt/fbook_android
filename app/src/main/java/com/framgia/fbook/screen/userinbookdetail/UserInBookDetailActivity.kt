@@ -32,14 +32,15 @@ open class UserInBookDetailActivity : BaseActivity(), UserInBookDetailContract.V
   internal lateinit var mUserInBookDetailAdapter: UserInBookDetailAdapter
   lateinit var mUserInBookDetailComponent: UserInBookDetailComponent
 
-
   val mBook: ObservableField<Book> = ObservableField()
   val mPageLimit: ObservableField<Int> = ObservableField(4)
+  val mCurrentPage: ObservableField<Int> = ObservableField()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
     val book: Book = intent.getParcelableExtra(Constant.USER_BOOK_DETAIL_EXTRA)
+    val page = intent.getIntExtra(Constant.USER_BOOK_DETAIL_PAGE_EXTRA, 0)
 
     mUserInBookDetailComponent = DaggerUserInBookDetailComponent.builder()
         .appComponent((application as MainApplication).appComponent)
@@ -52,6 +53,7 @@ open class UserInBookDetailActivity : BaseActivity(), UserInBookDetailContract.V
     binding.viewModel = this
 
     mBook.set(book)
+    mCurrentPage.set(page)
   }
 
   override fun onStart() {
