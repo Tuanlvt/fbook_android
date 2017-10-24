@@ -68,6 +68,10 @@ class ApproveDetailActivity : BaseActivity(), ApproveDetailContract.ViewModel, I
     super.onStop()
   }
 
+  override fun onBackPressed() {
+    mNavigator.finishActivity()
+  }
+
   fun setGetListUserWaitAndRead(getListUserListener: GetListUserListener.GetListUserWaitAndRead) {
     mGetListUserWaitAndReadListener = getListUserListener
   }

@@ -78,6 +78,10 @@ class BookSeeMoreActivity : BaseActivity(), BookSeeMoreContract.ViewModel, onIte
     super.onStop()
   }
 
+  override fun onBackPressed() {
+    mNavigator.finishActivity()
+  }
+
   override fun onDismissProgressBarDialog() {
     mDialogManager.dismissProgressDialog()
   }
@@ -174,6 +178,10 @@ class BookSeeMoreActivity : BaseActivity(), BookSeeMoreContract.ViewModel, onIte
     if (mListCategory.isEmpty()) {
       return
     }
+    showDialogChooseCategory()
+  }
+
+  private fun showDialogChooseCategory() {
     val listCategory: MutableList<String?> = mutableListOf()
     mListCategory.indices.mapTo(listCategory) { mListCategory[it].name }
     mDialogManager.dialogListSingleChoice(applicationContext.getString(R.string.category),
@@ -192,11 +200,14 @@ class BookSeeMoreActivity : BaseActivity(), BookSeeMoreContract.ViewModel, onIte
           true
         }))
   }
-
   fun onClickSortBy() {
     if (mListSortBook.isEmpty()) {
       return
     }
+    showDialogChooseSort()
+  }
+
+  private fun showDialogChooseSort() {
     val listSortBook: MutableList<String?> = mutableListOf()
     mListSortBook.indices.mapTo(listSortBook) { mListSortBook[it].text }
     mDialogManager.dialogListSingleChoice(applicationContext.getString(R.string.sort_by),
@@ -222,7 +233,6 @@ class BookSeeMoreActivity : BaseActivity(), BookSeeMoreContract.ViewModel, onIte
         }
     ))
   }
-
   fun onArrowClick(view: View) {
     mNavigator.finishActivity()
   }

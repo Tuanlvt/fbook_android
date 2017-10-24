@@ -45,6 +45,7 @@ object Constant {
     val BOOK_DETAIL_REQUEST = 103
     val TAB_CATEGORY_FAVORITE_USER = 104
     val TAB_NOTIFICATION = 105
+    val TAB_MAIN = 106
     val APRROVE_BOOK_REQUEST = 10
   }
 

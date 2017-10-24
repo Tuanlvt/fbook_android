@@ -70,6 +70,10 @@ open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     super.onStop()
   }
 
+  override fun onBackPressed() {
+    mNavigator.finishActivity()
+  }
+
   fun setGetUserListenerPersonal(getUserListenerPersonal: GetUserListener.onGetUserPersonal) {
     mGetUserListenerPersonal = getUserListenerPersonal
   }

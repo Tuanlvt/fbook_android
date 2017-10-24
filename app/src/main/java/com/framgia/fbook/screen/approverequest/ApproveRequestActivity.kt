@@ -68,6 +68,10 @@ class ApproveRequestActivity : BaseActivity(), ApproveRequestContract.ViewModel,
     super.onStop()
   }
 
+  override fun onBackPressed() {
+    mNavigator.finishActivity()
+  }
+
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == Constant.ResultCode.UNAPPROVE

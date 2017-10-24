@@ -1,5 +1,7 @@
 package com.framgia.fbook.screen.main
 
+import android.app.Activity
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
@@ -17,6 +19,7 @@ import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.ActivityMainBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.SearchBook.SearchBookActivity
+import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.notification.notificationFollow.NotificationFollowListener
 import com.framgia.fbook.screen.notification.notificationUser.NotificationUserListener
 import com.framgia.fbook.screen.notification.notificationUser.ReadAllNotification
@@ -112,6 +115,13 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
     Toast.makeText(this, getString(R.string.please_click_back_again_to_exit),
         Toast.LENGTH_SHORT).show()
     mHandler.postDelayed(mRunnable, DELAY_TIME_TWO_TAP_BACK_BUTTON.toLong())
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == Constant.RequestCode.TAB_MAIN && resultCode == Activity.RESULT_OK) {
+      presenter.getCountNotification()
+    }
   }
 
   override fun onGetCountNotificationSuccess(count: Int?) {
@@ -274,7 +284,6 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
         MaterialDialog.ListCallbackSingleChoice { _, _, position, _ ->
           mCurrentOfficePosition = position
           updateCurrentOffice(position)
-
           mOfficeId = mListOffices[position].id
           mListBookMainPageListener.onGetListBook(mOfficeId)
           val isShowPrevious = mAdapter.getCurrentFragment().childFragmentManager.backStackEntryCount > 1
@@ -287,6 +296,7 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
 
   fun onClickAvatar(view: View) {
     if (mUser == null) {
+      goToLoginActivity()
       return
     }
     mNavigator.startActivity(ProfileActivity::class.java)
@@ -298,9 +308,23 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
 
   fun onClickChooseWorkSpace(view: View) {
     if (mUser == null) {
+      showDialogLogin()
       return
     }
     showDialogListOffice()
+  }
+
+  private fun goToLoginActivity() {
+    mNavigator.startActivityForResult(LoginActivity::class.java, Bundle(),
+        Constant.RequestCode.TAB_MAIN)
+  }
+  private fun showDialogLogin() {
+    mDialogManager.dialogBasic(getString(R.string.inform),
+        getString(R.string.you_must_be_login_into_perform_this_function),
+        MaterialDialog.SingleButtonCallback { _, _ ->
+          mNavigator.startActivityForResult(LoginActivity::class.java, Bundle(),
+              Constant.RequestCode.TAB_MAIN)
+        })
   }
 
   fun getCurrentOfficeId(): Int? {
