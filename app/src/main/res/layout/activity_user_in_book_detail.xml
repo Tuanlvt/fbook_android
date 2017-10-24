@@ -125,6 +125,7 @@
                 android:layout_height="match_parent"
                 app:offscreenPageLimit="@{viewModel.mPageLimit}"
                 bind:viewPageAdapter="@{viewModel.mUserInBookDetailAdapter}"
+                bind:currentFragment="@{viewModel.mCurrentPage}"
                 />
         </android.support.v4.widget.NestedScrollView>
     </LinearLayout>

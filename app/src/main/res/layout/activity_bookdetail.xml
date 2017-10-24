@@ -369,7 +369,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:gravity="center"
+                            android:onClick="@{() -> viewModel.onClickReview()}"
                             android:orientation="vertical"
                             >
                             <TextView
@@ -392,7 +394,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:gravity="center"
+                            android:onClick="@{() -> viewModel.onClickWaiting()}"
                             android:orientation="vertical"
                             >
                             <TextView
@@ -415,7 +419,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:gravity="center"
+                            android:onClick="@{() -> viewModel.onClickReading()}"
                             android:orientation="vertical"
                             >
                             <TextView
@@ -438,7 +444,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:gravity="center"
+                            android:onClick="@{() -> viewModel.onClickReturning()}"
                             android:orientation="vertical"
                             >
                             <TextView
@@ -461,7 +469,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:gravity="center"
+                            android:onClick="@{() -> viewModel.onClickReturned()}"
                             android:orientation="vertical"
                             >
                             <TextView

@@ -34,6 +34,11 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
 
   companion object {
     val TAG: String = LoginActivity::class.java.name
+    private val PAGE_REVIEW = 0
+    private val PAGE_WAITING = 1
+    private val PAGE_READING = 2
+    private val PAGE_RETURNING = 3
+    private val PAGE_RETURNED = 4
   }
 
   @Inject
@@ -304,9 +309,39 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
   fun onClickViewDetailsUser(view: View) {
     val bundle = Bundle()
     bundle.putParcelable(Constant.USER_BOOK_DETAIL_EXTRA, mBook.get())
+    bundle.putInt(Constant.USER_BOOK_DETAIL_PAGE_EXTRA, PAGE_REVIEW)
     mNavigator.startActivityForResult(UserInBookDetailActivity::class.java,
         bundle, Constant.RequestCode.BOOK_DETAIL_REQUEST)
   }
+
+  fun onClickReview() {
+    goToDetailsUser(PAGE_REVIEW)
+  }
+
+  fun onClickWaiting() {
+    goToDetailsUser(PAGE_WAITING)
+  }
+
+  fun onClickReading() {
+    goToDetailsUser(PAGE_READING)
+  }
+
+  fun onClickReturning() {
+    goToDetailsUser(PAGE_RETURNING)
+  }
+
+  fun onClickReturned() {
+    goToDetailsUser(PAGE_RETURNED)
+  }
+
+  private fun goToDetailsUser(page: Int) {
+    val bundle = Bundle()
+    bundle.putParcelable(Constant.USER_BOOK_DETAIL_EXTRA, mBook.get())
+    bundle.putInt(Constant.USER_BOOK_DETAIL_PAGE_EXTRA, page)
+    mNavigator.startActivityForResult(UserInBookDetailActivity::class.java,
+        bundle, Constant.RequestCode.BOOK_DETAIL_REQUEST)
+  }
+
 
   enum class Status(val value: Int) {
     WANT_TO_READ_THIS_BOOK(1),
