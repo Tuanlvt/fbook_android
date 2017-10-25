@@ -77,46 +77,65 @@
                                     tools:ignore="ContentDescription"
                                     />
                             </FrameLayout>
+
                             <TextView
                                 android:id="@+id/text_name_user"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom"
-                                android:layout_marginTop="@dimen/dp_5"
+                                android:layout_marginTop="@dimen/dp_2"
                                 android:fontFamily="serif"
                                 android:gravity="center"
                                 android:paddingBottom="@dimen/dp_2"
                                 android:text="@{viewModel.mUser.name}"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/sp_25"
-                                android:textStyle="bold"
                                 app:layout_constraintTop_toBottomOf="@+id/frame_layout_image"
                                 tools:ignore="MissingConstraints"
                                 tools:layout_editor_absoluteX="0dp"
                                 />
+
                             <FrameLayout
                                 android:id="@+id/layout_button_follow"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dp_3"
+                                android:layout_margin="@dimen/dp_2"
+                                android:layout_weight="1"
+                                android:padding="@dimen/dp_5"
                                 android:visibility="@{viewModel.mIsVisibleLayoutButtonFollow ? View.VISIBLE : View.GONE}"
                                 app:layout_constraintTop_toBottomOf="@+id/text_name_user"
                                 >
-                                <Button
+                                <View
                                     android:layout_width="match_parent"
+                                    android:layout_height="@dimen/dp_1"
+                                    android:layout_gravity="center_vertical"
+                                    android:background="@color/color_gray_view"
+                                    />
+                                <Button
+                                    android:layout_width="@dimen/dp_150"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
                                     android:background="@drawable/button_click_blue"
                                     android:onClick="@{viewModel::onClickFollowOrUnFollowUser}"
+                                    android:paddingEnd="@dimen/dp_35"
+                                    android:paddingLeft="@dimen/dp_35"
+                                    android:paddingRight="@dimen/dp_35"
+                                    android:paddingStart="@dimen/dp_35"
                                     android:text="@string/unfollow"
                                     android:textColor="@color/color_white"
                                     android:visibility="@{viewModel.mIsVisibleButtonFollow ? View.VISIBLE : View.GONE}"
-                                    tools:ignore="UselessParent"
+                                    tools:ignore="TooDeepLayout,UselessParent"
                                     />
                                 <Button
-                                    android:layout_width="match_parent"
+                                    android:layout_width="@dimen/dp_150"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/button_click_green"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/button_green_follow"
                                     android:onClick="@{viewModel::onClickFollowOrUnFollowUser}"
+                                    android:paddingEnd="@dimen/dp_35"
+                                    android:paddingLeft="@dimen/dp_35"
+                                    android:paddingRight="@dimen/dp_35"
+                                    android:paddingStart="@dimen/dp_35"
                                     android:text="@string/follow"
                                     android:textColor="@color/color_white"
                                     android:visibility="@{viewModel.mIsVisibleButtonFollow ? View.GONE : View.VISIBLE}"
@@ -174,22 +193,214 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tab_layout"
                         >
-                        <Button
+
+                        <android.support.v7.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/button_translate_click"
-                            android:onClick="@{() ->viewModel.onClickOther()}"
+                            android:layout_marginBottom="@dimen/dp_5"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:layout_marginRight="@dimen/dp_5"
+                            android:layout_marginTop="@dimen/dp_10"
                             android:padding="@dimen/dp_8"
-                            android:text="@string/see_more_information"
-                            android:textAllCaps="false"
-                            android:textColor="@color/color_red_mos"
-                            tools:ignore="UseCompoundDrawables"
-                            />
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_2"
-                            android:background="@drawable/background"
-                            />
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingBottom="@dimen/dp_5"
+                                android:paddingTop="@dimen/dp_7"
+                                android:weightSum="6.1"
+                                tools:ignore="DisableBaselineAlignment"
+                                >
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:gravity="center"
+                                    android:onClick="@{() -> viewModel.onClickSharing()}"
+                                    android:orientation="vertical"
+                                    tools:ignore="TooDeepLayout"
+                                    >
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:paddingBottom="@dimen/dp_10"
+                                        android:textColor="@color/color_white"
+                                        android:textSize="@dimen/sp_13"
+                                        bind:setSize="@{viewModel.mNumberOfSharing}"
+                                        tools:ignore="TooDeepLayout"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/sharing"
+                                        />
+                                </LinearLayout>
+                                <View
+                                    android:layout_width="@dimen/dp_1"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginBottom="@dimen/dp_5"
+                                    android:layout_marginTop="@dimen/dp_5"
+                                    android:background="@color/color_red_mos"
+                                    />
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:gravity="center"
+                                    android:onClick="@{() -> viewModel.onClickReading()}"
+                                    android:orientation="vertical"
+                                    >
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:paddingBottom="@dimen/dp_10"
+                                        android:textColor="@color/color_white"
+                                        android:textSize="@dimen/sp_13"
+                                        bind:setSize="@{viewModel.mNumberOfReading}"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/reading"
+                                        />
+                                </LinearLayout>
+                                <View
+                                    android:layout_width="@dimen/dp_1"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginBottom="@dimen/dp_5"
+                                    android:layout_marginTop="@dimen/dp_5"
+                                    android:background="@color/color_red_mos"
+                                    />
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:gravity="center"
+                                    android:onClick="@{() -> viewModel.onClickWaiting()}"
+                                    android:orientation="vertical"
+                                    >
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:paddingBottom="@dimen/dp_10"
+                                        android:textColor="@color/color_white"
+                                        android:textSize="@dimen/sp_13"
+                                        bind:setSize="@{viewModel.mNumberOfWaiting}"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/waiting"
+                                        />
+                                </LinearLayout>
+                                <View
+                                    android:layout_width="@dimen/dp_1"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginBottom="@dimen/dp_5"
+                                    android:layout_marginTop="@dimen/dp_5"
+                                    android:background="@color/color_red_mos"
+                                    />
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.2"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:gravity="center"
+                                    android:onClick="@{() -> viewModel.onClickSuggested()}"
+                                    android:orientation="vertical"
+                                    >
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:paddingBottom="@dimen/dp_10"
+                                        android:textColor="@color/color_white"
+                                        android:textSize="@dimen/sp_13"
+                                        bind:setSize="@{viewModel.mNumberOfSuggested}"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/suggested"
+                                        />
+                                </LinearLayout>
+                                <View
+                                    android:layout_width="@dimen/dp_1"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginBottom="@dimen/dp_5"
+                                    android:layout_marginTop="@dimen/dp_5"
+                                    android:background="@color/color_red_mos"
+                                    />
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:gravity="center"
+                                    android:onClick="@{() -> viewModel.onClickReturned()}"
+                                    android:orientation="vertical"
+                                    >
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:paddingBottom="@dimen/dp_10"
+                                        android:textColor="@color/color_white"
+                                        android:textSize="@dimen/sp_13"
+                                        bind:setSize="@{viewModel.mNumberOfReturned}"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/returned"
+                                        />
+                                </LinearLayout>
+                                <View
+                                    android:layout_width="@dimen/dp_1"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginBottom="@dimen/dp_5"
+                                    android:layout_marginTop="@dimen/dp_5"
+                                    android:background="@color/color_red_mos"
+                                    />
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.9"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:gravity="center"
+                                    android:onClick="@{() -> viewModel.onClickReview()}"
+                                    android:orientation="vertical"
+                                    >
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:paddingBottom="@dimen/dp_10"
+                                        android:textColor="@color/color_white"
+                                        android:textSize="@dimen/sp_13"
+                                        bind:setSize="@{viewModel.mNumberOfReview}"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/review"
+                                        />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
                         <android.support.v4.view.ViewPager
                             android:id="@+id/viewpager"
                             android:layout_width="match_parent"
@@ -200,7 +411,6 @@
                             bind:viewPageAdapter="@{viewModel.profileAdapter}"
                             />
                     </LinearLayout>
-
                 </android.support.v4.widget.NestedScrollView>
             </android.support.design.widget.CoordinatorLayout>
         </android.support.constraint.ConstraintLayout>

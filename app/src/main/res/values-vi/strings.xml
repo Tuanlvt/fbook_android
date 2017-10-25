@@ -134,4 +134,8 @@
     <string name="mark_all_as_read">Đánh dấu tất cả là đã đọc</string>
     <string name="notthing_to_update">Không có gì để cập nhật !</string>
     <string name="see_more_information">Xem thêm thông tin</string>
+    <string name="action">Hoạt động </string>
+    <string name="sharing">Đang chia sẻ</string>
+    <string name="suggested">Gợi ý</string>
+    <string name="returned_books">Sách đã đọc</string>
 </resources>
