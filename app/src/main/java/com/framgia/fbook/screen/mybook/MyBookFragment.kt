@@ -19,6 +19,7 @@ import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.approverequest.ApproveRequestActivity
 import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.login.LoginActivity
+import com.framgia.fbook.screen.main.LoginListener
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.main.NotificationListener
 import com.framgia.fbook.utils.Constant
@@ -30,7 +31,7 @@ import javax.inject.Inject
 /**
  * MyBook Screen.
  */
-open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClickListener {
+open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClickListener, LoginListener.LoginOnMyBook {
 
   @Inject
   internal lateinit var mPresenter: MyBookContract.Presenter
@@ -82,16 +83,14 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
     super.onAttach(context)
     if (context is MainActivity) {
       mUpdateNotificationListener = context
+      context.setLoginOnMyBookListener(this)
     }
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_MY_BOOK_REQUEST) {
-      mIsVisibleLayoutNotLoggedIn.set(false)
-      mIsEnable.set(true)
-      mUpdateNotificationListener.updateNotification()
-      mPresenter.getMyBook(mUserRepository.getUserLocal()?.id)
+      loggedIn()
     }
   }
 
@@ -118,6 +117,10 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
       mIsVisibleLayoutNotLoggedIn.set(false)
       user.let { mPresenter.getMyBook(userId = user.id) }
     }
+  }
+
+  override fun onLoggedIn() {
+    loggedIn()
   }
 
   override fun onError(e: BaseException) {
@@ -173,6 +176,13 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
 
   fun onRefresh() {
     mIsRefresh.set(true)
+    mPresenter.getMyBook(mUserRepository.getUserLocal()?.id)
+  }
+
+  private fun loggedIn() {
+    mIsVisibleLayoutNotLoggedIn.set(false)
+    mIsEnable.set(true)
+    mUpdateNotificationListener.updateNotification()
     mPresenter.getMyBook(mUserRepository.getUserLocal()?.id)
   }
 
