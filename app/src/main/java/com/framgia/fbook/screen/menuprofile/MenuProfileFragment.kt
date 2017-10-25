@@ -16,6 +16,7 @@ import com.framgia.fbook.databinding.FragmentMenuProfileBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.approverequest.ApproveRequestActivity
 import com.framgia.fbook.screen.login.LoginActivity
+import com.framgia.fbook.screen.main.LoginListener
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.main.NotificationListener
 import com.framgia.fbook.screen.profile.ProfileActivity
@@ -29,7 +30,15 @@ import javax.inject.Inject
 /**
  * Menuprofile Screen.
  */
-class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
+class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel, LoginListener.LoginOnMenuProfile {
+
+  companion object {
+    private val PAGE_LIMIT = 1
+    val TAG: String = "MenuProfileFragment"
+    fun newInstance(): MenuProfileFragment {
+      return MenuProfileFragment()
+    }
+  }
 
   private val mNavigator: Navigator by lazy { Navigator(this) }
   @Inject
@@ -74,24 +83,25 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
     super.onAttach(context)
     if (context is MainActivity) {
       mUpdateNotificationListener = context
-    }
-  }
-
-  companion object {
-    private val PAGE_LIMIT = 1
-    val TAG: String = "MenuProfileFragment"
-    fun newInstance(): MenuProfileFragment {
-      return MenuProfileFragment()
+      context.setLoginOnMenuProfileListener(this)
     }
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_PROFILE_REQUEST) {
-      mIsVisibleLayoutNotLoggedIn.set(true)
-      mUpdateNotificationListener.updateNotification()
-      mUser.set(mUserRepository.getUserLocal())
+      loggedIn()
     }
+  }
+
+  override fun onLoggedIn() {
+    loggedIn()
+  }
+
+  private fun loggedIn() {
+    mIsVisibleLayoutNotLoggedIn.set(true)
+    mUpdateNotificationListener.updateNotification()
+    mUser.set(mUserRepository.getUserLocal())
   }
 
   override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -140,9 +150,5 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
           mNavigator.startActivityAtRoot(MainActivity::class.java)
         })
     return
-  }
-
-  override fun getUserVisibleHint(): Boolean {
-    return super.getUserVisibleHint()
   }
 }

@@ -17,6 +17,7 @@ import com.framgia.fbook.data.source.local.sharedprf.SharedPrefsKey
 import com.framgia.fbook.databinding.FragmentNotificationcontainerBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.login.LoginActivity
+import com.framgia.fbook.screen.main.LoginListener
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.main.NotificationListener
 import com.framgia.fbook.screen.main.ReadAllNotificationListener
@@ -31,7 +32,7 @@ import com.google.gson.Gson
 /**
  * NotificationContainer Screen.
  */
-class NotificationContainerFragment : BaseFragment() {
+class NotificationContainerFragment : BaseFragment(), LoginListener.LoginOnNotification {
 
   private val mNotificationContainerAdapter: NotificationContainerAdapter by lazy {
     NotificationContainerAdapter(context, fragmentManager)
@@ -57,7 +58,24 @@ class NotificationContainerFragment : BaseFragment() {
     if (context is MainActivity) {
       mNotificationListener = context
       mReadAllNotification = context
+      context.setLoginOnNotificationListener(this)
     }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_NOTIFICATION) {
+      loggedIn()
+    }
+  }
+
+  override fun onLoggedIn() {
+    loggedIn()
+  }
+
+  private fun loggedIn() {
+    mIsVisibleLayoutNotLoggedIn.set(false)
+    mNotificationListener.getEnable(true)
   }
 
   private fun getUserLocal(): User? {
@@ -91,14 +109,6 @@ class NotificationContainerFragment : BaseFragment() {
     }
     mNotificationListener.getEnable(true)
     mIsVisibleLayoutNotLoggedIn.set(false)
-  }
-
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-    if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_NOTIFICATION) {
-      mIsVisibleLayoutNotLoggedIn.set(false)
-      mNotificationListener.getEnable(true)
-    }
   }
 
   fun getNotificationContainerAdapter(): NotificationContainerAdapter {

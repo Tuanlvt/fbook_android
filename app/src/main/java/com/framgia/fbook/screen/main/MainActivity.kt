@@ -53,11 +53,15 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
   private lateinit var mMainComponent: MainComponent
   private lateinit var mHandler: Handler
   private lateinit var mRunnable: Runnable
+
   private lateinit var mNotificationFollowListener: NotificationFollowListener
   private lateinit var mListBookMainPageListener: ListBookMainPageListener
   private lateinit var mListBookSeeMoreListener: ListBookSeeMoreListener
   private lateinit var mNotificationUserListener: NotificationUserListener
   private lateinit var mReadAllNotificationOfUser: ReadAllNotification
+  private lateinit var mLoginOnMyBookListener: LoginListener.LoginOnMyBook
+  private lateinit var mLoginOnNotificationListener: LoginListener.LoginOnNotification
+  private lateinit var mLoginOnMenuProfileListener: LoginListener.LoginOnMenuProfile
 
   private var mIsDoubleTapBack = false
   private var mListOffices = mutableListOf<Office>()
@@ -120,7 +124,7 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == Constant.RequestCode.TAB_MAIN && resultCode == Activity.RESULT_OK) {
-      presenter.getCountNotification()
+      loggedIn()
     }
   }
 
@@ -188,6 +192,18 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
     mOfficeId = mUser?.officeId
     setAvatar(mUser?.avatar)
     setCurrentOffice(mListOffices)
+  }
+
+  fun setLoginOnMyBookListener(loginListener: LoginListener.LoginOnMyBook) {
+    mLoginOnMyBookListener = loginListener
+  }
+
+  fun setLoginOnNotificationListener(loginListener: LoginListener.LoginOnNotification) {
+    mLoginOnNotificationListener = loginListener
+  }
+
+  fun setLoginOnMenuProfileListener(loginListener: LoginListener.LoginOnMenuProfile) {
+    mLoginOnMenuProfileListener = loginListener
   }
 
   fun setNotificationFollowListener(notificationFollowListener: NotificationFollowListener) {
@@ -318,6 +334,16 @@ class MainActivity : BaseActivity(), MainContract.ViewModel, NotificationListene
     mNavigator.startActivityForResult(LoginActivity::class.java, Bundle(),
         Constant.RequestCode.TAB_MAIN)
   }
+
+  private fun loggedIn() {
+    presenter.getCountNotification()
+    when (mBottomBar.currentTabId) {
+      R.id.tab_my_book -> mLoginOnMyBookListener.onLoggedIn()
+      R.id.tab_notification -> mLoginOnNotificationListener.onLoggedIn()
+      R.id.tab_account -> mLoginOnMenuProfileListener.onLoggedIn()
+    }
+  }
+
   private fun showDialogLogin() {
     mDialogManager.dialogBasic(getString(R.string.inform),
         getString(R.string.you_must_be_login_into_perform_this_function),
