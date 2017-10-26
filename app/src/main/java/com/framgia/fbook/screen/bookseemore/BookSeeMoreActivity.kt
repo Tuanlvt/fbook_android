@@ -146,7 +146,7 @@ class BookSeeMoreActivity : BaseActivity(), BookSeeMoreContract.ViewModel, onIte
     mAdapter.setItemInternalBookListener(this)
     mIsOrderByAsc.set(false)
 
-    val gridLayoutManager = GridLayoutManager(applicationContext, 3)
+    val gridLayoutManager = GridLayoutManager(applicationContext, 2)
     binding.recyclerListBook.layoutManager = gridLayoutManager
     binding.recyclerListBook.addOnScrollListener(
         object : EndlessRecyclerOnScrollListener(gridLayoutManager) {
@@ -200,6 +200,7 @@ class BookSeeMoreActivity : BaseActivity(), BookSeeMoreContract.ViewModel, onIte
           true
         }))
   }
+
   fun onClickSortBy() {
     if (mListSortBook.isEmpty()) {
       return
@@ -233,6 +234,7 @@ class BookSeeMoreActivity : BaseActivity(), BookSeeMoreContract.ViewModel, onIte
         }
     ))
   }
+
   fun onArrowClick(view: View) {
     mNavigator.finishActivity()
   }

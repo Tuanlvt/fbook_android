@@ -16,7 +16,7 @@ class ItemBookInUserViewModel(val book: Book?,
   val name: String = book?.author.toString()
 
   fun getVisibleButtonReturnBook(): Boolean {
-    return positionTab == 0 && checkCurrentUser
+    return positionTab == 1 && checkCurrentUser
   }
 
   fun onItemBookInUserClick(view: View) {
