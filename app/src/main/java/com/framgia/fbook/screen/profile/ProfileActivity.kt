@@ -47,7 +47,6 @@ open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
   val mNumberOfWaiting: ObservableField<Int> = ObservableField(0)
   val mNumberOfReading: ObservableField<Int> = ObservableField(0)
   val mNumberOfReturned: ObservableField<Int> = ObservableField(0)
-  val mNumberOfSuggested: ObservableField<Int> = ObservableField(0)
   val mNumberOfSharing: ObservableField<Int> = ObservableField(0)
   val mPageLimit: ObservableField<Int> = ObservableField(PAGE_LIMIT)
   val mIsVisibleButtonFollow: ObservableField<Boolean> = ObservableField()
@@ -78,6 +77,11 @@ open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     super.onStop()
   }
 
+  override fun onResume() {
+    super.onResume()
+    fillData()
+  }
+
   override fun onBackPressed() {
     mNavigator.finishActivity()
   }
@@ -94,6 +98,14 @@ open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     mGetUserListenerFollow = getUserListenerFollow
   }
 
+  override fun onShowProgressDialog() {
+    mDialogManager.showIndeterminateProgressDialog()
+  }
+
+  override fun onDismissProgressDialog() {
+    mDialogManager.dismissProgressDialog()
+  }
+
   override fun onGetUserOtherProfileSuccess(user: User?) {
     user?.let {
       mUser.set(user)
@@ -101,7 +113,6 @@ open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
       mGetUserListenerCategory.onGetUser(user)
     }
     mIsVisibleLayoutNoData.set(false)
-    mDialogManager.dismissProgressDialog()
   }
 
   override fun onGetSizeBookInUserProfileSuccess(bookInUser: BookInUser?) {
@@ -122,7 +133,6 @@ open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
 
   override fun onError(exception: BaseException) {
     Log.e(TAG, exception.getMessageError())
-    mDialogManager.dismissProgressDialog()
   }
 
   override fun onFollowOrUnFollowSuccess() {
@@ -130,29 +140,19 @@ open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
     mPresenter.getFollowInfomationOfUser(mUser.get().id)
   }
 
-  fun onClickOther() {
-    val bundle = Bundle()
-    val idUser: Int? = mUser.get().id
-    if (idUser != null) {
-      bundle.putInt(Constant.BOOK_DETAIL_IN_USER_EXTRA, idUser)
-      mNavigator.startActivity(OtherUserActivity::class.java, bundle)
-    }
-  }
-
   private fun fillData() {
     val idUser: Int? = intent.getIntExtra(Constant.BOOK_DETAIL_EXTRA, 0)
     if (idUser != mUserRepository.getUserLocal()?.id && idUser != Constant.EXTRA_ZERO) {
       mPresenter.getUserOtherProfile(idUser)
-      mPresenter.getFollowInfomationOfUser(idUser)
       mPresenter.getSizeBookInUserProfile(idUser)
-      mDialogManager.showIndeterminateProgressDialog()
+      mPresenter.getFollowInfomationOfUser(idUser)
       mIsVisibleLayoutNoData.set(true)
       return
     }
     mIsVisibleLayoutButtonFollow.set(false)
     mUser.set(mUserRepository.getUserLocal())
-    mPresenter.getFollowInfomationOfUser(mUser.get().id)
     mPresenter.getSizeBookInUserProfile(mUserRepository.getUserLocal()?.id)
+    mPresenter.getFollowInfomationOfUser(mUser.get().id)
     return
   }
 
@@ -165,44 +165,52 @@ open class ProfileActivity : BaseActivity(), ProfileContract.ViewModel {
   }
 
   fun onClickSharing() {
-    //TOdo Edit later
+    onNextBookInUserDetail(PAGE_SHARING)
   }
 
   fun onClickReading() {
-    //TOdo Edit later
+    onNextBookInUserDetail(PAGE_READING)
   }
 
   fun onClickWaiting() {
-    //TOdo Edit later
+    onNextBookInUserDetail(PAGE_WAITING)
   }
 
   fun onClickReturned() {
-    //TOdo Edit later
-  }
-
-  fun onClickSuggested() {
-    //TOdo Edit later
+    onNextBookInUserDetail(PAGE_RETURNED)
   }
 
   fun onClickReview() {
-    //TOdo Edit later
+    onNextBookInUserDetail(PAGE_REVIEW)
   }
 
   fun onClickFollowOrUnFollowUser(view: View) {
     val followOrUnFollowUserRequest = FollowOrUnFollowUserRequest()
     val itemFollowOrUnFollowUserRequest = FollowOrUnFollowUserRequest.Item()
-
     itemFollowOrUnFollowUserRequest.userId = mUser.get().id
     followOrUnFollowUserRequest.item = itemFollowOrUnFollowUserRequest
     mPresenter.followOrUnFollow(followOrUnFollowUserRequest)
   }
 
+  private fun onNextBookInUserDetail(page: Int) {
+    val bundle = Bundle()
+    val idUser: Int? = mUser.get().id
+    if (idUser != null) {
+      bundle.putInt(Constant.BOOK_DETAIL_IN_USER_EXTRA, idUser)
+      bundle.putInt(Constant.USER_BOOK_DETAIL_PAGE_EXTRA, page)
+      mNavigator.startActivity(OtherUserActivity::class.java, bundle)
+    }
+  }
+
+
   companion object {
     private val PAGE_LIMIT = 1
     val TAG: String = ProfileActivity::class.java.name
-    fun newInstance(): ProfileActivity {
-      return ProfileActivity()
-    }
+    private val PAGE_SHARING = 0
+    private val PAGE_READING = 1
+    private val PAGE_WAITING = 2
+    private val PAGE_RETURNED = 3
+    private val PAGE_REVIEW = 4
   }
 
   fun getProfileComponent(): ProfileComponent {

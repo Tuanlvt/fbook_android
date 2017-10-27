@@ -51,6 +51,8 @@ open class ProfilePresenter(
               sizeReviewBook.items?.data?.size)
         }).subscribeOn(mBaseSchedulerProvider.io())
         .observeOn(mBaseSchedulerProvider.ui())
+        .doOnSubscribe({ mViewModel?.onShowProgressDialog() })
+        .doAfterTerminate({ mViewModel?.onDismissProgressDialog() })
         .subscribe(
             { listSizeBookInUser ->
               mViewModel?.onGetSizeBookInUserProfileSuccess(listSizeBookInUser)
@@ -65,6 +67,8 @@ open class ProfilePresenter(
     val disposable: Disposable = mUserRepository.getOtherUserProfile(idUser)
         .subscribeOn(mBaseSchedulerProvider.io())
         .observeOn(mBaseSchedulerProvider.ui())
+        .doOnSubscribe({ mViewModel?.onShowProgressDialog() })
+        .doAfterTerminate({ mViewModel?.onDismissProgressDialog() })
         .subscribe(
             { user ->
               mViewModel?.onGetUserOtherProfileSuccess(user.item)
@@ -79,6 +83,8 @@ open class ProfilePresenter(
     val disposable: Disposable = mUserRepository.getFollowInfomationOfUser(idUser)
         .subscribeOn(mBaseSchedulerProvider.io())
         .observeOn(mBaseSchedulerProvider.ui())
+        .doOnSubscribe({ mViewModel?.onShowProgressDialog() })
+        .doAfterTerminate({ mViewModel?.onDismissProgressDialog() })
         .subscribe({ follow ->
           mViewModel?.onGetFollowInfomationOfUserSuccess(follow.items)
         },
@@ -90,6 +96,8 @@ open class ProfilePresenter(
     val disposable: Disposable = mUserRepository.followOrUnFollowUser(followOrUnFollowUserRequest)
         .subscribeOn(mBaseSchedulerProvider.io())
         .observeOn(mBaseSchedulerProvider.ui())
+        .doOnSubscribe({ mViewModel?.onShowProgressDialog() })
+        .doAfterTerminate({ mViewModel?.onDismissProgressDialog() })
         .subscribe({
           mViewModel?.onFollowOrUnFollowSuccess()
         }, { error ->

@@ -24,6 +24,10 @@ interface ProfileContract {
 
     fun onFollowOrUnFollowSuccess()
 
+    fun onShowProgressDialog()
+
+    fun onDismissProgressDialog()
+
     fun onError(exception: BaseException)
   }
 
