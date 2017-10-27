@@ -134,8 +134,18 @@
     <string name="mark_all_as_read">Đánh dấu tất cả là đã đọc</string>
     <string name="notthing_to_update">Không có gì để cập nhật !</string>
     <string name="see_more_information">Xem thêm thông tin</string>
-    <string name="action">Hoạt động </string>
     <string name="sharing">Đang chia sẻ</string>
     <string name="suggested">Gợi ý</string>
     <string name="returned_books">Sách đã đọc</string>
+    <string name="date_format_yyyy_MM_dd">yyyy-MM-dd</string>
+    <string name="select_category">Chọn thể loại </string>
+    <string name="select_office">Chọn văn phòng</string>
+    <string name="select_image_from_gallery_or_camera">Chọn hình ảnh từ thư viện hoặc máy ảnh</string>
+    <string name="retry">Thử lại</string>
+    <string name="error">Lỗi</string>
+    <string name="newsfeed">Thông báo từ người theo dõi</string>
+    <string name="least_6_characters">Vui lòng nhập ít nhất 6 ký tự!</string>
+    <string name="input_book_to_search">Nhập Sách để tìm kiếm</string>
+    <string name="search_book">Tìm kiếm sách</string>
+    <string name="email">Email</string>
 </resources>
