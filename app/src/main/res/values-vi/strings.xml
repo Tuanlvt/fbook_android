@@ -41,7 +41,7 @@
     <string name="update">Cập nhật</string>
     <string name="edit_category_favorite">Chỉnh sửa thể loại yêu thích</string>
     <string name="are_you_sure_remove_owner_this_book">Bạn có chắc chắn xóa chủ sở hữu cuốn sách này?</string>
-    <string name="are_you_sure_add_owner_this_book">Bạn có chắc chắn thêm chủ sở hữu cuốn sách này?</string>
+    <string name="are_you_sure_you_want_to_share_this_book">Bạn có chắc chắn muốn chia sẻ cuốn sách này?</string>
     <string name="do_you_want_to_read_this_book">Bạn có muốn đọc cuốn sách này?</string>
     <string name="do_you_want_cancel_waiting_this_book">Bạn có muốn hủy bỏ chờ đợi cuốn sách này?</string>
     <string name="choose_category">Chọn thể loại</string>
