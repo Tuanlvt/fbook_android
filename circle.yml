@@ -19,9 +19,9 @@ dependencies:
     - mkdir -p $ANDROID_HOME/licenses
     - echo -e "8933bad161af4178b1185d1a37fbf41ea5269c55" > $ANDROID_HOME/licenses/android-sdk-license
     - echo -e "84831b9409646a918e30573bab4c9c91346d8abd" > $ANDROID_HOME/licenses/android-sdk-preview-license
-    - $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" "extras;android;m2repository" "extras;google;m2repository"
-    - $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.1"
-    - $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.1"
+    - echo y | $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" "extras;android;m2repository" "extras;google;m2repository"
+    - echo y | $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.1"
+    - echo y | $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.1"
     - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 -o reviewdog && chmod +x ./reviewdog
   cache_directories:
     # Android SDK
@@ -39,5 +39,5 @@ dependencies:
 test:
   override:
     - sh scripts/saddler.sh:
-        timeout: 1200
+        timeout: 2400
     - sh scripts/pushNotification.sh

@@ -243,7 +243,7 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
       return
     }
     mDialogManager.dialogBasic(getString(R.string.inform),
-        getString(R.string.are_you_sure_add_owner_this_book),
+        getString(R.string.are_you_sure_you_want_to_share_this_book),
         MaterialDialog.SingleButtonCallback { materialDialog, dialogAction ->
           mPresenter.addUserHaveThisBook(mBookId)
         })

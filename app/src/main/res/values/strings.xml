@@ -51,7 +51,7 @@
     <string name="edit_category_favorite">Edit Category Favorite</string>
     <string name="update">Update</string>
     <string name="are_you_sure_remove_owner_this_book">Are you sure remove owner this book?</string>
-    <string name="are_you_sure_add_owner_this_book">Are you sure add owner this book?</string>
+    <string name="are_you_sure_you_want_to_share_this_book">Are you sure you want to share this book?</string>
     <string name="do_you_want_to_read_this_book">Do you want to read this book?</string>
     <string name="update_success">Update Success !</string>
     <string name="do_you_want_cancel_waiting_this_book">Do you want cancel waiting this book?</string>
