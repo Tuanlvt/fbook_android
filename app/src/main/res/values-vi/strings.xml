@@ -148,4 +148,6 @@
     <string name="input_book_to_search">Nhập Sách để tìm kiếm</string>
     <string name="search_book">Tìm kiếm sách</string>
     <string name="email">Email</string>
+    <string name="form_edit_book_to_admin">Form Request Edit Book To Admin</string>
+    <string name="send_request">Gửi yêu cầu</string>
 </resources>
