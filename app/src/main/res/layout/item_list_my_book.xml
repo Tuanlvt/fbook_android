@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_5"
             >
+
             <ImageView
                 android:id="@+id/image_cover"
                 android:layout_width="@dimen/dp_130"
@@ -38,6 +39,7 @@
                 bind:imageUrl="@{viewModel.book.Image.mobileImage.smallPath}"
                 tools:ignore="ContentDescription"
                 />
+
             <TextView
                 android:layout_width="@dimen/dp_130"
                 android:layout_height="wrap_content"
@@ -55,6 +57,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintVertical_bias="0.0"
                 />
+
             <android.support.constraint.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -76,8 +79,21 @@
                     android:textSize="@dimen/sp_17"
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/image_button_edit"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+                <ImageView
+                    android:id="@+id/image_button_edit"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:background="@android:color/transparent"
+                    android:onClick="@{viewModel::onClickEditBook}"
+                    android:padding="@dimen/dp_2"
+                    android:tint="@color/color_grey_500"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_edit"
+                    bind:ignore="ContentDescription"
                     />
                 <TextView
                     android:id="@+id/text_title_author"
@@ -164,6 +180,7 @@
                     app:layout_constraintVertical_bias="0.95"
                     style="@style/Base.Widget.AppCompat.RatingBar.Small"
                     />
+
                 <Button
                     android:id="@+id/button_view_all"
                     android:layout_width="wrap_content"

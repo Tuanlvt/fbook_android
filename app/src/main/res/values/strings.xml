@@ -151,4 +151,6 @@
     <string name="sharing">Sharing</string>
     <string name="suggested">Suggested</string>
     <string name="returned_books">Returned Book</string>
+    <string name="form_edit_book_to_admin">Form Request Edit Book To Admin</string>
+    <string name="send_request">Send Request</string>
 </resources>

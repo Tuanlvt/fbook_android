@@ -18,6 +18,7 @@ class MyBookAdapter constructor(
 
   private val mBooks: MutableList<Book> = ArrayList<Book>()
   private lateinit var mItemMyBookListener: ItemMyBookClickListener
+  private lateinit var mItemEditListener: ItemEditClickListener
 
   fun updateData(listBook: List<Book>) {
     mBooks.clear()
@@ -29,11 +30,15 @@ class MyBookAdapter constructor(
     mItemMyBookListener = itemMyBookListener
   }
 
+  fun setItemEditListener(itemEditClickListener: ItemEditClickListener) {
+    mItemEditListener = itemEditClickListener
+  }
+
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
     val binding = DataBindingUtil.inflate<ItemListMyBookBinding>(
         LayoutInflater.from(parent.context),
         R.layout.item_list_my_book, parent, false)
-    return ItemViewHolder(binding, mItemMyBookListener)
+    return ItemViewHolder(binding, mItemMyBookListener, mItemEditListener)
   }
 
   override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -45,11 +50,12 @@ class MyBookAdapter constructor(
   }
 
   class ItemViewHolder(private val mBinding: ItemListMyBookBinding,
-      private val mItemClickListener: ItemMyBookClickListener?) : RecyclerView.ViewHolder(
+      private val mItemClickListener: ItemMyBookClickListener?,
+      private val mItemEditClickListener: ItemEditClickListener?) : RecyclerView.ViewHolder(
       mBinding.root) {
 
     fun bind(book: Book) {
-      mBinding.viewModel = ItemMyBookViewModel(book, mItemClickListener)
+      mBinding.viewModel = ItemMyBookViewModel(book, mItemClickListener, mItemEditClickListener)
       mBinding.executePendingBindings()
     }
   }

@@ -22,6 +22,7 @@ import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.main.LoginListener
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.main.NotificationListener
+import com.framgia.fbook.screen.updatebook.UpdateBookActivity
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.library.MaterialDialog
@@ -31,7 +32,7 @@ import javax.inject.Inject
 /**
  * MyBook Screen.
  */
-open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClickListener, LoginListener.LoginOnMyBook {
+open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClickListener, LoginListener.LoginOnMyBook, ItemEditClickListener {
 
   @Inject
   internal lateinit var mPresenter: MyBookContract.Presenter
@@ -43,6 +44,7 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
   internal lateinit var mUserRepository: UserRepository
   @Inject
   internal lateinit var mNavigator: Navigator
+  private var mTimeClick: Long = 0
   private var mIsLoadDataFirstTime: Boolean = true
   private lateinit var mUpdateNotificationListener: NotificationListener.UpdateNotificationListener
 
@@ -65,7 +67,7 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
     binding.viewModel = this
 
     mMyBookAdapter.setItemMyBookListener(this)
-
+    mMyBookAdapter.setItemEditListener(this)
     return binding.root
   }
 
@@ -116,6 +118,15 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
       mIsEnable.set(true)
       mIsVisibleLayoutNotLoggedIn.set(false)
       user.let { mPresenter.getMyBook(userId = user.id) }
+    }
+  }
+
+  override fun editClickListener(book: Book?) {
+    val bundle = Bundle()
+    bundle.putParcelable(Constant.BOOK_UPDATE_EXTRA, book)
+    if (System.currentTimeMillis() > mTimeClick + Constant.TIME_DELAY_ONE_SECONDS) {
+      mNavigator.startActivity(UpdateBookActivity::class.java, bundle)
+      mTimeClick = System.currentTimeMillis()
     }
   }
 

@@ -21,7 +21,9 @@ object Constant {
   val EXTRA_ZERO = 0
   val APPROVE = "approve"
   val UNAPPROVE = "unapprove"
+  val TIME_DELAY_ONE_SECONDS = 1000
 
+  val BOOK_UPDATE_EXTRA = "book_update"
   val BOOK_DETAIL_EXTRA = "book_detail"
   val USER_BOOK_DETAIL_EXTRA = "user_book_detail"
   val USER_BOOK_DETAIL_PAGE_EXTRA = "user_book_detail_page"

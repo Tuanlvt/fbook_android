@@ -86,5 +86,9 @@
             android:name=".screen.bookseemore.BookSeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".screen.updatebook.UpdateBookActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.ShowActionBar"/>
     </application>
 </manifest>
