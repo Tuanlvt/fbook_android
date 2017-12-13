@@ -13,7 +13,7 @@ import io.reactivex.disposables.Disposable
  * Listens to user actions from the UI ({@link BookSeeMoreActivity}), retrieves the data and updates
  * the UI as required.
  */
-class BookSeeMorePresenter(private val mCategoryRepository: CategoryRepository,
+open class BookSeeMorePresenter(private val mCategoryRepository: CategoryRepository,
     private val mBookRepository: BookRepository) : BookSeeMoreContract.Presenter {
 
   private var mViewModel: BookSeeMoreContract.ViewModel? = null

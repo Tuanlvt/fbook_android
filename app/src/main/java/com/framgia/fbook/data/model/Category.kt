@@ -12,7 +12,7 @@ class Category() : BaseModel(), Parcelable {
 
   @SerializedName("id")
   @Expose
-  var id: Int? = 0
+  var id: Int = 0
   @SerializedName("name")
   @Expose
   var name: String? = null
@@ -29,7 +29,7 @@ class Category() : BaseModel(), Parcelable {
   }
 
   override fun writeToParcel(parcel: Parcel, flags: Int) {
-    parcel.writeValue(id)
+    parcel.writeInt(id)
     parcel.writeString(name)
     parcel.writeString(description)
     parcel.writeValue(favorite)

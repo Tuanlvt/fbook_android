@@ -12,6 +12,8 @@ import com.framgia.fbook.data.source.remote.api.response.BaseBookByCategoryRespo
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.response.ErrorResponse
+import com.framgia.fbook.screen.bookseemore.BookSeeMoreActivity
+import com.framgia.fbook.screen.bookseemore.BookSeeMorePresenter
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.rx.ImmediateSchedulerProvider
 import io.reactivex.Single
@@ -32,9 +34,9 @@ import org.mockito.junit.MockitoJUnitRunner
 class ListBookPresenterTest {
 
   @InjectMocks
-  lateinit var mPresenter: ListBookPresenter
+  lateinit var mPresenter: BookSeeMorePresenter
   @Mock
-  lateinit var mViewModel: ListBookFragment
+  lateinit var mViewModel: BookSeeMoreActivity
   @InjectMocks
   lateinit var mBaseSchedulerProvider: ImmediateSchedulerProvider
   @Mock

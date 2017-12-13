@@ -2,6 +2,7 @@ package com.framgia.fbook.data.source
 
 import com.framgia.fbook.data.model.*
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
+import com.framgia.fbook.data.source.remote.api.request.EditBookRequest
 import com.framgia.fbook.data.source.remote.api.request.ReviewBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
@@ -51,5 +52,7 @@ interface BookDataSource {
         type: String?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 
     fun returnBook(actionBookDetail: ActionBookDetail?): Single<Any>
+
+    fun requestFormEditBook(bookId: Int?, editBookRequest: EditBookRequest): Single<Any>
   }
 }

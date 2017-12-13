@@ -123,4 +123,8 @@ interface FBookApi {
 
   @POST("/api/v0/notifications/update/all")
   fun readAllNotificationOfUser(): Single<Any>
+
+  @PUT("/api/v0/books/{book_id}/request_update")
+  fun requestFormEditBook(@Path(
+      "book_id") id: Int?, @Body editBookRequest: EditBookRequest): Single<Any>
 }

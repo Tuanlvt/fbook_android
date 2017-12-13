@@ -63,6 +63,9 @@ class Book() : BaseModel(), Parcelable {
   @SerializedName("users_returned")
   var usersReturneds: List<User>? = ArrayList()
   @Expose
+  @SerializedName("code")
+  var codeBook: String = ""
+  @Expose
   @SerializedName("reviews_detail")
   var reviewDetails: List<ReviewDetail>? = ArrayList()
   @SerializedName("category")
@@ -80,14 +83,17 @@ class Book() : BaseModel(), Parcelable {
     countView = parcel.readValue(Int::class.java.classLoader) as? Int
     avgStar = parcel.readValue(Float::class.java.classLoader) as? Float
     overview = parcel.readString()
+    image = parcel.readParcelable(Image::class.java.classLoader)
+    images = parcel.createTypedArrayList(Image)
     owners = parcel.createTypedArrayList(Owner)
     usersWaitings = parcel.createTypedArrayList(User)
     usersReadings = parcel.createTypedArrayList(User)
     usersReturnings = parcel.createTypedArrayList(User)
     usersReturneds = parcel.createTypedArrayList(User)
+    codeBook = parcel.readString()
     reviewDetails = parcel.createTypedArrayList(ReviewDetail)
     office = parcel.readParcelable(Office::class.java.classLoader)
-    numberOfWaiting = parcel.readValue(Int::class.java.classLoader) as? Int
+    category = parcel.readParcelable(Category::class.java.classLoader)
   }
 
   class ReviewDetail() : BaseModel(), Parcelable {
@@ -148,14 +154,17 @@ class Book() : BaseModel(), Parcelable {
     parcel.writeValue(countView)
     parcel.writeValue(avgStar)
     parcel.writeString(overview)
+    parcel.writeParcelable(image, flags)
+    parcel.writeTypedList(images)
     parcel.writeTypedList(owners)
     parcel.writeTypedList(usersWaitings)
     parcel.writeTypedList(usersReadings)
     parcel.writeTypedList(usersReturnings)
     parcel.writeTypedList(usersReturneds)
+    parcel.writeString(codeBook)
     parcel.writeTypedList(reviewDetails)
     parcel.writeParcelable(office, flags)
-    parcel.writeValue(numberOfWaiting)
+    parcel.writeParcelable(category, flags)
   }
 
   override fun describeContents(): Int {

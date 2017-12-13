@@ -32,7 +32,7 @@ import javax.inject.Inject
 /**
  * MyBook Screen.
  */
-open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClickListener, LoginListener.LoginOnMyBook, ItemEditClickListener {
+open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClickListener, LoginListener.LoginOnMyBook {
 
   @Inject
   internal lateinit var mPresenter: MyBookContract.Presenter
@@ -67,7 +67,6 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
     binding.viewModel = this
 
     mMyBookAdapter.setItemMyBookListener(this)
-    mMyBookAdapter.setItemEditListener(this)
     return binding.root
   }
 
