@@ -3,6 +3,7 @@ package com.framgia.fbook.data.source
 import com.framgia.fbook.data.model.*
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
+import com.framgia.fbook.data.source.remote.api.request.EditBookRequest
 import com.framgia.fbook.data.source.remote.api.request.ReviewBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
@@ -82,5 +83,9 @@ class BookRepositoryImpl @Inject constructor(
 
   override fun returnBook(actionBookDetail: ActionBookDetail?): Single<Any> {
     return bookRemoteDataSource.returnBook(actionBookDetail)
+  }
+
+  override fun requestFormEditBook(bookId: Int?, editBookRequest: EditBookRequest): Single<Any> {
+    return bookRemoteDataSource.requestFormEditBook(bookId, editBookRequest)
   }
 }

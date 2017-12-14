@@ -28,7 +28,7 @@ import javax.inject.Inject
 /**
  * BookSeeMore Screen.
  */
-class BookSeeMoreActivity : BaseActivity(), BookSeeMoreContract.ViewModel, onItemRecyclerViewClickListener, MainActivity.ListBookSeeMoreListener {
+open class BookSeeMoreActivity : BaseActivity(), BookSeeMoreContract.ViewModel, onItemRecyclerViewClickListener, MainActivity.ListBookSeeMoreListener {
 
   @Inject
   internal lateinit var mPresenter: BookSeeMoreContract.Presenter

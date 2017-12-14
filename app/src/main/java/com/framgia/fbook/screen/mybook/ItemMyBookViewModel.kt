@@ -8,8 +8,7 @@ import com.framgia.fbook.data.model.Book
  * Created by framgia on 05/09/2017.
  */
 class ItemMyBookViewModel(val book: Book,
-    private val mItemClickListener: ItemMyBookClickListener?,
-    private val mItemEditClickListener: ItemEditClickListener?) : BaseObservable() {
+    private val mItemClickListener: ItemMyBookClickListener?) : BaseObservable() {
   fun onItemClicked(view: View) {
     mItemClickListener?.onItemMyBookClick(book)
   }
@@ -19,6 +18,6 @@ class ItemMyBookViewModel(val book: Book,
   }
 
   fun onClickEditBook(view: View) {
-    mItemEditClickListener?.editClickListener(book)
+    mItemClickListener?.editClickListener(book)
   }
 }

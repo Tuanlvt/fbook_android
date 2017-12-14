@@ -11,18 +11,18 @@ import com.google.gson.annotations.SerializedName
 class Office() : BaseModel(), Parcelable {
   @SerializedName("id")
   @Expose
-  var id: Int? = null
+  var id: Int = 0
   @SerializedName("name")
   @Expose
   var name: String? = null
 
   constructor(parcel: Parcel) : this() {
-    id = parcel.readValue(Int::class.java.classLoader) as? Int
+    id = parcel.readInt()
     name = parcel.readString()
   }
 
   override fun writeToParcel(parcel: Parcel, flags: Int) {
-    parcel.writeValue(id)
+    parcel.writeInt(id)
     parcel.writeString(name)
   }
 

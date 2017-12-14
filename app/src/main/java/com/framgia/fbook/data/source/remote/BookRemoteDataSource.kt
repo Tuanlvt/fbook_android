@@ -2,10 +2,7 @@ package com.framgia.fbook.data.source.remote
 
 import com.framgia.fbook.data.model.*
 import com.framgia.fbook.data.source.BookDataSource
-import com.framgia.fbook.data.source.remote.api.request.BookRequest
-import com.framgia.fbook.data.source.remote.api.request.ReadingOrCancelBookRequest
-import com.framgia.fbook.data.source.remote.api.request.ReviewBookRequest
-import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
+import com.framgia.fbook.data.source.remote.api.request.*
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.service.FBookApi
@@ -142,5 +139,9 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
     val readingOrCancelBookRequest = ReadingOrCancelBookRequest()
     readingOrCancelBookRequest.actionBookDetail = actionBookDetail
     return fbookApi.returnBook(readingOrCancelBookRequest)
+  }
+
+  override fun requestFormEditBook(bookId: Int?, editBookRequest: EditBookRequest): Single<Any> {
+    return fbookApi.requestFormEditBook(bookId, editBookRequest)
   }
 }

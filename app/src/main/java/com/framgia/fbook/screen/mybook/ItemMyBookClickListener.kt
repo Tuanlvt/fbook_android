@@ -9,4 +9,6 @@ interface ItemMyBookClickListener {
   fun onItemMyBookClick(book: Book)
 
   fun onClickViewAllRequest()
+
+  fun editClickListener(book: Book?)
 }
